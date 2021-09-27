@@ -16,16 +16,16 @@ import {
   TouchableOpacity,
  Linking,
 } from "react-native";
-<Image source={require('C:\\Users\\lexif\\AppProject\\assets\\R.png')} /> 
+<Image /> 
 
   export default function App() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const NavigationApp = StackNavigator({
-      SignUp:{screen:SignUpScreen},
+    //const NavigationApp = StackNavigator({
+      //SignUp:{screen:SignUpScreen},
      
       
-    });
+    //});
     return (
       <View style={styles.container}>
       <Image
