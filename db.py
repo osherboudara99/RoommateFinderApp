@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 import os
 import mysql.connector
 from mysql.connector import errorcode
+import insertion
 
 app = Flask(__name__)
 
@@ -13,7 +14,14 @@ app = Flask(__name__)
 def db_conn(): 
     try:
         cnx = mysql.connector.connect(user='root', password='',
-                              host='127.0.0.1')
+                              host='127.0.0.1', database='flask')
+
+        cursor = cnx.cursor()
+
+        cursor.execute("INSERT IGNORE INTO articles VALUES (NULL, %s, %s, %s)", ('Geert', 'Vanderkelen', '2021-09-08'))
+    
+        cnx.commit()
+        cursor.close()
         cnx.close()
         return "success"
     except mysql.connector.Error as err:
