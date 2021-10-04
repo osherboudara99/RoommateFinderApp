@@ -21,7 +21,7 @@ def db_conn():
 
         cursor.execute("CREATE DATABASE IF NOT EXISTS SeniorProject")
 
-        #cursor.execute("INSERT IGNORE INTO articles VALUES (NULL, %s, %s, %s)", ('Geert', 'Vanderkelen', '2021-09-08'))
+        #cursor.execute("SELECT email, phone, password FROM SeniorProject.Users WHERE (email = %s OR phone = %s) AND password = %s", (email_var, phone_var, password_var))
 
         cursor.execute("CREATE TABLE IF NOT EXISTS SeniorProject.Users ( \
   `userid` int(10) NOT NULL AUTO_INCREMENT, \
