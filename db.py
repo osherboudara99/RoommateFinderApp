@@ -2,7 +2,6 @@ from flask import Flask, render_template, request
 import os
 import mysql.connector
 from mysql.connector import errorcode
-import insertion
 
 app = Flask(__name__)
 
@@ -14,13 +13,30 @@ app = Flask(__name__)
 def db_conn(): 
     try:
         cnx = mysql.connector.connect(user='root', password='',
-                              host='127.0.0.1', database='flask')
+                              host='127.0.0.1')
+
+        
 
         cursor = cnx.cursor()
 
-        cursor.execute("INSERT IGNORE INTO articles VALUES (NULL, %s, %s, %s)", ('Geert', 'Vanderkelen', '2021-09-08'))
+        cursor.execute("CREATE DATABASE IF NOT EXISTS SeniorProject")
+
+        #cursor.execute("INSERT IGNORE INTO articles VALUES (NULL, %s, %s, %s)", ('Geert', 'Vanderkelen', '2021-09-08'))
+
+        cursor.execute("CREATE TABLE IF NOT EXISTS SeniorProject.Users ( \
+  `userid` int(10) NOT NULL AUTO_INCREMENT, \
+  `firstName` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci, \
+  `lastName` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, \
+  `phone` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, \
+  `password` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, \
+  `email` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL, \
+  `birth_date` DATE DEFAULT NULL,\
+  PRIMARY KEY (`userid`), \
+  UNIQUE KEY `phone_UNIQUE` (`phone`), \
+  UNIQUE KEY `email_UNIQUE` (`email`), \
+  CHECK (`phone` NOT LIKE '%[^0-9]%' AND LENGTH(`phone`) = 10) \
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci")
     
-        cnx.commit()
         cursor.close()
         cnx.close()
         return "success"
