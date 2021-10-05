@@ -29,7 +29,7 @@ import {
     return (
       <View style={styles.container}>
       <Image
-      style={{height:'10%', width:'25%', marginTop:'2%', alignItems: "center",marginBottom:"15%"}}
+      style={{height:'12%', width:'25%', marginTop:'2%', alignItems: "center",marginBottom:"15%"}}
 source={{uri:'https://th.bing.com/th/id/R.09cd898d6be677558e64bb03d9170c1c?rik=HMz2tjfY%2fYsWhA&riu=http%3a%2f%2fimg1.wikia.nocookie.net%2f__cb20140622151800%2fcharacters%2fimages%2f6%2f66%2fKirby_(KRTDL).png&ehk=JY3ai18E3va2F2vMaU%2bg0stZvApIyb3rtm5WIsm1iBw%3d&risl=&pid=ImgRaw&r=0'}}
       />
       <StatusBar style="auto" />
