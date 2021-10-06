@@ -2,7 +2,8 @@ from flask import Flask, render_template, request
 import os
 import mysql.connector
 from mysql.connector import errorcode
-from login import login_blueprint
+from login_backend import login_blueprint
+from signup_backend import signup_blueprint
 
 
 app = Flask(__name__)
@@ -49,6 +50,8 @@ def connect():
             return err
 
 app.register_blueprint(login_blueprint)
+
+app.register_blueprint(signup_blueprint)
 
 if __name__ == '__main__':
     app.run(host=os.getenv('IP', '0.0.0.0'), 
