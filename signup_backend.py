@@ -17,7 +17,7 @@ def signup():
     cursor = cnx.cursor()
 
 
-    #
+    #cursor.execute("INSERT INTO SeniorProject.Users VALUES (NULL,'blahj', 'blah', 'blah', 'blahj', 'blah', 'blah')")
 
     
     cursor.close()
