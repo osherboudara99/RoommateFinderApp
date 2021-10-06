@@ -2,6 +2,8 @@ from flask import Flask, render_template, request
 import os
 import mysql.connector
 from mysql.connector import errorcode
+from login import login_blueprint
+
 
 app = Flask(__name__)
 
@@ -10,7 +12,7 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['GET', 'POST'])
-def db_conn(): 
+def connect(): 
     try:
         cnx = mysql.connector.connect(user='root', password='',
                               host='127.0.0.1')
@@ -20,8 +22,6 @@ def db_conn():
         cursor = cnx.cursor()
 
         cursor.execute("CREATE DATABASE IF NOT EXISTS SeniorProject")
-
-        #cursor.execute("SELECT email, phone, password FROM SeniorProject.Users WHERE (email = %s OR phone = %s) AND password = %s", (email_var, phone_var, password_var))
 
         cursor.execute("CREATE TABLE IF NOT EXISTS SeniorProject.Users ( \
   `userid` int(10) NOT NULL AUTO_INCREMENT, \
@@ -48,6 +48,7 @@ def db_conn():
         else:
             return err
 
+app.register_blueprint(login_blueprint)
 
 if __name__ == '__main__':
     app.run(host=os.getenv('IP', '0.0.0.0'), 
