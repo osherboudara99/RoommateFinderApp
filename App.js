@@ -1,4 +1,3 @@
-
 import SignUp from './SignUpPage';
 import LoginPage from './LoginPage';
 import LoginNavigation from './LoginNavigation';
