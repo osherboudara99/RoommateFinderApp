@@ -1,5 +1,5 @@
 
-import SignUp from './SignUp';
+import SignUp from './SignUpTest';
 
 import { Alarm } from '@material-ui/icons';
 import React from 'react';
