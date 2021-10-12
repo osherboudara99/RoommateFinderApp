@@ -22,17 +22,20 @@ const SignInScreen = ({navigation}) => {
         lastName:'',
         birthDay: '',
         email: '',
+        phone: '',
         password: '',
         check_textInputChange: false,
         check_firstNameInputChange:false,
         check_lastNameInputChange:false,
          check_birthdayInputChange:false,
+        check_phoneInputChange:false,
         secureTextEntry: true,
         isValidUser:true,
         isValidPassword:true,
         isValidFirstName:true,
         isValidLastName:true,
         isValidBirthday:true,
+        isValidPhone:true,
     });
 
     const textInputChange = (val) => {
@@ -186,6 +189,38 @@ const SignInScreen = ({navigation}) => {
         }
 
     }
+
+    const phone_validation = (val) =>{
+        var rege = /^\d{10}$/
+        if(rege.test(val)){
+            if(val.trim().length == 10){
+                setData({
+                    ...data,
+                    phone: val,
+                    isValidPhone:true,
+                    check_phoneInputChange:true
+                });
+                }
+                else{
+                   setData({
+                    ...data,
+                    phone: val,
+                    isValidPhone:false,
+                    check_phoneInputChange:false,
+                });
+                }
+
+        }
+        else{
+            setData({
+             ...data,
+             phone: val,
+             isValidPhone:false,
+             check_phoneInputChange:false,
+         });
+
+    }
+}
     
 
     const updateSecureTextEntry = () => {
@@ -346,6 +381,39 @@ const SignInScreen = ({navigation}) => {
              {data.isValidUser ? null : 
 <Animatable.View animation ="fadeInLeft" duration={500}>
 <Text style ={styles.errorMsg}> Email is invalid try again.</Text>
+</Animatable.View>
+}
+<Text style={[styles.text_footer, {
+                marginTop: 10
+            }]}>Phone Number</Text>
+            <View style={styles.action}>
+                <FontAwesome 
+                    name="phone"
+                    color="#05375a"
+                    size={20}
+                />
+                <TextInput 
+                    placeholder="Your Phone Number"
+                    style={styles.textInput}
+                    autoCapitalize="none"
+                    onChangeText={(val) => phone_validation(val)}
+                    
+                />
+                {data.check_phoneInputChange ? 
+                <Animatable.View
+                    animation="bounceIn"
+                >
+                    <Feather 
+                        name="check-circle"
+                        color="green"
+                        size={20}
+                    />
+                </Animatable.View>
+                : null}
+            </View>
+             {data.isValidPhone ? null : 
+<Animatable.View animation ="fadeInLeft" duration={500}>
+<Text style ={styles.errorMsg}> Phone number is invalid, please try again.</Text>
 </Animatable.View>
 }
             <Text style={[styles.text_footer, {
