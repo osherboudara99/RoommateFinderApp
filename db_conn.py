@@ -11,7 +11,6 @@ app = Flask(__name__)
 
 
 
-
 @app.route('/', methods=['GET', 'POST'])
 def connect(): 
     try:
@@ -31,7 +30,7 @@ def connect():
   `phone` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, \
   `password` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, \
   `email` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL, \
-  `birth_date` DATE DEFAULT NULL,\
+  `birthDay` DATE DEFAULT NULL,\
   PRIMARY KEY (`userid`), \
   UNIQUE KEY `phone_UNIQUE` (`phone`), \
   UNIQUE KEY `email_UNIQUE` (`email`), \
@@ -54,5 +53,5 @@ app.register_blueprint(login_blueprint)
 app.register_blueprint(signup_blueprint)
 
 if __name__ == '__main__':
-    app.run(host=os.getenv('IP', '0.0.0.0'), 
-            port=int(os.getenv('PORT', 4444)))
+    app.run(host='192.168.0.2', 
+            port=3000, debug=True)

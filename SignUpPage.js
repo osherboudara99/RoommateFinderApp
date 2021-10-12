@@ -17,13 +17,8 @@ import Feather from 'react-native-vector-icons/Feather';
 
 const SignInScreen = ({navigation}) => {
 
+
     const [data, setData] = React.useState({
-        firstName: '',
-        lastName:'',
-        birthDay: '',
-        email: '',
-        phone: '',
-        password: '',
         check_textInputChange: false,
         check_firstNameInputChange:false,
         check_lastNameInputChange:false,
@@ -38,19 +33,44 @@ const SignInScreen = ({navigation}) => {
         isValidPhone:true,
     });
 
+    const [firstName, setFirstName] = React.useState('')
+    const [lastName, setLastName] = React.useState('')
+    const [phone, setPhone] = React.useState('')
+    const [password, setPassword] = React.useState('')
+    const [email, setEmail] = React.useState('')
+    const [birthDay, setBirthDay] = React.useState('')
+
+
+    const insertSignupData = () => {
+        alert(firstName);
+        fetch('http://192.168.0.2:3000/signup', {
+            method:'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({ firstName:firstName, lastName:lastName, phone:phone, password:password, email:email, birthDay:birthDay})
+        })
+        .then(resp => resp.json())
+        .then(info => {
+            alert('executed');
+        })
+        .catch(error => console.log(error))
+
+    }
+
     const textInputChange = (val) => {
        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if( re.test(val) ) {
+            setEmail({email: val});
             setData({
                 ...data,
-                email: val,
                 check_textInputChange: true,
                 isValidUser:true
             });
         } else {
+            setEmail({email: val});
             setData({
                 ...data,
-                email: val,
                 check_textInputChange: false,
                 isValidUser:false
             });
@@ -67,71 +87,71 @@ const SignInScreen = ({navigation}) => {
          var dtMonth = dateValues[3];
           var dtDay=  dateValues[5];
            if (dtMonth < 1 || dtMonth > 12) {
+            setBirthDay({birthDay: val});
             setData({
                 ...data,
-                birthDay: val,
                 check_birthdayInputChange: false,
                 isValidBirthday:false
             });
         } else if (dtDay < 1 || dtDay> 31) {
+            setBirthDay({birthDay: val});
            setData({
                 ...data,
-                birthDay: val,
                 check_birthdayInputChange: false,
                 isValidBirthday:false
             });
     }else if ((dtMonth==4 || dtMonth==6 || dtMonth==9 || dtMonth==11) && dtDay ==31) {
+            setBirthDay({birthDay: val});
            setData({
                 ...data,
-                birthDay: val,
                 check_birthdayInputChange: false,
                 isValidBirthday:false
             });
     }else if (dtMonth == 2) {
         var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
         if (dtDay> 29 || (dtDay ==29 && !isleap)) {
+            setBirthDay({birthDay: val});
      setData({
                 ...data,
-                birthDay: val,
                 check_birthdayInputChange: false,
                 isValidBirthday:false
             });
     } else{
+        setBirthDay({birthDay: val});
             setData({
                 ...data,
-                birthDay: val,
                 check_birthdayInputChange: true,
                 isValidBirthday:true
             });
        }
     }else{
+        setBirthDay({birthDay: val});
           setData({
                 ...data,
-                birthDay: val,
                 check_birthdayInputChange: true,
                 isValidBirthday:true
             });
     }
         }else {
+            setBirthDay({birthDay: val});
             setData({
                 ...data,
-                birthDay: val,
                 check_birthdayInputChange: false,
                 isValidBirthday:false
             });
         } 
         }else {
+            setBirthDay({birthDay: val});
             setData({
                 ...data,
-                birthDay: val,
                 check_birthdayInputChange: false,
                 isValidBirthday:false
             });
         }
          }else {
+            setBirthDay({birthDay: val});
             setData({
                 ...data,
-                birthDay: val,
                 check_birthdayInputChange: false,
                 isValidBirthday:false
             });
@@ -139,15 +159,15 @@ const SignInScreen = ({navigation}) => {
     }
     const handlePasswordChange = (val) => {
        if( val.trim() != '' ) {
+        setPassword({password: val});
         setData({
             ...data,
-            password: val,
             isValidPassword:true
         });
         }else{
+            setPassword({password: val});
            setData({
             ...data,
-            password: val,
             isValidPassword:false
         });
         }
@@ -155,16 +175,18 @@ const SignInScreen = ({navigation}) => {
     }
       const textFirstNameChange= (val) => {
        if( val.trim() != ''  ) {
+        setFirstName({
+            firstName: val
+        });
         setData({
             ...data,
-            firstName: val,
             isValidFirstName:true,
             check_firstNameInputChange:true
         });
         }else{
+            setFirstName({firstName: val});
            setData({
             ...data,
-            firstName: val,
             isValidFirstName:false,
             check_firstNameInputChange:false,
         });
@@ -173,16 +195,16 @@ const SignInScreen = ({navigation}) => {
     }
     const textLastNameChange= (val) => {
        if( val.trim() != ''  ) {
+        setLastName({lastName: val});
         setData({
             ...data,
-            lastName: val,
             isValidLastName:true,
             check_lastNameInputChange:true
         });
         }else{
+            setLastName({lastName: val});
            setData({
             ...data,
-            lastName: val,
             isValidLastName:false,
             check_lastNameInputChange:false,
         });
@@ -194,17 +216,17 @@ const SignInScreen = ({navigation}) => {
         var rege = /^\d{10}$/
         if(rege.test(val)){
             if(val.trim().length == 10){
+                setPhone({phone: val});
                 setData({
                     ...data,
-                    phone: val,
                     isValidPhone:true,
                     check_phoneInputChange:true
                 });
                 }
                 else{
+                    setPhone({phone: val});
                    setData({
                     ...data,
-                    phone: val,
                     isValidPhone:false,
                     check_phoneInputChange:false,
                 });
@@ -212,9 +234,9 @@ const SignInScreen = ({navigation}) => {
 
         }
         else{
+            setPhone({phone: val});
             setData({
              ...data,
-             phone: val,
              isValidPhone:false,
              check_phoneInputChange:false,
          });
@@ -229,20 +251,7 @@ const SignInScreen = ({navigation}) => {
             secureTextEntry: !data.secureTextEntry
         });
     }
-    const handleValidUser= (val)=>{
-      alert(val);
-     if(val.trim().length >= 4){
-       setData({
-         ...data,
-         isValidUser:true
-       });
-     }else{
-       setData({
-         ...data,
-         isValidUser:false
-       });
-     }
-    }
+
 
     return (
       <View style={styles.container}>
@@ -458,7 +467,7 @@ const SignInScreen = ({navigation}) => {
            
             <View style={styles.button}>
                 <TouchableOpacity
-                   // onPress={() => navigation.navigate('SignUpScreen')}
+                    onPress={() => insertSignupData()}
                     style={[styles.signIn, {
                         borderColor: '#009387',
                         borderWidth: 1,
