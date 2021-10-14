@@ -42,13 +42,13 @@ const SignInScreen = ({navigation}) => {
 
 
     const insertSignupData = () => {
-        alert(firstName);
+        alert(firstName.firstName);
         fetch('http://192.168.0.2:3000/signup', {
             method:'POST',
             headers: {
                 'Content-Type':'application/json'
             },
-            body: JSON.stringify({ firstName:firstName, lastName:lastName, phone:phone, password:password, email:email, birthDay:birthDay})
+            body: JSON.stringify({ firstName:firstName.firstName, lastName:lastName.lastName, phone:phone.phone, password:password.password, email:email.email, birthDay:birthDay.birthDay})
         })
         .then(resp => resp.json())
         .then(info => {

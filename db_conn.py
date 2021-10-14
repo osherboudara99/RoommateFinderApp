@@ -4,11 +4,15 @@ import mysql.connector
 from mysql.connector import errorcode
 from login_backend import login_blueprint
 from signup_backend import signup_blueprint
+from flask_cors import CORS, cross_origin
+
+
 
 
 app = Flask(__name__)
 
-
+cors = CORS(app)
+app.config['CORS_HEADER'] = 'Content-Type'
 
 
 @app.route('/', methods=['GET', 'POST'])

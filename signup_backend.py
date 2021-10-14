@@ -7,7 +7,7 @@ signup_blueprint = Blueprint('signup', __name__)
 
 
 
-@signup_blueprint.route('/signup', methods=['GET', 'POST'])
+@signup_blueprint.route('/signup', methods=['POST'])
 def signup():
 
     cnx = mysql.connector.connect(user='root', password='',
@@ -23,16 +23,14 @@ def signup():
     signup_sql = ("INSERT INTO SeniorProject.Users VALUES (NULL, %s, %s, %s, %s, %s, %s)")
     signup_values = (firstName, lastName, phone, password, email, birthDay)
     cursor = cnx.cursor()
-    row_headers=[x[0] for x in cursor.description]
-
+    
     cursor.execute(signup_sql, signup_values)
 
-    rv = cursor.fetchall()
-    json_data=[]
-    for result in rv:
-        json_data.append(dict(zip(row_headers,result)))
+    cnx.commit()
+
+
     
     cursor.close()
     cnx.close()
-    return json.dumps(json_data)
+    return "nothing"
     
