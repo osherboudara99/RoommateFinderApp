@@ -1,4 +1,3 @@
-import { AirlineSeatReclineNormalOutlined } from "@material-ui/icons";
 import React, { useEffect, useState, useRef } from "react";
 import { Text, View, StyleSheet, Animated } from "react-native";
 import RNBootSplash from "react-native-bootsplash";
