@@ -31,7 +31,6 @@ const SignInScreen = ({navigation}) => {
         isValidLastName:true,
         isValidBirthday:true,
         isValidPhone:true,
-        isValidButton:false,
     });
 
     const [firstName, setFirstName] = React.useState('')
@@ -58,7 +57,7 @@ const SignInScreen = ({navigation}) => {
         .catch(error => console.log(error))
 
     }
-         
+
     const textInputChange = (val) => {
        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if( re.test(val) ) {
@@ -76,7 +75,6 @@ const SignInScreen = ({navigation}) => {
                 isValidUser:false
             });
         }
-        
     }
     const birthdayInputChange = (val) => {
        var validatePattern = /^(\d{4})(\-)(\d{1,2})(\-)(\d{1,2})$/;
@@ -160,26 +158,21 @@ const SignInScreen = ({navigation}) => {
         }
     }
     const handlePasswordChange = (val) => {
-        
        if( val.trim() != '' ) {
         setPassword({password: val});
         setData({
             ...data,
-            isValidPassword:true,
-            isValidButton:true
-            
+            isValidPassword:true
         });
         }else{
             setPassword({password: val});
            setData({
             ...data,
-            isValidPassword:false,
-            isValidButton:false
+            isValidPassword:false
         });
         }
-        
+
     }
-  
       const textFirstNameChange= (val) => {
        if( val.trim() != ''  ) {
         setFirstName({
@@ -409,7 +402,7 @@ const SignInScreen = ({navigation}) => {
                     size={20}
                 />
                 <TextInput 
-                    placeholder="Your Phone Number No Dashes or Slashes"
+                    placeholder="Your Phone Number"
                     style={styles.textInput}
                     autoCapitalize="none"
                     onChangeText={(val) => phone_validation(val)}
@@ -471,11 +464,8 @@ const SignInScreen = ({navigation}) => {
 <Text style ={styles.errorMsg}> Password is Required.</Text>
 </Animatable.View>
 }
-
-
+           
             <View style={styles.button}>
-            {data.check_firstNameInputChange && data.check_lastNameInputChange && data.check_phoneInputChange && data.check_birthdayInputChange
-&& data.check_textInputChange && data.isValidButton ? 
                 <TouchableOpacity
                     onPress={() => insertSignupData()}
                     style={[styles.signIn, {
@@ -488,13 +478,10 @@ const SignInScreen = ({navigation}) => {
                         color: '#009387'
                     }]}>Sign In</Text>
                 </TouchableOpacity>
-                : null}
                  <TouchableOpacity>
                 <Text style={{color: '#009387', marginTop:15}}>Already have an account? Sign In Here</Text>
             </TouchableOpacity>
             </View>
-          
-
         </Animatable.View>
       </View>
     );

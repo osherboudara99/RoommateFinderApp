@@ -23,8 +23,7 @@ const SignInScreen = ({navigation}) => {
         check_textInputChange: false,
         secureTextEntry: true,
         isValidUser:true,
-        isValidPassword:true,
-        isValidButton:false
+        isValidPassword:true
     });
 
     const textInputChange = (val) => {
@@ -47,27 +46,21 @@ const SignInScreen = ({navigation}) => {
     }
 
     const handlePasswordChange = (val) => {
-        
-        if( val.trim() != '' ) {
-       
-         setData({
-             ...data,
-             password:val,
-             isValidPassword:true,
-             isValidButton:true
-             
-         });
-         }else{
-             
-            setData({
-             ...data,
-             password:val,
-             isValidPassword:false,
-             isValidButton:false
-         });
-         }
-         
-     }
+       if( val.trim().length > 4 ) {
+        setData({
+            ...data,
+            password: val,
+            isValidPassword:true
+        });
+        }else{
+           setData({
+            ...data,
+            password: val,
+            isValidPassword:false
+        });
+        }
+
+    }
 
     const updateSecureTextEntry = () => {
         setData({
@@ -167,14 +160,14 @@ const SignInScreen = ({navigation}) => {
             </View>
             {data.isValidPassword ? null : 
 <Animatable.View animation ="fadeInLeft" duration={500}>
-<Text style ={styles.errorMsg}> Password is required.</Text>
+<Text style ={styles.errorMsg}> Password must be 8 characters long.</Text>
 </Animatable.View>
 }
            
             <View style={styles.button}>
                
                    
-            {data.check_textInputChange&& data.isValidButton ? 
+              
 
                 <TouchableOpacity
                    // onPress={() => navigation.navigate('SignUpScreen')}
@@ -188,7 +181,6 @@ const SignInScreen = ({navigation}) => {
                         color: '#009387'
                     }]}>Sign In</Text>
                 </TouchableOpacity>
-                : null}
                  <TouchableOpacity>
                 <Text style={{color: '#009387', marginTop:15}}>No Account? Sign Up Here</Text>
             </TouchableOpacity>
@@ -255,8 +247,5 @@ const styles = StyleSheet.create({
     textSign: {
         fontSize: 18,
         fontWeight: 'bold'
-    },
-    errorMsg: {
-        color: '#ae0700'
     }
   });
