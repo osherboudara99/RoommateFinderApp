@@ -18,27 +18,54 @@ import Feather from 'react-native-vector-icons/Feather';
 const SignInScreen = ({navigation}) => {
 
     const [data, setData] = React.useState({
-        email: '',
-        password: '',
         check_textInputChange: false,
         secureTextEntry: true,
         isValidUser:true,
         isValidPassword:true
     });
 
+    const [password, setPassword] = React.useState('')
+    const [email, setEmail] = React.useState('')
+
+    /*useEffect(() => {
+        fetch('http://192.168.0.2:3000/login', {
+            method:'GET'
+        })
+        .then(resp => resp.json())
+        .then(registration => {
+            setData(registration)
+        })
+    }, [])*/
+
+    const loginData = () => {
+        alert(email.email);
+        fetch('http://192.168.0.2:3000/login', {
+            method:'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({password:password.password, email:email.email})
+        })
+        .then(resp => resp.text())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => console.log(error))
+    }
+
     const textInputChange = (val) => {
        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if( re.test(val) ) {
+            setEmail({email: val});
             setData({
                 ...data,
-                email: val,
                 check_textInputChange: true,
                 isValidUser:true
             });
         } else {
+            setEmail({email: val});
             setData({
                 ...data,
-                email: val,
                 check_textInputChange: false,
                 isValidUser:false
             });
@@ -47,15 +74,16 @@ const SignInScreen = ({navigation}) => {
 
     const handlePasswordChange = (val) => {
        if( val.trim().length > 4 ) {
+        setPassword({password: val});
         setData({
             ...data,
             password: val,
             isValidPassword:true
         });
         }else{
+            setPassword({password: val});
            setData({
             ...data,
-            password: val,
             isValidPassword:false
         });
         }
@@ -170,7 +198,7 @@ const SignInScreen = ({navigation}) => {
               
 
                 <TouchableOpacity
-                   // onPress={() => navigation.navigate('SignUpScreen')}
+                    onPress={() => loginData()}
                     style={[styles.signIn, {
                         borderColor: '#009387',
                         borderWidth: 1,
