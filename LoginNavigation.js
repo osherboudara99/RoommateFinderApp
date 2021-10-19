@@ -6,16 +6,19 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const LoginStack = createNativeStackNavigator();
 
 
-export default function LoginNavigation()
+const LoginNavigation = ({navigation, route}) =>
 {
     return(
-        <LoginStack.Navigator initialRouteName={"Initial"}>
+        <LoginStack.Navigator>
         <LoginStack.Screen
-          name="Login"
+          name="LoginPage"
           component={LoginPage}
           options={{ title: 'Login' }}
+          initialParams={{setIsLoggedIn: route.params.setIsLoggedIn}}
         />
         <LoginStack.Screen name="SignUp" component={SignUp} />
         </LoginStack.Navigator>
     );
 }
+
+export default LoginNavigation;

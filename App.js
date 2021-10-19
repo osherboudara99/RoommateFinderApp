@@ -20,9 +20,10 @@ const Stack = createNativeStackNavigator();
       <Stack.Navigator>
         
         {isLoggedIn == false ? (
-         <Stack.Screen name="Login" component={LoginNavigation} options={{ headerShown: false }} />
+         <Stack.Screen name="LoginNavigation" component={LoginNavigation} options={{ headerShown: false,
+         }} initialParams={{ setIsLoggedIn: setIsLoggedIn }}/>
        ) : (
-           <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />)}
+           <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} initialParams={{ setIsLoggedIn: setIsLoggedIn }}/>)}
     
 
       </Stack.Navigator>
