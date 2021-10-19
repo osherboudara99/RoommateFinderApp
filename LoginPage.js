@@ -182,7 +182,7 @@ const SignInScreen = ({navigation}) => {
                     }]}>Sign In</Text>
                 </TouchableOpacity>
                  <TouchableOpacity>
-                <Text style={{color: '#009387', marginTop:15}}>No Account? Sign Up Here</Text>
+                <Text style={{color: '#009387', marginTop:15}} onPress={() => navigation.push("SignUp")}>No Account? Sign Up Here</Text>
             </TouchableOpacity>
             </View>
         </Animatable.View>

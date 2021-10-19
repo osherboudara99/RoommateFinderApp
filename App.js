@@ -1,28 +1,25 @@
 
 import SignUp from './SignUpPage';
+import LoginPage from './LoginPage';
 
-import { Alarm } from '@material-ui/icons';
 import React from 'react';
-import { useState } from "react";
-import {StackNavigator} from 'react-navigation';
-//import SignUp from "C:\\Users\\lexif\\AppProject\\SignUp.js";
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TextInput,
-  Button,
-  TouchableOpacity,
- Linking,
-} from "react-native";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+const Stack = createNativeStackNavigator();
 
   export default function App() {
     return (
-     <SignUp/>
-     //<Ex/>
-      
+      <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Login"
+          component={LoginPage}
+          options={{ title: 'Welcome' }}
+        />
+        <Stack.Screen name="SignUp" component={SignUp} />
+      </Stack.Navigator>
+    </NavigationContainer>
     );
 }
