@@ -17,66 +17,45 @@ import Feather from 'react-native-vector-icons/Feather';
 
 const SignInScreen = ({navigation}) => {
 
-
     const [data, setData] = React.useState({
+        firstName: '',
+        lastName:'',
+        birthDay: '',
+        email: '',
+        password: '',
         check_textInputChange: false,
         check_firstNameInputChange:false,
         check_lastNameInputChange:false,
          check_birthdayInputChange:false,
-        check_phoneInputChange:false,
         secureTextEntry: true,
         isValidUser:true,
         isValidPassword:true,
         isValidFirstName:true,
         isValidLastName:true,
         isValidBirthday:true,
-        isValidPhone:true,
-        isValidButton:false,
+        isValidButton:true,
     });
 
-    const [firstName, setFirstName] = React.useState('')
-    const [lastName, setLastName] = React.useState('')
-    const [phone, setPhone] = React.useState('')
-    const [password, setPassword] = React.useState('')
-    const [email, setEmail] = React.useState('')
-    const [birthDay, setBirthDay] = React.useState('')
-
-
-    const insertSignupData = () => {
-        alert(firstName.firstName);
-        fetch('http://192.168.0.2:3000/signup', {
-            method:'POST',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            body: JSON.stringify({ firstName:firstName.firstName, lastName:lastName.lastName, phone:phone.phone, password:password.password, email:email.email, birthDay:birthDay.birthDay})
-        })
-        .then(resp => resp.json())
-        .then(info => {
-            alert('executed');
-        })
-        .catch(error => console.log(error))
-
-    }
-         
     const textInputChange = (val) => {
        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if( re.test(val) ) {
-            setEmail({email: val});
             setData({
                 ...data,
+                email: val,
                 check_textInputChange: true,
                 isValidUser:true
             });
         } else {
-            setEmail({email: val});
             setData({
                 ...data,
+                email: val,
                 check_textInputChange: false,
                 isValidUser:false
             });
         }
-        
+        if(isValidUser &&   isValidPassword && isValidFirstName &&  isValidLastName && isValidBirthday ){
+
+        }
     }
     const birthdayInputChange = (val) => {
        var validatePattern = /^(\d{4})(\-)(\d{1,2})(\-)(\d{1,2})$/;
@@ -89,111 +68,104 @@ const SignInScreen = ({navigation}) => {
          var dtMonth = dateValues[3];
           var dtDay=  dateValues[5];
            if (dtMonth < 1 || dtMonth > 12) {
-            setBirthDay({birthDay: val});
             setData({
                 ...data,
+                birthDay: val,
                 check_birthdayInputChange: false,
                 isValidBirthday:false
             });
         } else if (dtDay < 1 || dtDay> 31) {
-            setBirthDay({birthDay: val});
            setData({
                 ...data,
+                birthDay: val,
                 check_birthdayInputChange: false,
                 isValidBirthday:false
             });
     }else if ((dtMonth==4 || dtMonth==6 || dtMonth==9 || dtMonth==11) && dtDay ==31) {
-            setBirthDay({birthDay: val});
            setData({
                 ...data,
+                birthDay: val,
                 check_birthdayInputChange: false,
                 isValidBirthday:false
             });
     }else if (dtMonth == 2) {
         var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
         if (dtDay> 29 || (dtDay ==29 && !isleap)) {
-            setBirthDay({birthDay: val});
      setData({
                 ...data,
+                birthDay: val,
                 check_birthdayInputChange: false,
                 isValidBirthday:false
             });
     } else{
-        setBirthDay({birthDay: val});
             setData({
                 ...data,
+                birthDay: val,
                 check_birthdayInputChange: true,
                 isValidBirthday:true
             });
        }
     }else{
-        setBirthDay({birthDay: val});
           setData({
                 ...data,
+                birthDay: val,
                 check_birthdayInputChange: true,
                 isValidBirthday:true
             });
     }
         }else {
-            setBirthDay({birthDay: val});
             setData({
                 ...data,
+                birthDay: val,
                 check_birthdayInputChange: false,
                 isValidBirthday:false
             });
         } 
         }else {
-            setBirthDay({birthDay: val});
             setData({
                 ...data,
+                birthDay: val,
                 check_birthdayInputChange: false,
                 isValidBirthday:false
             });
         }
          }else {
-            setBirthDay({birthDay: val});
             setData({
                 ...data,
+                birthDay: val,
                 check_birthdayInputChange: false,
                 isValidBirthday:false
             });
         }
     }
     const handlePasswordChange = (val) => {
-        
        if( val.trim() != '' ) {
-        setPassword({password: val});
         setData({
             ...data,
-            isValidPassword:true,
-            isValidButton:true
-            
+            password: val,
+            isValidPassword:true
         });
         }else{
-            setPassword({password: val});
            setData({
             ...data,
-            isValidPassword:false,
-            isValidButton:false
+            password: val,
+            isValidPassword:false
         });
         }
-        
+
     }
-  
       const textFirstNameChange= (val) => {
        if( val.trim() != ''  ) {
-        setFirstName({
-            firstName: val
-        });
         setData({
             ...data,
+            firstName: val,
             isValidFirstName:true,
             check_firstNameInputChange:true
         });
         }else{
-            setFirstName({firstName: val});
            setData({
             ...data,
+            firstName: val,
             isValidFirstName:false,
             check_firstNameInputChange:false,
         });
@@ -202,54 +174,22 @@ const SignInScreen = ({navigation}) => {
     }
     const textLastNameChange= (val) => {
        if( val.trim() != ''  ) {
-        setLastName({lastName: val});
         setData({
             ...data,
+            lastName: val,
             isValidLastName:true,
             check_lastNameInputChange:true
         });
         }else{
-            setLastName({lastName: val});
            setData({
             ...data,
+            lastName: val,
             isValidLastName:false,
             check_lastNameInputChange:false,
         });
         }
 
     }
-
-    const phone_validation = (val) =>{
-        var rege = /^\d{10}$/
-        if(rege.test(val)){
-            if(val.trim().length == 10){
-                setPhone({phone: val});
-                setData({
-                    ...data,
-                    isValidPhone:true,
-                    check_phoneInputChange:true
-                });
-                }
-                else{
-                    setPhone({phone: val});
-                   setData({
-                    ...data,
-                    isValidPhone:false,
-                    check_phoneInputChange:false,
-                });
-                }
-
-        }
-        else{
-            setPhone({phone: val});
-            setData({
-             ...data,
-             isValidPhone:false,
-             check_phoneInputChange:false,
-         });
-
-    }
-}
     
 
     const updateSecureTextEntry = () => {
@@ -258,7 +198,20 @@ const SignInScreen = ({navigation}) => {
             secureTextEntry: !data.secureTextEntry
         });
     }
-
+    const handleValidUser= (val)=>{
+      alert(val);
+     if(val.trim().length >= 4){
+       setData({
+         ...data,
+         isValidUser:true
+       });
+     }else{
+       setData({
+         ...data,
+         isValidUser:false
+       });
+     }
+    }
 
     return (
       <View style={styles.container}>
@@ -399,39 +352,6 @@ const SignInScreen = ({navigation}) => {
 <Text style ={styles.errorMsg}> Email is invalid try again.</Text>
 </Animatable.View>
 }
-<Text style={[styles.text_footer, {
-                marginTop: 10
-            }]}>Phone Number</Text>
-            <View style={styles.action}>
-                <FontAwesome 
-                    name="phone"
-                    color="#05375a"
-                    size={20}
-                />
-                <TextInput 
-                    placeholder="Your Phone Number No Dashes or Slashes"
-                    style={styles.textInput}
-                    autoCapitalize="none"
-                    onChangeText={(val) => phone_validation(val)}
-                    
-                />
-                {data.check_phoneInputChange ? 
-                <Animatable.View
-                    animation="bounceIn"
-                >
-                    <Feather 
-                        name="check-circle"
-                        color="green"
-                        size={20}
-                    />
-                </Animatable.View>
-                : null}
-            </View>
-             {data.isValidPhone ? null : 
-<Animatable.View animation ="fadeInLeft" duration={500}>
-<Text style ={styles.errorMsg}> Phone number is invalid, please try again.</Text>
-</Animatable.View>
-}
             <Text style={[styles.text_footer, {
                 marginTop: 10
             }]}>Password</Text>
@@ -471,13 +391,10 @@ const SignInScreen = ({navigation}) => {
 <Text style ={styles.errorMsg}> Password is Required.</Text>
 </Animatable.View>
 }
-
-
+{data.isValidButton ? null : 
             <View style={styles.button}>
-            {data.check_firstNameInputChange && data.check_lastNameInputChange && data.check_phoneInputChange && data.check_birthdayInputChange
-&& data.check_textInputChange && data.isValidButton ? 
                 <TouchableOpacity
-                    onPress={() => insertSignupData()}
+                   // onPress={() => navigation.navigate('SignUpScreen')}
                     style={[styles.signIn, {
                         borderColor: '#009387',
                         borderWidth: 1,
@@ -488,13 +405,11 @@ const SignInScreen = ({navigation}) => {
                         color: '#009387'
                     }]}>Sign In</Text>
                 </TouchableOpacity>
-                : null}
+}
                  <TouchableOpacity>
                 <Text style={{color: '#009387', marginTop:15}}>Already have an account? Sign In Here</Text>
             </TouchableOpacity>
             </View>
-          
-
         </Animatable.View>
       </View>
     );
