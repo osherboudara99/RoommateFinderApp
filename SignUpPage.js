@@ -44,7 +44,7 @@ const SignInScreen = ({navigation}) => {
 
     const insertSignupData = () => {
         alert(firstName.firstName);
-        fetch('http://192.168.0.2:3000/signup', {
+        fetch('http://127.0.0.1:5000/signup', {
             method:'POST',
             headers: {
                 'Content-Type':'application/json'
@@ -485,7 +485,7 @@ const SignInScreen = ({navigation}) => {
                 </TouchableOpacity>
                 :null}
                  <TouchableOpacity>
-                <Text style={{color: '#009387', marginTop:15}}>Already have an account? Sign In Here</Text>
+                <Text style={{color: '#009387', marginTop:15}} onPress={() => navigation.popToTop()}>Already have an account? Sign In Here</Text>
             </TouchableOpacity>
             </View>
         </Animatable.View>

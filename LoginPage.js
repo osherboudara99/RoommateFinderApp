@@ -15,7 +15,7 @@ import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 
-const SignInScreen = ({navigation}) => {
+const SignInScreen = ({navigation, route}) => {
 
     const [data, setData] = React.useState({
         check_textInputChange: false,
@@ -40,7 +40,7 @@ const SignInScreen = ({navigation}) => {
 
     const loginData = () => {
         alert(email.email);
-        fetch('http://192.168.0.2:3000/login', {
+        fetch('http://127.0.0.1:5000/login', {
             method:'POST',
             headers: {
                 'Content-Type':'application/json'
@@ -50,6 +50,11 @@ const SignInScreen = ({navigation}) => {
         .then(resp => resp.text())
         .then(data => {
             console.log(data);
+            if(data === "logged in")
+            {
+                console.log(route.params)
+                route.params.setIsLoggedIn(true);
+            }
         })
         .catch(error => console.log(error))
     }
@@ -214,7 +219,7 @@ const SignInScreen = ({navigation}) => {
                 </TouchableOpacity>
 :null}
                  <TouchableOpacity>
-                <Text style={{color: '#009387', marginTop:15}}>No Account? Sign Up Here</Text>
+                <Text style={{color: '#009387', marginTop:15}} onPress={() => navigation.push("SignUp")}>No Account? Sign Up Here</Text>
             </TouchableOpacity>
 
             </View>
