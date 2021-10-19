@@ -18,27 +18,55 @@ import Feather from 'react-native-vector-icons/Feather';
 const SignInScreen = ({navigation}) => {
 
     const [data, setData] = React.useState({
-        email: '',
-        password: '',
         check_textInputChange: false,
         secureTextEntry: true,
         isValidUser:true,
-        isValidPassword:true
+        isValidPassword:true,
+        isValidButton:false
     });
+
+    const [password, setPassword] = React.useState('')
+    const [email, setEmail] = React.useState('')
+
+    /*useEffect(() => {
+        fetch('http://192.168.0.2:3000/login', {
+            method:'GET'
+        })
+        .then(resp => resp.json())
+        .then(registration => {
+            setData(registration)
+        })
+    }, [])*/
+
+    const loginData = () => {
+        alert(email.email);
+        fetch('http://192.168.0.2:3000/login', {
+            method:'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({password:password.password, email:email.email})
+        })
+        .then(resp => resp.text())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => console.log(error))
+    }
 
     const textInputChange = (val) => {
        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if( re.test(val) ) {
+            setEmail({email: val});
             setData({
                 ...data,
-                email: val,
                 check_textInputChange: true,
                 isValidUser:true
             });
         } else {
+            setEmail({email: val});
             setData({
                 ...data,
-                email: val,
                 check_textInputChange: false,
                 isValidUser:false
             });
@@ -46,17 +74,20 @@ const SignInScreen = ({navigation}) => {
     }
 
     const handlePasswordChange = (val) => {
-       if( val.trim().length > 4 ) {
+       if( val.trim() != '' ) {
+        setPassword({password: val});
         setData({
             ...data,
             password: val,
-            isValidPassword:true
+            isValidPassword:true,
+            isValidButton:true
         });
         }else{
+            setPassword({password: val});
            setData({
             ...data,
-            password: val,
-            isValidPassword:false
+            isValidPassword:false,
+            isValidButton:false
         });
         }
 
@@ -121,7 +152,7 @@ const SignInScreen = ({navigation}) => {
             </View>
              {data.isValidUser ? null : 
 <Animatable.View animation ="fadeInLeft" duration={500}>
-<Text style ={styles.errorMsg}> Username is invalid try again.</Text>
+<Text style ={styles.errorMsg}> Email is invalid. Please try again.</Text>
 </Animatable.View>
 }
             <Text style={[styles.text_footer, {
@@ -160,17 +191,17 @@ const SignInScreen = ({navigation}) => {
             </View>
             {data.isValidPassword ? null : 
 <Animatable.View animation ="fadeInLeft" duration={500}>
-<Text style ={styles.errorMsg}> Password must be 8 characters long.</Text>
+<Text style ={styles.errorMsg}> Password is required.</Text>
 </Animatable.View>
 }
            
             <View style={styles.button}>
                
                    
-              
+            {data.check_textInputChange&& data.isValidButton ? 
 
                 <TouchableOpacity
-                   // onPress={() => navigation.navigate('SignUpScreen')}
+                    onPress={() => loginData()}
                     style={[styles.signIn, {
                         borderColor: '#009387',
                         borderWidth: 1,
@@ -181,9 +212,11 @@ const SignInScreen = ({navigation}) => {
                         color: '#009387'
                     }]}>Sign In</Text>
                 </TouchableOpacity>
+:null}
                  <TouchableOpacity>
                 <Text style={{color: '#009387', marginTop:15}} onPress={() => navigation.push("SignUp")}>No Account? Sign Up Here</Text>
             </TouchableOpacity>
+
             </View>
         </Animatable.View>
       </View>
@@ -247,5 +280,8 @@ const styles = StyleSheet.create({
     textSign: {
         fontSize: 18,
         fontWeight: 'bold'
+    },
+    errorMsg: {
+        color: '#ae0700'
     }
   });

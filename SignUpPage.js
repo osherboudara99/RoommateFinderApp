@@ -31,6 +31,7 @@ const SignInScreen = ({navigation}) => {
         isValidLastName:true,
         isValidBirthday:true,
         isValidPhone:true,
+        isValidButton:false
     });
 
     const [firstName, setFirstName] = React.useState('')
@@ -162,13 +163,15 @@ const SignInScreen = ({navigation}) => {
         setPassword({password: val});
         setData({
             ...data,
-            isValidPassword:true
+            isValidPassword:true,
+            isValidButton:true
         });
         }else{
             setPassword({password: val});
            setData({
             ...data,
-            isValidPassword:false
+            isValidPassword:false,
+            isValidButton:false
         });
         }
 
@@ -466,6 +469,8 @@ const SignInScreen = ({navigation}) => {
 }
            
             <View style={styles.button}>
+            {data.check_textInputChange && data.isValidButton && data.check_birthdayInputChange && 
+            data.check_firstNameInputChange && data.check_lastNameInputChange && data.check_phoneInputChange ?
                 <TouchableOpacity
                     onPress={() => insertSignupData()}
                     style={[styles.signIn, {
@@ -478,6 +483,7 @@ const SignInScreen = ({navigation}) => {
                         color: '#009387'
                     }]}>Sign In</Text>
                 </TouchableOpacity>
+                :null}
                  <TouchableOpacity>
                 <Text style={{color: '#009387', marginTop:15}}>Already have an account? Sign In Here</Text>
             </TouchableOpacity>
