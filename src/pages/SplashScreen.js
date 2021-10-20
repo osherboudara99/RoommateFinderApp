@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Text, View, StyleSheet, Animated } from "react-native";
-import RNBootSplash from "react-native-bootsplash";
+import { View, Animated, Text, StyleSheet } from 'react-native';
+import BootSplash from 'react-native-bootsplash';
 
-let bootSplashLogo = require('../../assets/logo.png');
+let splash = require('../../assets/logo_copy.png')
 
+// Simulate (slow) API call for setup
 let fakeApiCallWithoutBadNetwork = (ms) =>
     new Promise((resolve) => setTimeout(resolve, ms));
 
-let SplashScreen = () => {
+let SplashScreen = ({ navigation }) => {
     let [bootSplashIsVisible, setBootSplashIsVisible] = useState(true);
     let [bootSplashLogoIsLoaded, setBootSplashLogoIsLoaded] = useState(false);
     let opacity = useRef(new Animated.Value(1));
@@ -18,7 +19,7 @@ let SplashScreen = () => {
         await fakeApiCallWithoutBadNetwork(3000);
 
         try {
-            await RNBootSplash.hide();
+            await BootSplash.hide();
 
             Animated.stagger(250, [
                 Animated.spring(translateY.current, {
@@ -42,6 +43,10 @@ let SplashScreen = () => {
         } catch (error) {
             setBootSplashIsVisible(false);
         }
+        // Allow welcome text to display
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        // Redirect to Log In/Sign In
+        navigation.replace('Sign In');
     };
 
     useEffect(() => {
@@ -61,7 +66,7 @@ let SplashScreen = () => {
                     ]}
                 >
                     <Animated.Image
-                        source={bootSplashLogo}
+                        source={splash}
                         fadeDuration={0}
                         onLoadEnd={() => setBootSplashLogoIsLoaded(true)}
                         style={[
@@ -80,26 +85,27 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#F5FCFF",
+        backgroundColor: "#009387",
     },
     text: {
-        fontSize: 24,
+        fontSize: '2rem',
         fontWeight: "700",
         margin: 20,
-        lineHeight: 30,
-        color: "#333",
+        lineHeight: '2rem',
+        color: "#FFFFFF",
         textAlign: "center",
     },
     bootsplash: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#F5FCFF",
+        backgroundColor: "#009387",
     },
     logo: {
         height: 200,
-        width: 900,
+        width: 800,
     },
 });
+
 
 export default SplashScreen;
