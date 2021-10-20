@@ -39,7 +39,6 @@ const SignInScreen = ({navigation, route}) => {
     }, [])*/
 
     const loginData = () => {
-        alert(email.email);
         fetch('http://127.0.0.1:5000/login', {
             method:'POST',
             headers: {
