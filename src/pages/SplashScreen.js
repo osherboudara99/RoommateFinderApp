@@ -4,9 +4,11 @@ import BootSplash from 'react-native-bootsplash';
 
 let splash = require('../../assets/logo_copy.png')
 
-// Simulate (slow) API call for setup
-let fakeApiCallWithoutBadNetwork = (ms) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
+// This is where we will connect to the server.
+// It is set to a timeout since we don't have
+// that much data to load yet
+let connectToBackend = () =>
+    new Promise((resolve) => setTimeout(resolve, 3000));
 
 let SplashScreen = ({ navigation }) => {
     let [bootSplashIsVisible, setBootSplashIsVisible] = useState(true);
@@ -16,7 +18,7 @@ let SplashScreen = ({ navigation }) => {
 
     let init = async () => {
         // You can uncomment this line to add a delay on app startup
-        await fakeApiCallWithoutBadNetwork(3000);
+        await connectToBackend();
 
         try {
             await BootSplash.hide();
@@ -45,7 +47,7 @@ let SplashScreen = ({ navigation }) => {
         }
         // Allow welcome text to display
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        // Redirect to Log In/Sign In
+        // Redirect to Log In/Sign In using the Stack Navigator
         navigation.replace('Sign In');
     };
 
@@ -102,8 +104,10 @@ const styles = StyleSheet.create({
         backgroundColor: "#009387",
     },
     logo: {
-        height: 200,
-        width: 800,
+        flex: 1,
+        height: 250,
+        width: 250,
+        resizeMode: 'contain'
     },
 });
 
