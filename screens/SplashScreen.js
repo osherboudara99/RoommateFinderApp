@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { View, Animated, Text, StyleSheet } from 'react-native';
 import BootSplash from 'react-native-bootsplash';
 
-let splash = require('../../assets/logo_copy.png')
+let splash = require('../assets/logo_copy.png')
 
 // This is where we will connect to the server.
 // It is set to a timeout since we don't have
@@ -10,7 +10,7 @@ let splash = require('../../assets/logo_copy.png')
 let connectToBackend = () =>
     new Promise((resolve) => setTimeout(resolve, 3000));
 
-let SplashScreen = ({ navigation }) => {
+let SplashScreen = ({ isLoggedIn, setIsLoggedIn, navigation }) => {
     let [bootSplashIsVisible, setBootSplashIsVisible] = useState(true);
     let [bootSplashLogoIsLoaded, setBootSplashLogoIsLoaded] = useState(false);
     let opacity = useRef(new Animated.Value(1));
@@ -48,7 +48,7 @@ let SplashScreen = ({ navigation }) => {
         // Allow welcome text to display
         await new Promise((resolve) => setTimeout(resolve, 1000));
         // Redirect to Log In/Sign In using the Stack Navigator
-        navigation.replace('Sign In');
+        navigation.replace('SignIn');
     };
 
     useEffect(() => {
