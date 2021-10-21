@@ -1,8 +1,8 @@
-import SignUp from './SignUpPage';
-import LoginPage from './LoginPage';
+import SignUp from '../screens/SignUpScreen';
+import LoginPage from '../screens/LoginScreen';
 import React, { useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import SplashScreen from './screens/SplashScreen';
+import SplashScreen from '../screens/SplashScreen';
 
 const LoginStack = createNativeStackNavigator();
 

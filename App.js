@@ -1,8 +1,5 @@
-import SignUp from './SignUpPage';
-import SignInScreen from './LoginPage';
-import LoginNavigation from './LoginNavigation';
-import HomeScreen from './screens/HomeScreen';
-import SplashScreen from './screens/SplashScreen';
+import LoginNavigation from './navigation/LoginNavigation';
+import HomeNavigation from './navigation/HomeNavigation';
 
 import React, { useState } from 'react';
 
@@ -18,26 +15,6 @@ export default function App() {
 
 
   return (
-  /*  <NavigationContainer>
-      <Stack.Navigator initialRouteName='SplashScreen'>
-        <Stack.Screen
-          name='SplashScreen'
-          component={SplashScreen}
-          options={{ headerShown: false }}
-          initialParams={{ isLoggedIn: isLoggedIn, setIsLoggedIn: setIsLoggedIn }}
-        />
-        <Stack.Screen
-          name="SignIn"
-          component={SignInScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="HomeScreen"
-          component={HomeScreen}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>*/
     <NavigationContainer>
       <Stack.Navigator>
 
@@ -45,7 +22,7 @@ export default function App() {
          <Stack.Screen name="LoginNavigation" component={LoginNavigation} options={{ headerShown: false,
          }} initialParams={{ setIsLoggedIn: setIsLoggedIn, shownSplashScreen: shownSplashScreen, setShownSplashScreen: setShownSplashScreen }}/>
        ) : (
-           <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} initialParams={{ setIsLoggedIn: setIsLoggedIn }}/>)}
+           <Stack.Screen name="HomeNavigation" component={HomeNavigation} options={{ headerShown: false }} initialParams={{ setIsLoggedIn: setIsLoggedIn }}/>)}
 
 
       </Stack.Navigator>

@@ -15,7 +15,7 @@ import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 
-const SignInScreen = ({navigation, route}) => {
+const LoginScreen = ({navigation, route}) => {
 
     const [data, setData] = React.useState({
         check_textInputChange: false,
@@ -227,7 +227,7 @@ const SignInScreen = ({navigation, route}) => {
     );
 };
 
-export default SignInScreen;
+export default LoginScreen;
 
 const styles = StyleSheet.create({
     container: {

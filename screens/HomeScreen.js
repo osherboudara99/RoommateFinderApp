@@ -12,32 +12,4 @@ const HomeScreen = ({navigation, route}) => {
   );
 }
 
-function ProfileScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      
-      <Text>Profile!</Text>
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
-const Tab = createBottomTabNavigator();
-
-const App = ({route}) => {
-    return (
-        <Tab.Navigator>
-          <Tab.Screen name="Home" component={HomeScreen} initialParams={{ setIsLoggedIn: route.params.setIsLoggedIn }}/>
-          <Tab.Screen name="Profile" component={ProfileScreen} />
-          <Tab.Screen name="Settings" component={SettingsScreen} />
-        </Tab.Navigator>
-    );
-  }
-
-  export default App;
+export default HomeScreen;
