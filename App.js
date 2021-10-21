@@ -14,9 +14,11 @@ const Stack = createNativeStackNavigator();
 export default function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [shownSplashScreen, setShownSplashScreen] = useState(false)
+
 
   return (
-    <NavigationContainer>
+  /*  <NavigationContainer>
       <Stack.Navigator initialRouteName='SplashScreen'>
         <Stack.Screen
           name='SplashScreen'
@@ -34,6 +36,18 @@ export default function App() {
           component={HomeScreen}
           options={{ headerShown: false }}
         />
+      </Stack.Navigator>
+    </NavigationContainer>*/
+    <NavigationContainer>
+      <Stack.Navigator>
+
+        {isLoggedIn == false ? (
+         <Stack.Screen name="LoginNavigation" component={LoginNavigation} options={{ headerShown: false,
+         }} initialParams={{ setIsLoggedIn: setIsLoggedIn, shownSplashScreen: shownSplashScreen, setShownSplashScreen: setShownSplashScreen }}/>
+       ) : (
+           <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} initialParams={{ setIsLoggedIn: setIsLoggedIn }}/>)}
+
+
       </Stack.Navigator>
     </NavigationContainer>
   );

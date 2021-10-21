@@ -10,7 +10,7 @@ let splash = require('../assets/logo_copy.png')
 let connectToBackend = () =>
     new Promise((resolve) => setTimeout(resolve, 3000));
 
-let SplashScreen = ({ isLoggedIn, setIsLoggedIn, navigation }) => {
+let SplashScreen = ({ route, navigation }) => {
     let [bootSplashIsVisible, setBootSplashIsVisible] = useState(true);
     let [bootSplashLogoIsLoaded, setBootSplashLogoIsLoaded] = useState(false);
     let opacity = useRef(new Animated.Value(1));
@@ -47,9 +47,12 @@ let SplashScreen = ({ isLoggedIn, setIsLoggedIn, navigation }) => {
         }
         // Allow welcome text to display
         await new Promise((resolve) => setTimeout(resolve, 1000));
+        
+        route.params.setShownSplashScreen(true);
         // Redirect to Log In/Sign In using the Stack Navigator
-        navigation.replace('SignIn');
+        navigation.replace('LoginPage');
     };
+
 
     useEffect(() => {
         bootSplashLogoIsLoaded && init();

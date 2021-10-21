@@ -15,7 +15,7 @@ import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 
-const SignInScreen = ({navigation}) => {
+const SignInScreen = ({navigation, route}) => {
 
 
     const [data, setData] = React.useState({
@@ -471,7 +471,7 @@ const SignInScreen = ({navigation}) => {
             {data.check_textInputChange && data.isValidButton && data.check_birthdayInputChange && 
             data.check_firstNameInputChange && data.check_lastNameInputChange && data.check_phoneInputChange ?
                 <TouchableOpacity
-                    onPress={() => insertSignupData()}
+                    onPress={() => {route.params.setIsLoggedIn(true); insertSignupData();}}
                     style={[styles.signIn, {
                         borderColor: '#009387',
                         borderWidth: 1,
