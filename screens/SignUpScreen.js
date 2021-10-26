@@ -480,7 +480,7 @@ const SignInScreen = ({navigation, route}) => {
                 >
                     <Text style={[styles.textSign, {
                         color: '#009387'
-                    }]}>Sign In</Text>
+                    }]}>Sign Up</Text>
                 </TouchableOpacity>
                 :null}
                  <TouchableOpacity>

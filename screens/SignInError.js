@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { View, Animated, Text, StyleSheet } from 'react-native';
 import BootSplash from 'react-native-bootsplash';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 let splash = require('../assets/logo_copy.png')
 
@@ -60,7 +61,11 @@ let SignInError = ({ route, navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Error. Email or Password Incorrect.</Text>
+            <Text style={styles.text}>  <FontAwesome 
+                    name="exclamation-circle"
+                    color=""
+                    size={50}
+                />  Email or Password Incorrect.</Text>
 
             {bootSplashIsVisible && (
                 <Animated.View
