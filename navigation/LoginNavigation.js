@@ -1,5 +1,6 @@
 import SignUp from '../screens/SignUpScreen';
 import LoginPage from '../screens/LoginScreen';
+import LoginError from '../screens/SignInError';
 import React, { useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SplashScreen from '../screens/SplashScreen';
@@ -34,7 +35,13 @@ const LoginNavigation = ({navigation, route}) =>
         name="SignUp" 
         component={SignUp}
         initialParams={{setIsLoggedIn: route.params.setIsLoggedIn}} />
+          <LoginStack.Screen 
+        name="SignInError" 
+        component={LoginError}
+        initialParams={{setIsLoggedIn: route.params.setIsLoggedIn}} />
+        
         </LoginStack.Navigator>
+        
     );
 }
 
