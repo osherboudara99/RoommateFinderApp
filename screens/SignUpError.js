@@ -11,7 +11,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 let connectToBackend = () =>
     new Promise((resolve) => setTimeout(resolve, 100));
 
-let SignInError = ({ route, navigation }) => {
+let SignUpError = ({ route, navigation }) => {
     let [bootSplashIsVisible, setBootSplashIsVisible] = useState(true);
     let [bootSplashLogoIsLoaded, setBootSplashLogoIsLoaded] = useState(true);
     let opacity = useRef(new Animated.Value(1));
@@ -65,7 +65,7 @@ let SignInError = ({ route, navigation }) => {
                     name="exclamation-circle"
                     color=""
                     size={40}
-                />  Email or Password Incorrect.</Text>
+                />  Email or Phone Number Already Exists. Must Be Unique.</Text>
 
             {bootSplashIsVisible && (
                 <Animated.View
@@ -112,4 +112,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default SignInError;
+export default SignUpError;
