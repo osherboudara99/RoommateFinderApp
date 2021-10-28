@@ -13,5 +13,29 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [shownSplashScreen, setShownSplashScreen] = useState(false);
 
-  return <ProfileScreen />;
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        {isLoggedIn == false ? (
+          <Stack.Screen
+            name="LoginNavigation"
+            component={LoginNavigation}
+            options={{ headerShown: false }}
+            initialParams={{
+              setIsLoggedIn: setIsLoggedIn,
+              shownSplashScreen: shownSplashScreen,
+              setShownSplashScreen: setShownSplashScreen,
+            }}
+          />
+        ) : (
+          <Stack.Screen
+            name="HomeNavigation"
+            component={HomeNavigation}
+            options={{ headerShown: false }}
+            initialParams={{ setIsLoggedIn: setIsLoggedIn }}
+          />
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
