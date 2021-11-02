@@ -22,7 +22,7 @@ const HomeNavigation = ({route}) => {
                 ? 'ios-home'
                 : 'ios-home-outline';
             } else if (route.name === 'Settings') {
-              iconName = focused ? 'ios-list-box' : 'ios-list';
+              iconName = focused ? 'ios-list-sharp' : 'ios-list-outline';
             }
             else if (route.name === 'Profile') {
               iconName = focused
@@ -33,7 +33,7 @@ const HomeNavigation = ({route}) => {
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: 'tomato',
+          tabBarActiveTintColor: 'green',
           tabBarInactiveTintColor: 'gray',
         })}
         
