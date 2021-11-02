@@ -50,9 +50,16 @@ const SignInScreen = ({navigation, route}) => {
             },
             body: JSON.stringify({ firstName:firstName.firstName, lastName:lastName.lastName, phone:phone.phone, password:password.password, email:email.email, birthDay:birthDay.birthDay})
         })
-        .then(resp => resp.json())
-        .then(info => {
-            alert('executed');
+        .then(resp => resp.text())
+        .then(data => {
+            console.log(data);
+            if(data === "executed")
+            {
+                console.log(route.params)
+                route.params.setIsLoggedIn(true);
+            }else if(data === "not executed"){
+                navigation.navigate("SignUpError");
+            }
         })
         .catch(error => console.log(error))
 
@@ -480,7 +487,7 @@ const SignInScreen = ({navigation, route}) => {
                 >
                     <Text style={[styles.textSign, {
                         color: '#009387'
-                    }]}>Sign In</Text>
+                    }]}>Sign Up</Text>
                 </TouchableOpacity>
                 :null}
                  <TouchableOpacity>

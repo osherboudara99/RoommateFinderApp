@@ -1,6 +1,8 @@
 import SignUp from '../screens/SignUpScreen';
 import Questionnaire from '../screens/Questionnaire';
 import LoginPage from '../screens/LoginScreen';
+import LoginError from '../screens/SignInError';
+import SignUpError from '../screens/SignUpError';
 import React, { useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SplashScreen from '../screens/SplashScreen';
