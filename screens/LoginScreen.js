@@ -14,6 +14,7 @@ import * as Animatable from 'react-native-animatable';
 //import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
+import { Navigation } from '@material-ui/icons';
 
 const LoginScreen = ({navigation, route}) => {
 
@@ -53,6 +54,8 @@ const LoginScreen = ({navigation, route}) => {
             {
                 console.log(route.params)
                 route.params.setIsLoggedIn(true);
+            }else if(data === "not logged in"){
+                navigation.navigate("SignInError");
             }
         })
         .catch(error => console.log(error))
