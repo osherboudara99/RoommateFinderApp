@@ -17,7 +17,6 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.titleBar}>
-          <Ionicons name="ios-arrow-back" size={30} color="#fff"></Ionicons>
           <Ionicons name="ellipsis-vertical" size={30} color="#fff"></Ionicons>
         </View>
         <View style={{ alignSelf: "center" }}>
