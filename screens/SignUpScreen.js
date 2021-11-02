@@ -471,7 +471,7 @@ const SignInScreen = ({navigation, route}) => {
             {data.check_textInputChange && data.isValidButton && data.check_birthdayInputChange && 
             data.check_firstNameInputChange && data.check_lastNameInputChange && data.check_phoneInputChange ?
                 <TouchableOpacity
-                    onPress={() => {route.params.setIsLoggedIn(true); insertSignupData();}}
+                    onPress={() => {navigation.navigate("Questionnaire"); insertSignupData();}}
                     style={[styles.signIn, {
                         borderColor: '#009387',
                         borderWidth: 1,

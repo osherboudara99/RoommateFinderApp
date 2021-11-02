@@ -1,4 +1,5 @@
 import SignUp from '../screens/SignUpScreen';
+import Questionnaire from '../screens/Questionnaire';
 import LoginPage from '../screens/LoginScreen';
 import React, { useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -34,7 +35,14 @@ const LoginNavigation = ({navigation, route}) =>
         name="SignUp" 
         component={SignUp}
         initialParams={{setIsLoggedIn: route.params.setIsLoggedIn}} />
+        <LoginStack.Screen 
+        name="Questionnaire" 
+        component={Questionnaire}
+        initialParams={{setIsLoggedIn: route.params.setIsLoggedIn}} />
+
+
         </LoginStack.Navigator>
+        
     );
 }
 

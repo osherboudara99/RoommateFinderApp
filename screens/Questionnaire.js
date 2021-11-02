@@ -7,7 +7,7 @@ import Input from '../src/components/Input';
 import Question from '../src/components/Question';
 import Button from '../src/components/Button'
 
-export default function Questionnaire({ navigation }) {
+export default function Questionnaire({ route, navigation }) {
     const window = useWindowDimensions()
 
     const [questionNumber, setQuestionNumber] = useState(1)
@@ -22,6 +22,15 @@ export default function Questionnaire({ navigation }) {
         if (questionNumber > 1) {
             setQuestionNumber(questionNumber - 1)
         }
+    }
+
+    
+    const Submission = () => {
+        handleSubmit(onSubmit);
+        //console.log("test");
+        //console.log(errors);
+        //console.log(route.params);
+        route.params.setIsLoggedIn(true);
     }
 
     const { control, handleSubmit, formState: { errors } } = useForm();
@@ -280,7 +289,7 @@ export default function Questionnaire({ navigation }) {
                     {questionNumber == 12 && (
                         <Button
                             title='Submit'
-                            onPress={handleSubmit(onSubmit)}
+                            onPress={() => Submission()} //Cyrus code: handleSubmit(onSubmit)
                             style={styles.buttonRight}
                         />
                     )}
