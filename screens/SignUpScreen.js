@@ -56,7 +56,8 @@ const SignInScreen = ({navigation, route}) => {
             if(data === "executed")
             {
                 console.log(route.params)
-                route.params.setIsLoggedIn(true);
+                //route.params.setIsLoggedIn(true);
+                navigation.navigate("Questionnaire");
             }else if(data === "not executed"){
                 navigation.navigate("SignUpError");
             }
@@ -478,7 +479,7 @@ const SignInScreen = ({navigation, route}) => {
             {data.check_textInputChange && data.isValidButton && data.check_birthdayInputChange && 
             data.check_firstNameInputChange && data.check_lastNameInputChange && data.check_phoneInputChange ?
                 <TouchableOpacity
-                    onPress={() => {navigation.navigate("Questionnaire"); insertSignupData();}}
+                    onPress={() => {insertSignupData(); }}
                     style={[styles.signIn, {
                         borderColor: '#009387',
                         borderWidth: 1,

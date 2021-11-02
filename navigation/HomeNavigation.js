@@ -12,9 +12,16 @@ const Tab = createBottomTabNavigator();
 const HomeNavigation = ({route}) => {
     return (
         <Tab.Navigator>
-          <Tab.Screen name="Home" component={HomeScreen} initialParams={{ setIsLoggedIn: route.params.setIsLoggedIn }}/>
-          <Tab.Screen name="Profile" component={ProfileScreen} />
-          <Tab.Screen name="Settings" component={SettingsScreen} />
+          <Tab.Screen name="Home" 
+          component={HomeScreen} 
+         options={{ headerShown: false }} 
+         initialParams={{ setIsLoggedIn: route.params.setIsLoggedIn }}/>
+          <Tab.Screen name="Profile" 
+          component={ProfileScreen} 
+         options={{ headerShown: false }} />
+          <Tab.Screen name="Settings" 
+          component={SettingsScreen} 
+         options={{ headerShown: false }} />
         </Tab.Navigator>
     );
   }

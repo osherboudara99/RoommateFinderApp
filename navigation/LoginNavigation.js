@@ -30,18 +30,29 @@ const LoginNavigation = ({navigation, route}) =>
         <LoginStack.Screen
           name="LoginPage"
           component={LoginPage}
-          options={{ title: 'Login' }}
+          options={{ title: 'Login',  headerShown: false }}
           initialParams={{setIsLoggedIn: route.params.setIsLoggedIn}}
         />
         <LoginStack.Screen 
         name="SignUp" 
         component={SignUp}
+        options={{ headerShown: false }}
         initialParams={{setIsLoggedIn: route.params.setIsLoggedIn}} />
         <LoginStack.Screen 
         name="Questionnaire" 
         component={Questionnaire}
+        options={{ headerShown: false }}
         initialParams={{setIsLoggedIn: route.params.setIsLoggedIn}} />
-
+   <LoginStack.Screen 
+        name="SignInError" 
+        component={LoginError}
+        options={{ headerShown: false }}
+        initialParams={{setIsLoggedIn: route.params.setIsLoggedIn}} />
+          <LoginStack.Screen 
+        name="SignUpError" 
+        component={SignUpError}
+        options={{ headerShown: false }}
+        initialParams={{setIsLoggedIn: route.params.setIsLoggedIn}} />
 
         </LoginStack.Navigator>
         
