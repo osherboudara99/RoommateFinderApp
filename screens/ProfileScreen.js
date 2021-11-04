@@ -145,7 +145,7 @@ export default function App() {
                 { fontSize: 12, color: "#DFD8C8", textTransform: "uppercase" },
               ]}
             >
-              Media
+              Photos
             </Text>
           </View>
         </View>

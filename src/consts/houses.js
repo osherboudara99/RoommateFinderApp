@@ -1,7 +1,7 @@
 const houses = [
   {
     id: '1',
-    title: 'LF 2-3 roommate in 4 bedroom house',
+    title: '2-3 roommate in 4 bedroom house',
     location: 'East Side Los Angeles',
     image: require('../assets/house1.jpg'),
     details: `This building is located in the Oliver area, withing walking distance of shops...`,

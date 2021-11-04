@@ -137,6 +137,7 @@ const HomeScreen = ({navigation}) => {
         {/* Input and sort button container */}
         <View
           style={{
+            marginTop: 10,
             flexDirection: 'row',
             justifyContent: 'space-between',
             paddingHorizontal: 20,
