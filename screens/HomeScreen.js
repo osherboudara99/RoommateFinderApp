@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import COLORS from '../src/consts/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-const {width} = Dimensions.get('screen');
+const {width} = 375; //Dimensions.get('screen'); old code
 import houses from '../src/consts/houses';
 const HomeScreen = ({navigation}) => {
   const optionsList = [
