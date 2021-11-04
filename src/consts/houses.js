@@ -20,6 +20,7 @@ const houses = [
     interiors: [
       require('../assets/interior1.jpg'),
       require('../assets/interior2.jpg'),
+      
       require('../assets/interior3.jpg'),
     ],
   },
