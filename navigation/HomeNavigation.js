@@ -21,6 +21,8 @@ const HomeNavigation = ({route}) => {
               iconName = focused
                 ? 'ios-home'
                 : 'ios-home-outline';
+
+                
             } else if (route.name === 'Settings') {
               iconName = focused ? 'ios-list-sharp' : 'ios-list-outline';
             }
@@ -34,6 +36,7 @@ const HomeNavigation = ({route}) => {
             return <Ionicons name={iconName} size={size} color={color} />;
           },
           tabBarActiveTintColor: 'green',
+          
           tabBarInactiveTintColor: 'gray',
         })}
         

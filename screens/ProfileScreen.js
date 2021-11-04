@@ -145,10 +145,14 @@ export default function App() {
                 { fontSize: 12, color: "#DFD8C8", textTransform: "uppercase" },
               ]}
             >
-              Media
+              Photos
             </Text>
           </View>
         </View>
+        <Divider
+          orientation="horizontal"
+          style={{ marginTop: 10, marginHorizontal: 25 }}
+        />
       </ScrollView>
     </SafeAreaView>
   );
