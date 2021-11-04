@@ -81,7 +81,7 @@ const HomeScreen = ({navigation}) => {
                 {house.title}
               </Text>
               <Text
-                style={{fontWeight: 'bold', color: COLORS.blue, fontSize: 16}}>
+                style={{fontWeight: 'bold', color: COLORS.green, fontSize: 16}}>
                 $1,500
               </Text>
             </View>
@@ -123,8 +123,8 @@ const HomeScreen = ({navigation}) => {
       {/* Header container */}
       <View style={style.header}>
         <View>
-          <Text style={{color: COLORS.grey}}>Location</Text>
-          <Text style={{color: COLORS.dark, fontSize: 20, fontWeight: 'bold'}}>
+          <Text style={{color: COLORS.light}}>Location</Text>
+          <Text style={{color: COLORS.white, fontSize: 20, fontWeight: 'bold'}}>
             USA
           </Text>
         </View>
@@ -177,6 +177,7 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
+    backgroundColor: COLORS.green,
   },
   profileImage: {
     height: 50,

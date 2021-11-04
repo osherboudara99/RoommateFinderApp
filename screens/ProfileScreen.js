@@ -149,6 +149,10 @@ export default function App() {
             </Text>
           </View>
         </View>
+        <Divider
+          orientation="horizontal"
+          style={{ marginTop: 10, marginHorizontal: 25 }}
+        />
       </ScrollView>
     </SafeAreaView>
   );

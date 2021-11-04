@@ -34,6 +34,7 @@ const HomeNavigation = ({route}) => {
             return <Ionicons name={iconName} size={size} color={color} />;
           },
           tabBarActiveTintColor: 'green',
+          
           tabBarInactiveTintColor: 'gray',
         })}
         
