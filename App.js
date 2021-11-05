@@ -1,5 +1,5 @@
 import LoginNavigation from "./navigation/LoginNavigation";
-import HomeNavigation from "./navigation/HomeNavigation";
+import AppNavigation from "./navigation/AppNavigation";
 import ProfileScreen from "./screens/ProfileScreen";
 
 import React, { useState } from "react";
@@ -29,8 +29,8 @@ export default function App() {
           />
         ) : (
           <Stack.Screen
-            name="HomeNavigation"
-            component={HomeNavigation}
+            name="AppNavigation"
+            component={AppNavigation}
             options={{ headerShown: false }}
             initialParams={{ setIsLoggedIn: setIsLoggedIn }}
           />

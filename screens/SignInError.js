@@ -51,7 +51,7 @@ let SignInError = ({ route, navigation }) => {
         
        
         // Redirect to Log In/Sign In using the Stack Navigator
-        navigation.replace('LoginPage');
+        navigation.replace('LoginScreen');
     };
 
 

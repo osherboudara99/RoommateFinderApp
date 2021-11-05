@@ -14,8 +14,8 @@ import {
 } from 'react-native';
 import COLORS from '../src/consts/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-const {width} = 375; //Dimensions.get('screen'); old code
-import houses from '../src/consts/houses';
+const {width} = Dimensions.get('screen'); //old code
+import listings from '../src/consts/listings';
 const HomeScreen = ({navigation}) => {
   const optionsList = [
     {title: 'Need a roommate', img: require('../src/assets/roommate1.jpg')},
@@ -164,7 +164,7 @@ const HomeScreen = ({navigation}) => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
           vertical
-          data={houses}
+          data={listings}
           renderItem={({item}) => <Card house={item} />}
         />
       </ScrollView>

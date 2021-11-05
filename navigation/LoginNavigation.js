@@ -1,6 +1,7 @@
 import SignUp from '../screens/SignUpScreen';
 import Questionnaire from '../screens/Questionnaire';
-import LoginPage from '../screens/LoginScreen';
+import LoginScreen from '../screens/LoginScreen';
+import OnBoardScreen from '../screens/OnBoardScreen';
 import LoginError from '../screens/SignInError';
 import SignUpError from '../screens/SignUpError';
 import React, { useState } from 'react';
@@ -28,9 +29,15 @@ const LoginNavigation = ({navigation, route}) =>
        ) : null}
 
         <LoginStack.Screen
-          name="LoginPage"
-          component={LoginPage}
+          name="OnBoardScreen"
+          component={OnBoardScreen}
           options={{ title: 'Login',  headerShown: false }}
+          initialParams={{setIsLoggedIn: route.params.setIsLoggedIn}}
+        />
+        <LoginStack.Screen
+          name="LoginScreen"
+          component={LoginScreen}
+          options={{ title: 'LoginScreen',  headerShown: false }}
           initialParams={{setIsLoggedIn: route.params.setIsLoggedIn}}
         />
         <LoginStack.Screen 

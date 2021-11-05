@@ -50,7 +50,7 @@ let SplashScreen = ({ route, navigation }) => {
         
         route.params.setShownSplashScreen(true);
         // Redirect to Log In/Sign In using the Stack Navigator
-        navigation.replace('LoginPage');
+        navigation.replace('OnBoardScreen');
     };
 
 
