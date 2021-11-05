@@ -492,7 +492,7 @@ const SignInScreen = ({navigation, route}) => {
                 </TouchableOpacity>
                 :null}
                  <TouchableOpacity>
-                <Text style={{color: '#009387', marginTop:15}} onPress={() => navigation.popToTop()}>Already have an account? Sign In Here</Text>
+                <Text style={{color: '#009387', marginTop:15}} onPress={() => navigation.replace('LoginScreen')}>Already have an account? Sign In Here</Text>
             </TouchableOpacity>
             </View>
         </Animatable.View>

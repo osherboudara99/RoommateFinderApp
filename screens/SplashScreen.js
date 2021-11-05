@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { View, Animated, Text, StyleSheet } from 'react-native';
 import BootSplash from 'react-native-bootsplash';
 
-let splash = require('../assets/logo_copy.png')
+let splash = require('../src/assets/logo_copy.png')
 
 // This is where we will connect to the server.
 // It is set to a timeout since we don't have

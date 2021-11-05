@@ -28,12 +28,14 @@ const LoginNavigation = ({navigation, route}) =>
        />
        ) : null}
 
+        
         <LoginStack.Screen
           name="OnBoardScreen"
           component={OnBoardScreen}
-          options={{ title: 'Login',  headerShown: false }}
-          initialParams={{setIsLoggedIn: route.params.setIsLoggedIn}}
+          options={{ title: 'OnBoardScreen',  headerShown: false }}
         />
+
+
         <LoginStack.Screen
           name="LoginScreen"
           component={LoginScreen}

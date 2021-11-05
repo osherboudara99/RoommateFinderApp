@@ -19,13 +19,11 @@ const HomeNavigation = ({navigation, route}) =>
           name="HomeScreen"
           component={HomeScreen}
           options={{ title: 'HomeScreen',  headerShown: false }}
-          initialParams={{setIsLoggedIn: route.params.setIsLoggedIn}}
         />
         <HomeStack.Screen
           name="DetailsScreen"
           component={DetailsScreen}
           options={{ title: 'DetailsScreen',  headerShown: false }}
-          initialParams={{setIsLoggedIn: route.params.setIsLoggedIn}}
         />
 
 

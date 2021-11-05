@@ -25,6 +25,7 @@ export default function App() {
               setIsLoggedIn: setIsLoggedIn,
               shownSplashScreen: shownSplashScreen,
               setShownSplashScreen: setShownSplashScreen,
+
             }}
           />
         ) : (

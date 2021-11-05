@@ -18,8 +18,8 @@ const {width} = Dimensions.get('screen'); //old code
 import listings from '../src/consts/listings';
 const HomeScreen = ({navigation}) => {
   const optionsList = [
-    {title: 'Need a roommate', img: require('../src/assets/roommate1.jpg')},
-    {title: 'Find a roommate', img: require('../src/assets/roommate2.jpg')},
+    {title: 'Need a roommate', img: require('../src/assets/homescreen/roommate1.jpg')},
+    {title: 'Find a roommate', img: require('../src/assets/homescreen/roommate2.jpg')},
   ];
   const categoryList = ['Matching', 'Recommended', 'Nearest'];
 
@@ -130,7 +130,7 @@ const HomeScreen = ({navigation}) => {
         </View>
         <Image
           style={style.profileImage}
-          source={require('../src/assets/person.jpg')}
+          source={require('../src/assets/homescreen/person.jpg')}
         />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>

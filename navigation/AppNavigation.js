@@ -43,15 +43,15 @@ const AppNavigation = ({route}) => {
         >
           <Tab.Screen name="Home" 
           component={HomeNavigation} 
-         options={{ headerShown: false }} 
-         initialParams={{ setIsLoggedIn: route.params.setIsLoggedIn }}
+         options={{ headerShown: false }}
          />
           <Tab.Screen name="Profile" 
           component={ProfileScreen} 
          options={{ headerShown: false }} />
           <Tab.Screen name="Settings" 
           component={SettingsScreen} 
-         options={{ headerShown: false }} />
+         options={{ headerShown: false }} 
+         initialParams={{ setIsLoggedIn: route.params.setIsLoggedIn }}/>
         </Tab.Navigator>
     );
   }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   StatusBar,
   View,
@@ -9,14 +9,15 @@ import {
   Pressable,
 } from 'react-native';
 import COLORS from '../src/consts/colors';
-const OnBoardScreen = ({navigation}) => {
+const OnBoardScreen = ({navigation, route}) => {
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <StatusBar translucent backgroundColor={COLORS.tranparent} />
 
       {/* Onboarding Image */}
       <Image
-        source={require('../src/assets/onboardImage.jpg')}
+        source={require('../src/assets/homescreen/onboardImage.jpg')}
         style={style.image}
       />
 
