@@ -9,6 +9,7 @@ import {
   Image,
   Dimensions,
   ScrollView,
+  Pressable,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -108,9 +109,15 @@ const DetailsScreen = ({navigation, route}) => {
                 Total Price
               </Text>
             </View>
-            <View style={style.bookNowBtn}>
+           
+            
+            <Pressable
+                    onPress={() => {navigation.navigate("chatScreen");}}>
+                      <View style={style.bookNowBtn}>
               <Text style={{color: COLORS.white}}>Contact now</Text>
-            </View>
+              </View>
+</Pressable>
+           
           </View>
         </View>
       </ScrollView>
@@ -142,6 +149,7 @@ const style = StyleSheet.create({
     height: 50,
     width: 50,
     backgroundColor: COLORS.white,
+    color:COLORS.green,
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
@@ -184,7 +192,7 @@ const style = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLORS.dark,
+    backgroundColor: COLORS.green,
     borderRadius: 10,
     paddingHorizontal: 20,
   },
