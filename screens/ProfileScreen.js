@@ -63,7 +63,9 @@ export default function App() {
               <FontAwesome5 name="edit" size={22} color="#dae4d6" />
             </TouchableOpacity>
           </View>
-          <Text style={[styles.text, styles.subText]}></Text>
+          <Text style={[styles.text, styles.subText]}>
+            I am a new user who is learning to use the roommate finder app!
+          </Text>
         </View>
         <Divider
           orientation="horizontal"
@@ -78,24 +80,7 @@ export default function App() {
               <FontAwesome5 name="edit" size={22} color="#dae4d6" />
             </TouchableOpacity>
           </View>
-          <View style={styles.QuestionnaireAnswers}>
-            <FontAwesome5
-              name="desktop"
-              size={24}
-              color="#dae4d6"
-              style={{ marginRight: 10 }}
-            />
-            <Text style={[styles.text, styles.subText]}>Zoom friendly</Text>
-          </View>
-          <View style={styles.QuestionnaireAnswers}>
-            <FontAwesome5
-              name="dog"
-              size={24}
-              color="#dae4d6"
-              style={{ marginRight: 10 }}
-            />
-            <Text style={[styles.text, styles.subText]}>Pet friendly</Text>
-          </View>
+
           <View style={styles.QuestionnaireAnswers}>
             <FontAwesome5
               name="location-arrow"
@@ -103,9 +88,8 @@ export default function App() {
               color="#dae4d6"
               style={{ marginRight: 10 }}
             />
-            <Text style={[styles.text, styles.subText]}>
-              Location Los Angeles
-            </Text>
+            <Text style={[styles.text, styles.subText]}>Location: </Text>
+            <Text style={[styles.text, styles.subTextRight]}>Los Angeles</Text>
           </View>
           <View style={styles.QuestionnaireAnswers}>
             <FontAwesome5
@@ -114,7 +98,28 @@ export default function App() {
               color="#dae4d6"
               style={{ marginRight: 10 }}
             />
-            <Text style={[styles.text, styles.subText]}>Budget 1500$</Text>
+            <Text style={[styles.text, styles.subText]}>Budget: </Text>
+            <Text style={[styles.text, styles.subTextRight]}>1500$</Text>
+          </View>
+          <View style={styles.QuestionnaireAnswers}>
+            <FontAwesome5
+              name="user-friends"
+              size={24}
+              color="#dae4d6"
+              style={{ marginRight: 10 }}
+            />
+            <Text style={[styles.text, styles.subText]}>Roommate Status: </Text>
+            <Text style={[styles.text, styles.subTextRight]}>Seeking</Text>
+          </View>
+          <View style={styles.QuestionnaireAnswers}>
+            <FontAwesome5
+              name="smoking"
+              size={24}
+              color="#dae4d6"
+              style={{ marginRight: 10 }}
+            />
+            <Text style={[styles.text, styles.subText]}>Smoking Status: </Text>
+            <Text style={[styles.text, styles.subTextRight]}>Non-Smoker</Text>
           </View>
           <View style={styles.QuestionnaireAnswers}>
             <FontAwesome5
@@ -123,14 +128,35 @@ export default function App() {
               color="#dae4d6"
               style={{ marginRight: 10 }}
             />
-            <Text style={[styles.text, styles.subText]}>Cleanliness 8/10</Text>
+            <Text style={[styles.text, styles.subText]}>Cleanliness: </Text>
+            <Text style={[styles.text, styles.subTextRight]}>8/10</Text>
+          </View>
+          <View style={styles.QuestionnaireAnswers}>
+            <FontAwesome5
+              name="desktop"
+              size={24}
+              color="#dae4d6"
+              style={{ marginRight: 10 }}
+            />
+            <Text style={[styles.text, styles.subText]}>Zoom preference: </Text>
+            <Text style={[styles.text, styles.subTextRight]}>Friendly</Text>
+          </View>
+          <View style={styles.QuestionnaireAnswers}>
+            <FontAwesome5
+              name="dog"
+              size={24}
+              color="#dae4d6"
+              style={{ marginRight: 10 }}
+            />
+            <Text style={[styles.text, styles.subText]}>Pet preference:</Text>{" "}
+            <Text style={[styles.text, styles.subTextRight]}> Friendly</Text>
           </View>
         </View>
         <Divider
           orientation="horizontal"
           style={{ marginTop: 5, marginHorizontal: 25 }}
         />
-        <View style={{ marginTop: 32 }}>
+        {/*<View style={{ marginTop: 32 }}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View style={styles.mediaImageContainer}>
               <Image
@@ -172,7 +198,7 @@ export default function App() {
               Photos
             </Text>
           </View>
-        </View>
+        </View>*/}
         <Divider
           orientation="horizontal"
           style={{ marginTop: 10, marginHorizontal: 25 }}
@@ -206,6 +232,11 @@ const styles = StyleSheet.create({
   subText: {
     fontSize: 18,
     color: "#dae4d6",
+    fontWeight: "500",
+  },
+  subTextRight: {
+    fontSize: 18,
+    color: "#ecf1ea",
     fontWeight: "500",
   },
   profileImage: {
