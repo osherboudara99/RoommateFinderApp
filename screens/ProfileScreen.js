@@ -63,12 +63,7 @@ export default function App() {
               <FontAwesome5 name="edit" size={22} color="#dae4d6" />
             </TouchableOpacity>
           </View>
-          <Text style={[styles.text, styles.subText]}>
-            Dragée pudding brownie carrot cake chocolate cake candy sugar plum.
-            Bonbon powder toffee halvah bear claw icing lemon drops jelly
-            topping. Biscuit gummies dragée ice cream bonbon. Bonbon icing
-            muffin jujubes croissant sugar plum donut carrot cake pudding.
-          </Text>
+          <Text style={[styles.text, styles.subText]}></Text>
         </View>
         <Divider
           orientation="horizontal"
@@ -100,6 +95,35 @@ export default function App() {
               style={{ marginRight: 10 }}
             />
             <Text style={[styles.text, styles.subText]}>Pet friendly</Text>
+          </View>
+          <View style={styles.QuestionnaireAnswers}>
+            <FontAwesome5
+              name="location-arrow"
+              size={24}
+              color="#dae4d6"
+              style={{ marginRight: 10 }}
+            />
+            <Text style={[styles.text, styles.subText]}>
+              Location Los Angeles
+            </Text>
+          </View>
+          <View style={styles.QuestionnaireAnswers}>
+            <FontAwesome5
+              name="money-bill"
+              size={24}
+              color="#dae4d6"
+              style={{ marginRight: 10 }}
+            />
+            <Text style={[styles.text, styles.subText]}>Budget 1500$</Text>
+          </View>
+          <View style={styles.QuestionnaireAnswers}>
+            <FontAwesome5
+              name="hands-wash"
+              size={24}
+              color="#dae4d6"
+              style={{ marginRight: 10 }}
+            />
+            <Text style={[styles.text, styles.subText]}>Cleanliness 8/10</Text>
           </View>
         </View>
         <Divider
