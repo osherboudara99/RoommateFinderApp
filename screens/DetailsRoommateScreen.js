@@ -8,6 +8,7 @@ import {
   FlatList,
   Image,
   Dimensions,
+  Pressable,
   ScrollView,
 } from "react-native";
 
@@ -126,9 +127,15 @@ const DetailsScreen = ({ navigation, route }) => {
                 Total Price
               </Text>
             </View>
-            <View style={style.bookNowBtn}>
-              <Text style={{ color: COLORS.white }}>Contact now</Text>
-            </View>
+            <Pressable
+              onPress={() => {
+                navigation.navigate("chatScreen");
+              }}
+            >
+              <View style={style.bookNowBtn}>
+                <Text style={{ color: COLORS.white }}>Contact now</Text>
+              </View>
+            </Pressable>
           </View>
         </View>
       </ScrollView>
