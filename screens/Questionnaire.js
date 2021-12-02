@@ -41,7 +41,7 @@ export default function Questionnaire({ route, navigation }) {
     return (
         <View style={styles.container}>
             <View style={[styles.form, { width: window.width - 20 }]}>
-                <Text style={styles.header}>Question {questionNumber}/12</Text>
+                <Text style={styles.header}>Question {questionNumber}/8</Text>
 
                 <Question
                     question='What is your location?'
@@ -63,85 +63,10 @@ export default function Questionnaire({ route, navigation }) {
                     name="Location"
                     defaultValue=""
                 />
-                <Question
-                    question='Do you already have an apartment?'
-                    display={questionNumber == 2}
-                    control={control}
-                    rules={{ required: true }}
-                    render={
-                        ({ field: { onChange, onBlur, value } }) => (
-                            <BooleanQuestionnaireSwitch
-                                value={value}
-                                trueLabel={'Yes'}
-                                falseLabel={'No'}
-                            />
-                        )
-                    }
-                    defaultvalue={false}
-                    name="hasApartment"
-                />
-
-                <Question
-                    question='Are you seeking roommates or are you trying to join others?'
-                    display={questionNumber == 3}
-                    control={control}
-                    rules={{ required: true }}
-                    render={
-                        ({ field: { onChange, onBlur, value } }) => (
-                            <BooleanQuestionnaireSwitch
-                                value={value}
-                                trueLabel={'Seeking'}
-                                falseLabel={'Joining'}
-                            />
-                        )
-                    }
-                    defaultvalue={false}
-                    name="roommateSeeking"
-                />
-
-                <Question
-                    question='Do you want your own room or are
-                    you okay with sharing with others?'
-                    display={questionNumber == 4}
-                    control={control}
-                    rules={{ required: true }}
-                    render={
-                        ({ field: { onChange, onBlur, value } }) => (
-                            <BooleanQuestionnaireSwitch
-                                value={value}
-                                trueLabel={'My own'}
-                                falseLabel={'I would rather share'}
-                            />
-                        )
-                    }
-                    defaultvalue={false}
-                    name="roommatePreference"
-                />
-
-                <Question
-                    question='On a scale of 1 to 10, how clean would you consider yourself?'
-                    display={questionNumber == 5}
-                    control={control}
-                    rules={{ required: true, min: 2 }}
-                    render={
-                        ({ field: { onChange, onBlur, value } }) => (
-                            <Input
-                                style={{ width: window.width - 10 }}
-                                onChangeText={onChange}
-                                onBlur={onBlur}
-                                value={value}
-                                keyboardType='number-pad'
-                                placeholder='Anywhere from 1-10'
-                            />
-                        )
-                    }
-                    name="Cleanliness"
-                    defaultValue=""
-                />
 
                 <Question
                     question='What is your budget amount?'
-                    display={questionNumber == 6}
+                    display={questionNumber == 2}
                     control={control}
                     rules={{ required: true, min: 5 }}
                     render={
@@ -161,8 +86,50 @@ export default function Questionnaire({ route, navigation }) {
                 />
 
                 <Question
+                    question='Are you seeking roommates for a place or do you need to join a place with roommates?'
+                    display={questionNumber == 3}
+                    control={control}
+                    rules={{ required: true }}
+                    render={
+                        ({ field: { onChange, onBlur, value } }) => (
+                            <BooleanQuestionnaireSwitch
+                                value={value}
+                                trueLabel={'Seeking'}
+                                falseLabel={'Joining'}
+                            />
+                        )
+                    }
+                    defaultvalue={false}
+                    name="othersUsingZoom"
+                />
+
+
+                <Question
+                    question='On a scale of 1 to 10, how clean would you consider yourself?'
+                    display={questionNumber == 4}
+                    control={control}
+                    rules={{ required: true, min: 2 }}
+                    render={
+                        ({ field: { onChange, onBlur, value } }) => (
+                            <Input
+                                style={{ width: window.width - 10 }}
+                                onChangeText={onChange}
+                                onBlur={onBlur}
+                                value={value}
+                                keyboardType='number-pad'
+                                placeholder='Anywhere from 1-10'
+                            />
+                        )
+                    }
+                    name="Cleanliness"
+                    defaultValue=""
+                />
+
+                
+
+                <Question
                     question='Would you consider yourself a smoker or non-smoker?'
-                    display={questionNumber == 7}
+                    display={questionNumber == 5}
                     control={control}
                     rules={{ required: true }}
                     render={
@@ -180,7 +147,7 @@ export default function Questionnaire({ route, navigation }) {
 
                 <Question
                     question='Would you consider yourself pet-friendly or not pet-friendly?'
-                    display={questionNumber == 8}
+                    display={questionNumber == 6}
                     control={control}
                     rules={{ required: true }}
                     render={
@@ -198,7 +165,7 @@ export default function Questionnaire({ route, navigation }) {
 
                 <Question
                     question='Zoom Related: Do you use zoom?'
-                    display={questionNumber == 9}
+                    display={questionNumber == 7}
                     control={control}
                     rules={{ required: true }}
                     render={
@@ -216,7 +183,7 @@ export default function Questionnaire({ route, navigation }) {
 
                 <Question
                     question='Zoom Related: Are you okay with others using Zoom?'
-                    display={questionNumber == 10}
+                    display={questionNumber == 8}
                     control={control}
                     rules={{ required: true }}
                     render={
@@ -232,44 +199,6 @@ export default function Questionnaire({ route, navigation }) {
                     name="othersUsingZoom"
                 />
 
-                <Question
-                    question='Zoom Related: Are you okay with being placed in
-                    the same room as the other person
-                    using zoom?'
-                    display={questionNumber == 11}
-                    control={control}
-                    rules={{ required: true }}
-                    render={
-                        ({ field: { onChange, onBlur, value } }) => (
-                            <BooleanQuestionnaireSwitch
-                                value={value}
-                                trueLabel={'Yes'}
-                                falseLabel={'No'}
-                            />
-                        )
-                    }
-                    defaultvalue={false}
-                    name="samePlaceZoom"
-                />
-
-                <Question
-                    question='Zoom Related: If not, do you need a
-                    separate room for using zoom?'
-                    display={questionNumber == 12}
-                    control={control}
-                    rules={{ required: true }}
-                    render={
-                        ({ field: { onChange, onBlur, value } }) => (
-                            <BooleanQuestionnaireSwitch
-                                value={value}
-                                trueLabel={'Yes'}
-                                falseLabel={'No'}
-                            />
-                        )
-                    }
-                    defaultvalue={false}
-                    name="separateRoomZoom"
-                />
 
 
                 <View style={styles.formNavigation}>
@@ -279,14 +208,14 @@ export default function Questionnaire({ route, navigation }) {
                         onPress={prevQuestion}
                         style={styles.buttonLeft}
                     />
-                    {questionNumber < 12 && (
+                    {questionNumber < 8 && (
                         <Button
                             title='Next'
                             onPress={nextQuestion}
                             style={styles.buttonRight}
                         />
                     )}
-                    {questionNumber == 12 && (
+                    {questionNumber == 8 && (
                         <Button
                             title='Submit'
                             onPress={() => Submission()} //Cyrus code: handleSubmit(onSubmit)

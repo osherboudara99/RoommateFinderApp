@@ -10,7 +10,7 @@ import { Avatar } from "react-native-elements";
 import { GiftedChat } from "react-native-gifted-chat";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
-
+ 
 const Chat = ({ navigation }) => {
   const [messages, setMessages] = useState([]);
   const signOut = () => {
@@ -27,7 +27,7 @@ const Chat = ({ navigation }) => {
         <View style={{ marginLeft: 100 }}>
           <Avatar
             source={{
-              avatar: "https://placeimg.com/140/140/any",
+              avatar: "/src/assets/profile-pic.jpg",
             }}
           />
         </View>
@@ -78,7 +78,7 @@ const Chat = ({ navigation }) => {
         user={{
           // _id: auth?.currentUser?.email,
           name: "Alexis".displayName,
-          avatar: "https://placeimg.com/140/140/any",
+          avatar: "https://thumbs.dreamstime.com/z/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg",
         }}
       />
     </View>
