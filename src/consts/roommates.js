@@ -6,6 +6,9 @@ const listings = [
     budget: "600$",
     image: require("../assets/homescreen/roommate1.jpg"),
     details: `I will be a very good roommate...`,
+    petFriendly: true,
+    smokingFriendly: false,
+    zoomFriendly: true,
     interiors: [
       require("../assets/homescreen/roommate1_pic1.jpg"),
       require("../assets/homescreen/roommate1_pic2.jpg"),
@@ -17,6 +20,9 @@ const listings = [
     title: "Business Woman ",
     location: "Down town Los Angeles",
     budget: "500$",
+    petFriendly: false,
+    smokingFriendly: false,
+    zoomFriendly: true,
     image: require("../assets/homescreen/roommate2.jpg"),
     details: `Super clean, fun, friendly and outgoing.`,
     interiors: [
@@ -30,6 +36,9 @@ const listings = [
     title: "Clean Entrepreneur ",
     location: "San Fernando Valley",
     budget: "400$",
+    petFriendly: false,
+    smokingFriendly: true,
+    zoomFriendly: true,
     image: require("../assets/homescreen/roommate3.jpg"),
     details: `Only need a place to sleep and create ideas!`,
     interiors: [
@@ -43,6 +52,9 @@ const listings = [
     title: "Bubbly Woman",
     budget: "700$",
     location: "Venice California",
+    petFriendly: true,
+    smokingFriendly: false,
+    zoomFriendly: true,
     image: require("../assets/homescreen/roommate4.jpg"),
     details: `Outgoing, loves to party and goes to festivals often.`,
     interiors: [

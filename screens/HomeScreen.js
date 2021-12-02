@@ -175,21 +175,41 @@ const HomeScreen = ({ navigation }) => {
               <View style={style.facility}>
                 <FontAwesome5 name="dog" size={18} color="#dae4d6" />
                 <Text> </Text>
-                <FontAwesome5 name="check" size={18} color="green" />
+                {roommate.petFriendly ? (
+                  <FontAwesome5 name="check" size={18} color="green" />
+                ) : (
+                  <MaterialCommunityIcons
+                    name="close-thick"
+                    size={18}
+                    color="red"
+                  />
+                )}
               </View>
               <View style={style.facility}>
                 <FontAwesome5 name="smoking" size={18} color="#dae4d6" />
                 <Text> </Text>
-                <MaterialCommunityIcons
-                  name="close-thick"
-                  size={18}
-                  color="red"
-                />
+                {roommate.smokingFriendly ? (
+                  <FontAwesome5 name="check" size={18} color="green" />
+                ) : (
+                  <MaterialCommunityIcons
+                    name="close-thick"
+                    size={18}
+                    color="red"
+                  />
+                )}
               </View>
               <View style={style.facility}>
                 <FontAwesome5 name="desktop" size={18} color="#dae4d6" />
                 <Text> </Text>
-                <FontAwesome5 name="check" size={18} color="green" />
+                {roommate.zoomFriendly ? (
+                  <FontAwesome5 name="check" size={18} color="green" />
+                ) : (
+                  <MaterialCommunityIcons
+                    name="close-thick"
+                    size={18}
+                    color="red"
+                  />
+                )}
               </View>
             </View>
           </View>
