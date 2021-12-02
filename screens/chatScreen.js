@@ -63,12 +63,14 @@ const Chat = ({ navigation }) => {
   }, []);
   return (
     <View style={{ flex: 1 }}>
-      <Icon
-        style={{ marginLeft: 20, marginTop: 20 }}
-        name="arrow-back-ios"
-        size={25}
-        onPress={navigation.goBack}
-      />
+      <View style={styles.headerBtn}>
+        <Icon
+          style={{ marginLeft: 5 }}
+          name="arrow-back-ios"
+          size={20}
+          onPress={navigation.goBack}
+        />
+      </View>
       <GiftedChat
         messages={messages}
         showAvatarForEveryMessage={true}
@@ -82,5 +84,16 @@ const Chat = ({ navigation }) => {
     </View>
   );
 };
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  headerBtn: {
+    marginLeft: 10,
+    marginTop: 10,
+    height: 50,
+    width: 50,
+    backgroundColor: "white",
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
 export default Chat;

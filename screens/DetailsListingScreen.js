@@ -32,6 +32,7 @@ const DetailsScreen = ({ navigation, route }) => {
             <View style={style.header}>
               <View style={style.headerBtn}>
                 <Icon
+                  style={{ marginLeft: 5 }}
                   name="arrow-back-ios"
                   size={20}
                   onPress={navigation.goBack}
