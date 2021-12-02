@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   SafeAreaView,
   View,
@@ -11,31 +11,43 @@ import {
   Image,
   Pressable,
   ScrollView,
-} from 'react-native';
-import COLORS from '../src/consts/colors';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-const {width} = Dimensions.get('screen'); //old code
-import listings from '../src/consts/listings';
-const HomeScreen = ({navigation}) => {
+} from "react-native";
+import COLORS from "../src/consts/colors";
+import Icon from "react-native-vector-icons/MaterialIcons";
+const { width } = Dimensions.get("screen"); //old code
+import listings from "../src/consts/listings";
+import roommates from "../src/consts/roommates";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
+const HomeScreen = ({ navigation }) => {
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
   const optionsList = [
-    {title: 'Need a roommate', img: require('../src/assets/homescreen/roommate1.jpg')},
-    {title: 'Find a roommate', img: require('../src/assets/homescreen/roommate2.jpg')},
+    {
+      title: "Need a roommate",
+      img: require("../src/assets/homescreen/roommate1.jpg"),
+    },
+    {
+      title: "Find a roommate",
+      img: require("../src/assets/homescreen/roommate2.jpg"),
+    },
   ];
-  const categoryList = ['Matching', 'Recommended', 'Nearest'];
+  const categoryList = ["Listings", "Roommates"];
 
   const ListCategories = () => {
-    const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
     return (
       <View style={style.categoryListContainer}>
         {categoryList.map((category, index) => (
           <Pressable
             key={index}
-            onPress={() => setSelectedCategoryIndex(index)}>
+            onPress={() => setSelectedCategoryIndex(index)}
+          >
             <Text
               style={[
                 style.categoryListText,
                 index == selectedCategoryIndex && style.activeCategoryListText,
-              ]}>
+              ]}
+            >
               {category}
             </Text>
           </Pressable>
@@ -53,7 +65,7 @@ const HomeScreen = ({navigation}) => {
             <Image source={option.img} style={style.optionsCardImage} />
 
             {/* Option title */}
-            <Text style={{marginTop: 10, fontSize: 18, fontWeight: 'bold'}}>
+            <Text style={{ marginTop: 10, fontSize: 18, fontWeight: "bold" }}>
               {option.title}
             </Text>
           </View>
@@ -61,50 +73,57 @@ const HomeScreen = ({navigation}) => {
       </View>
     );
   };
-  const Card = ({house}) => {
+  const Card = ({ house }) => {
     return (
       <Pressable
         activeOpacity={0.8}
-        onPress={() => navigation.navigate('DetailsScreen', house)}>
+        onPress={() => navigation.navigate("DetailsListingScreen", house)}
+      >
         <View style={style.card}>
           {/* House image */}
           <Image source={house.image} style={style.cardImage} />
-          <View style={{marginTop: 10}}>
+          <View style={{ marginTop: 10 }}>
             {/* Title and price container */}
             <View
               style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
+                flexDirection: "row",
+                justifyContent: "space-between",
                 marginTop: 10,
-              }}>
-              <Text style={{fontSize: 16, fontWeight: 'bold'}}>
+              }}
+            >
+              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
                 {house.title}
               </Text>
               <Text
-                style={{fontWeight: 'bold', color: COLORS.green, fontSize: 16}}>
-                $1,500
+                style={{
+                  fontWeight: "bold",
+                  color: COLORS.green,
+                  fontSize: 16,
+                }}
+              >
+                {house.price}
               </Text>
             </View>
 
             {/* Location text */}
 
-            <Text style={{color: COLORS.grey, fontSize: 14, marginTop: 5}}>
+            <Text style={{ color: COLORS.grey, fontSize: 14, marginTop: 5 }}>
               {house.location}
             </Text>
 
             {/* Facilities container */}
-            <View style={{marginTop: 10, flexDirection: 'row'}}>
+            <View style={{ marginTop: 10, flexDirection: "row" }}>
               <View style={style.facility}>
                 <Icon name="hotel" size={18} />
-                <Text style={style.facilityText}>2</Text>
+                <Text style={style.facilityText}>{house.bedrooms}</Text>
               </View>
               <View style={style.facility}>
                 <Icon name="bathtub" size={18} />
-                <Text style={style.facilityText}>2</Text>
+                <Text style={style.facilityText}>{house.bathrooms}</Text>
               </View>
               <View style={style.facility}>
                 <Icon name="aspect-ratio" size={18} />
-                <Text style={style.facilityText}>100m</Text>
+                <Text style={style.facilityText}>{house.size}</Text>
               </View>
             </View>
           </View>
@@ -112,8 +131,75 @@ const HomeScreen = ({navigation}) => {
       </Pressable>
     );
   };
+
+  const CardRoommate = ({ roommate }) => {
+    return (
+      <Pressable
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate("DetailsRoommateScreen", roommate)}
+      >
+        <View style={style.card}>
+          {/* House image */}
+          <Image source={roommate.image} style={style.cardImage} />
+          <View style={{ marginTop: 10 }}>
+            {/* Title and price container */}
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginTop: 10,
+              }}
+            >
+              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                {roommate.title}
+              </Text>
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  color: COLORS.green,
+                  fontSize: 16,
+                }}
+              >
+                {roommate.budget}
+              </Text>
+            </View>
+
+            {/* Location text */}
+
+            <Text style={{ color: COLORS.grey, fontSize: 14, marginTop: 5 }}>
+              {roommate.location}
+            </Text>
+
+            {/* Facilities container */}
+            <View style={{ marginTop: 10, flexDirection: "row" }}>
+              <View style={style.facility}>
+                <FontAwesome5 name="dog" size={18} color="#dae4d6" />
+                <Text> </Text>
+                <FontAwesome5 name="check" size={18} color="green" />
+              </View>
+              <View style={style.facility}>
+                <FontAwesome5 name="smoking" size={18} color="#dae4d6" />
+                <Text> </Text>
+                <MaterialCommunityIcons
+                  name="close-thick"
+                  size={18}
+                  color="red"
+                />
+              </View>
+              <View style={style.facility}>
+                <FontAwesome5 name="desktop" size={18} color="#dae4d6" />
+                <Text> </Text>
+                <FontAwesome5 name="check" size={18} color="green" />
+              </View>
+            </View>
+          </View>
+        </View>
+      </Pressable>
+    );
+  };
+
   return (
-    <SafeAreaView style={{backgroundColor: COLORS.white, flex: 1}}>
+    <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
       {/* Customise status bar */}
       <StatusBar
         translucent={false}
@@ -123,14 +209,16 @@ const HomeScreen = ({navigation}) => {
       {/* Header container */}
       <View style={style.header}>
         <View>
-          <Text style={{color: COLORS.light}}>Location</Text>
-          <Text style={{color: COLORS.white, fontSize: 20, fontWeight: 'bold'}}>
+          <Text style={{ color: COLORS.light }}>Location</Text>
+          <Text
+            style={{ color: COLORS.white, fontSize: 20, fontWeight: "bold" }}
+          >
             USA
           </Text>
         </View>
         <Image
           style={style.profileImage}
-          source={require('../src/assets/homescreen/person.jpg')}
+          source={require("../src/assets/homescreen/person.jpg")}
         />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -138,10 +226,11 @@ const HomeScreen = ({navigation}) => {
         <View
           style={{
             marginTop: 10,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
+            flexDirection: "row",
+            justifyContent: "space-between",
             paddingHorizontal: 20,
-          }}>
+          }}
+        >
           <View style={style.searchInputContainer}>
             <Icon name="search" color={COLORS.grey} size={25} />
             <TextInput placeholder="Search address, city, location" />
@@ -152,21 +241,32 @@ const HomeScreen = ({navigation}) => {
           </View>
         </View>
 
-        {/* Render list options */}
-        <ListOptions />
+        {/* Render list options 
+        <ListOptions />*/}
 
         {/* Render categories */}
         <ListCategories />
 
         {/* Render Card */}
-        <FlatList
-          snapToInterval={width - 20}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
-          vertical
-          data={listings}
-          renderItem={({item}) => <Card house={item} />}
-        />
+        {selectedCategoryIndex === 0 ? (
+          <FlatList
+            snapToInterval={width - 20}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingLeft: 20, paddingVertical: 20 }}
+            vertical
+            data={listings}
+            renderItem={({ item }) => <Card house={item} />}
+          />
+        ) : (
+          <FlatList
+            snapToInterval={width - 20}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingLeft: 20, paddingVertical: 20 }}
+            vertical
+            data={roommates}
+            renderItem={({ item }) => <CardRoommate roommate={item} />}
+          />
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -175,8 +275,8 @@ const HomeScreen = ({navigation}) => {
 const style = StyleSheet.create({
   header: {
     paddingVertical: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     paddingHorizontal: 20,
     backgroundColor: COLORS.green,
   },
@@ -189,8 +289,8 @@ const style = StyleSheet.create({
     height: 50,
     backgroundColor: COLORS.light,
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 20,
     borderRadius: 12,
   },
@@ -199,15 +299,15 @@ const style = StyleSheet.create({
     height: 50,
     width: 50,
     borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginLeft: 10,
   },
   optionsCard: {
     height: 210,
     width: width / 2 - 30,
     elevation: 15,
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: COLORS.white,
     borderRadius: 20,
     paddingTop: 10,
@@ -216,17 +316,17 @@ const style = StyleSheet.create({
   optionsCardImage: {
     height: 140,
     borderRadius: 10,
-    width: '100%',
+    width: "100%",
   },
   optionListsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginTop: 20,
     paddingHorizontal: 20,
   },
   categoryListText: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     paddingBottom: 5,
     color: COLORS.grey,
   },
@@ -236,8 +336,8 @@ const style = StyleSheet.create({
     paddingBottom: 5,
   },
   categoryListContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginTop: 40,
     paddingHorizontal: 40,
   },
@@ -251,11 +351,11 @@ const style = StyleSheet.create({
     borderRadius: 20,
   },
   cardImage: {
-    width: '100%',
+    width: "100%",
     height: 120,
     borderRadius: 15,
   },
-  facility: {flexDirection: 'row', marginRight: 15},
-  facilityText: {marginLeft: 5, color: COLORS.grey},
+  facility: { flexDirection: "row", marginRight: 15 },
+  facilityText: { marginLeft: 5, color: COLORS.grey },
 });
 export default HomeScreen;
