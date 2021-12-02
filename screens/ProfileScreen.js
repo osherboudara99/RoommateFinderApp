@@ -63,6 +63,7 @@ export default function App() {
               <FontAwesome5 name="edit" size={22} color="#dae4d6" />
             </TouchableOpacity>
           </View>
+          <View style={{ marginTop: 15 }} />
           <Text style={[styles.text, styles.subText]}>
             I am a new user who is learning to use the roommate finder app!
           </Text>
@@ -80,7 +81,7 @@ export default function App() {
               <FontAwesome5 name="edit" size={22} color="#dae4d6" />
             </TouchableOpacity>
           </View>
-
+          <View style={{ marginTop: 15 }} />
           <View style={styles.QuestionnaireAnswers}>
             <FontAwesome5
               name="location-arrow"
@@ -237,7 +238,7 @@ const styles = StyleSheet.create({
   subTextRight: {
     fontSize: 18,
     color: "#ecf1ea",
-    fontWeight: "500",
+    fontWeight: "750",
   },
   profileImage: {
     width: 200,
