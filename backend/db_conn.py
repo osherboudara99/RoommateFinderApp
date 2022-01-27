@@ -40,6 +40,22 @@ def connect():
   UNIQUE KEY `email_UNIQUE` (`email`), \
   CHECK (`phone` NOT LIKE '%[^0-9]%' AND LENGTH(`phone`) = 10) \
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci")
+
+
+        cursor.execute("CREATE TABLE IF NOT EXISTS SeniorProject.questionaire ( \
+    `questionaire_id` int(10) unsigned NOT NULL AUTO_INCREMENT, \
+    `userid` int(10) DEFAULT NULL, \
+    `zipcode_location` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, \
+    `budget` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, \
+    `roommates_yes_no` BOOLEAN NOT NULL, \
+    `cleanliness` int(2) unsigned NOT NULL, \
+    `smoker` BOOLEAN NOT NULL,\
+    `pets` BOOLEAN NOT NULL,\
+    `zoom_friendly` BOOLEAN NOT NULL,\
+    `zoom_others_using` BOOLEAN NOT NULL,\
+    PRIMARY KEY (`questionaire_id`), \
+    CONSTRAINT `qs_user_id` FOREIGN KEY (`userid`) REFERENCES `SeniorProject.Users` (`userid`)\
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci")
     
         cursor.close()
         cnx.close()
