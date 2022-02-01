@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   View,
@@ -50,13 +50,12 @@ export default function Questionnaire({ route, navigation }) {
     }
   };
 
-  const changeRoomate = (value) => {
-    console.log("Roommate: " + value);
-    setRoomate_yes_no({ roommate_yes_no: value });
-    setData({
-      ...data,
-      roommates_boolean:true
-  });
+
+  const callback = useCallback((val) => {
+    setRoommate_yes_no(val);
+  }, []);
+
+
   console.log("Roommate: " + data.roommates_boolean);
   };
   const [roommate_yes_no, setRoomate_yes_no] = React.useState(boolVal);
@@ -67,13 +66,16 @@ export default function Questionnaire({ route, navigation }) {
   const [budget, setBudget] = React.useState("");
   const [cleanliness, setCleanliness] = React.useState("");
 
+  const [roommate, setRoommate_yes_no] = React.useState(false);
+
   const Submission = () => {
     handleSubmit(onSubmit);
 
     console.log("loc:" + location);
     console.log("budget:" + budget);
     console.log("cleanliness:" + cleanliness);
-    console.log("roommate:" + roommate_yes_no);
+
+    console.log("roommate:" + roommate);
 
     //console.log("test");
     //console.log(errors);
@@ -122,7 +124,7 @@ export default function Questionnaire({ route, navigation }) {
           control={control}
           rules={{ required: true, min: 5 }}
           render={({ field: { onChange, onBlur, value } }) => (
-            <Input
+            <TextInput
               style={{ width: window.width - 10 }}
               onChange={onChange}
               onChangeText={(val) => setBudget(val)}
@@ -143,9 +145,8 @@ export default function Questionnaire({ route, navigation }) {
           rules={{ required: true }}
           render={({ field: { onChange, onBlur, value } }) => (
             <BooleanQuestionnaireSwitch
+              parentCallback={callback}
               value={value}
-              onChange={onChange}
-              onValueChange={(value) => changeRoomate(value)}
               trueLabel={"Seeking"}
               falseLabel={"Joining"}
             />
@@ -161,7 +162,7 @@ export default function Questionnaire({ route, navigation }) {
           control={control}
           rules={{ required: true, min: 2 }}
           render={({ field: { onChange, onBlur, value } }) => (
-            <Input
+            <TextInput
               style={{ width: window.width - 10 }}
               onChange={onChange}
               onChangeText={(val) => setCleanliness(val)}
