@@ -38,9 +38,11 @@ export default function Questionnaire({ route, navigation }) {
     petsOrNot: false,
     zoomOrNot: false,
     okayWithZoom: false,
+    roommates_boolean: false
   });
 
   const [location, setLocation] = React.useState("");
+
 
   const changeLocationData = (value) => {
     if (value.trim() != "") {
@@ -48,8 +50,21 @@ export default function Questionnaire({ route, navigation }) {
     }
   };
 
+  const changeRoomate = (value) => {
+    console.log("Roommate: " + value);
+    setRoomate_yes_no({ roommate_yes_no: value });
+    setData({
+      ...data,
+      roommates_boolean:true
+  });
+  console.log("Roommate: " + data.roommates_boolean);
+  };
+  const [roommate_yes_no, setRoomate_yes_no] = React.useState(boolVal);
+  const [smoker, setSmoker] = React.useState("");
+  const [pets, setPets] = React.useState("");
+  const [zoom_friendly, setZoom_friendly] = React.useState("");
+  const [zoom_others_using, setZoom_others_using] = React.useState("");
   const [budget, setBudget] = React.useState("");
-
   const [cleanliness, setCleanliness] = React.useState("");
 
   const Submission = () => {
@@ -58,6 +73,7 @@ export default function Questionnaire({ route, navigation }) {
     console.log("loc:" + location);
     console.log("budget:" + budget);
     console.log("cleanliness:" + cleanliness);
+    console.log("roommate:" + roommate_yes_no);
 
     //console.log("test");
     //console.log(errors);
@@ -128,10 +144,13 @@ export default function Questionnaire({ route, navigation }) {
           render={({ field: { onChange, onBlur, value } }) => (
             <BooleanQuestionnaireSwitch
               value={value}
+              onChange={onChange}
+              onValueChange={(value) => changeRoomate(value)}
               trueLabel={"Seeking"}
               falseLabel={"Joining"}
             />
           )}
+
           defaultvalue={false}
           name="othersUsingZoom"
         />

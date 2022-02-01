@@ -42,7 +42,7 @@ def connect():
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci")
 
 
-        cursor.execute("CREATE TABLE IF NOT EXISTS SeniorProject.questionaire ( \
+        cursor.execute("CREATE TABLE IF NOT EXISTS SeniorProject.questionnaire ( \
     `questionaire_id` int(10) unsigned NOT NULL AUTO_INCREMENT, \
     `userid` int(10) DEFAULT NULL, \
     `zipcode_location` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, \
