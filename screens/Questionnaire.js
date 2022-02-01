@@ -43,7 +43,7 @@ export default function Questionnaire({ route, navigation }) {
 
   const [location, setLocation] = React.useState("");
 
-  const [roommate_yes_no, setRoommate_yes_no] = React.useState(false);
+  const [roommate, setRoommate_yes_no] = React.useState(false);
   const [smoker, setSmoker] = React.useState("");
   const [pets, setPets] = React.useState("");
   const [zoom_friendly, setZoom_friendly] = React.useState("");
