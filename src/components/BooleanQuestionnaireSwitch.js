@@ -1,33 +1,36 @@
-import React, { useEffect, useState } from 'react'
-import { Switch, Text, View } from 'react-native'
+import React, { useEffect, useState } from "react";
+import { Switch, Text, View } from "react-native";
 
-const BooleanQuestionnaireSwitch = ({ value, trueLabel, falseLabel, ...props }) => {
-  const [isYes, setIsYes] = useState(value)
+const BooleanQuestionnaireSwitch = ({
+  parentCallback,
+  value,
+  trueLabel,
+  falseLabel,
+  ...props
+}) => {
+  const [isYes, setIsYes] = useState(value);
 
   const boolToLabel = (boolVal) => {
-    return boolVal ? trueLabel : falseLabel
-  }
+    return boolVal ? trueLabel : falseLabel;
+  };
 
-  var message = boolToLabel(isYes)
+  var message = boolToLabel(isYes);
 
   const toggleIsYes = () => {
-    setIsYes((currentVal) => !currentVal)
-  }
+    setIsYes((currentVal) => !currentVal);
+    parentCallback(!isYes);
+  };
 
   useEffect(() => {
-    message = boolToLabel(isYes)
-  }, [message, isYes])
+    message = boolToLabel(isYes);
+  }, [message, isYes]);
 
   return (
     <View>
-      <Switch
-        onValueChange={toggleIsYes}
-        value={isYes}
-        {...props}
-      />
+      <Switch onValueChange={toggleIsYes} value={isYes} {...props} />
       <Text {...props}>{message}</Text>
     </View>
-  )
-}
+  );
+};
 
-export default BooleanQuestionnaireSwitch
+export default BooleanQuestionnaireSwitch;

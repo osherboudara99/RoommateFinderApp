@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   View,
@@ -48,9 +48,15 @@ export default function Questionnaire({ route, navigation }) {
     }
   };
 
+  const callback = useCallback((val) => {
+    setRoommate_yes_no(val);
+  }, []);
+
   const [budget, setBudget] = React.useState("");
 
   const [cleanliness, setCleanliness] = React.useState("");
+
+  const [roommate, setRoommate_yes_no] = React.useState(false);
 
   const Submission = () => {
     handleSubmit(onSubmit);
@@ -58,6 +64,7 @@ export default function Questionnaire({ route, navigation }) {
     console.log("loc:" + location);
     console.log("budget:" + budget);
     console.log("cleanliness:" + cleanliness);
+    console.log("roommate:" + roommate);
 
     //console.log("test");
     //console.log(errors);
@@ -106,7 +113,7 @@ export default function Questionnaire({ route, navigation }) {
           control={control}
           rules={{ required: true, min: 5 }}
           render={({ field: { onChange, onBlur, value } }) => (
-            <Input
+            <TextInput
               style={{ width: window.width - 10 }}
               onChange={onChange}
               onChangeText={(val) => setBudget(val)}
@@ -127,7 +134,9 @@ export default function Questionnaire({ route, navigation }) {
           rules={{ required: true }}
           render={({ field: { onChange, onBlur, value } }) => (
             <BooleanQuestionnaireSwitch
+              parentCallback={callback}
               value={value}
+              onChange={(val) => setRoommate_yes_no(val)}
               trueLabel={"Seeking"}
               falseLabel={"Joining"}
             />
@@ -142,7 +151,7 @@ export default function Questionnaire({ route, navigation }) {
           control={control}
           rules={{ required: true, min: 2 }}
           render={({ field: { onChange, onBlur, value } }) => (
-            <Input
+            <TextInput
               style={{ width: window.width - 10 }}
               onChange={onChange}
               onChangeText={(val) => setCleanliness(val)}
