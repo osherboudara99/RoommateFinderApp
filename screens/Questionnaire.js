@@ -61,7 +61,8 @@ export default function Questionnaire({ route, navigation }) {
     console.log("loc:" + location);
     console.log("budget:" + budget);
     console.log("cleanliness:" + cleanliness);
-    console.log("roommate:" + roommate_yes_no);
+
+    console.log("roommate:" + roommate);
 
     //console.log("test");
     //console.log(errors);
