@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   View,
@@ -38,34 +38,22 @@ export default function Questionnaire({ route, navigation }) {
     petsOrNot: false,
     zoomOrNot: false,
     okayWithZoom: false,
-    roommates_boolean: false
+    roommates_boolean: false,
   });
 
   const [location, setLocation] = React.useState("");
 
-
-  const changeLocationData = (value) => {
-    if (value.trim() != "") {
-      setLocation({ location: value });
-    }
-  };
-
-  const changeRoomate = (value) => {
-    console.log("Roommate: " + value);
-    setRoomate_yes_no({ roommate_yes_no: value });
-    setData({
-      ...data,
-      roommates_boolean:true
-  });
-  console.log("Roommate: " + data.roommates_boolean);
-  };
-  const [roommate_yes_no, setRoomate_yes_no] = React.useState(boolVal);
+  const [roommate_yes_no, setRoommate_yes_no] = React.useState(false);
   const [smoker, setSmoker] = React.useState("");
   const [pets, setPets] = React.useState("");
   const [zoom_friendly, setZoom_friendly] = React.useState("");
   const [zoom_others_using, setZoom_others_using] = React.useState("");
   const [budget, setBudget] = React.useState("");
   const [cleanliness, setCleanliness] = React.useState("");
+
+  const callbackRoomate = useCallback((val) => {
+    setRoommate_yes_no(val);
+  }, []);
 
   const Submission = () => {
     handleSubmit(onSubmit);
@@ -122,7 +110,7 @@ export default function Questionnaire({ route, navigation }) {
           control={control}
           rules={{ required: true, min: 5 }}
           render={({ field: { onChange, onBlur, value } }) => (
-            <Input
+            <TextInput
               style={{ width: window.width - 10 }}
               onChange={onChange}
               onChangeText={(val) => setBudget(val)}
@@ -143,14 +131,12 @@ export default function Questionnaire({ route, navigation }) {
           rules={{ required: true }}
           render={({ field: { onChange, onBlur, value } }) => (
             <BooleanQuestionnaireSwitch
+              parentCallback={callbackRoomate}
               value={value}
-              onChange={onChange}
-              onValueChange={(value) => changeRoomate(value)}
               trueLabel={"Seeking"}
               falseLabel={"Joining"}
             />
           )}
-
           defaultvalue={false}
           name="othersUsingZoom"
         />
@@ -161,7 +147,7 @@ export default function Questionnaire({ route, navigation }) {
           control={control}
           rules={{ required: true, min: 2 }}
           render={({ field: { onChange, onBlur, value } }) => (
-            <Input
+            <TextInput
               style={{ width: window.width - 10 }}
               onChange={onChange}
               onChangeText={(val) => setCleanliness(val)}
