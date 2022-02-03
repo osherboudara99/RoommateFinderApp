@@ -44,15 +44,28 @@ export default function Questionnaire({ route, navigation }) {
   const [location, setLocation] = React.useState("");
 
   const [roommate, setRoommate_yes_no] = React.useState(false);
-  const [smoker, setSmoker] = React.useState("");
-  const [pets, setPets] = React.useState("");
-  const [zoom_friendly, setZoom_friendly] = React.useState("");
-  const [zoom_others_using, setZoom_others_using] = React.useState("");
-  const [budget, setBudget] = React.useState("");
-  const [cleanliness, setCleanliness] = React.useState("");
+  const [smoker, setSmoker] = React.useState(false);
+  const [pets, setPets] = React.useState(false);
+  const [zoom_friendly, setZoom_friendly] = React.useState(false);
+  const [zoom_others_using, setZoom_others_using] = React.useState(false);
+  const [budget, setBudget] = React.useState(false);
+  const [cleanliness, setCleanliness] = React.useState(false);
 
   const callbackRoomate = useCallback((val) => {
     setRoommate_yes_no(val);
+  }, []);
+
+  const callbackSmoker = useCallback((val) => {
+    setSmoker(val);
+  }, []);
+  const callbackPets = useCallback((val) => {
+    setPets(val);
+  }, []);
+  const callbackZoomFriendly = useCallback((val) => {
+    setZoom_friendly(val);
+  }, []);
+  const callbackZoomOthersUsing = useCallback((val) => {
+    setZoom_others_using(val);
   }, []);
 
   const Submission = () => {
@@ -61,8 +74,11 @@ export default function Questionnaire({ route, navigation }) {
     console.log("loc:" + location);
     console.log("budget:" + budget);
     console.log("cleanliness:" + cleanliness);
-
     console.log("roommate:" + roommate);
+    console.log("smoker:" + smoker);
+    console.log("pets:" + pets);
+    console.log("zoom friendly:" + zoom_friendly);
+    console.log("zoom others using:" + zoom_others_using);
 
     //console.log("test");
     //console.log(errors);
@@ -172,6 +188,7 @@ export default function Questionnaire({ route, navigation }) {
               value={value}
               trueLabel={"Smoker"}
               falseLabel={"Non-smoker"}
+              parentCallback={callbackSmoker}
             />
           )}
           defaultvalue={false}
@@ -188,6 +205,7 @@ export default function Questionnaire({ route, navigation }) {
               value={value}
               trueLabel={"Pet-friendly"}
               falseLabel={"Not Pet-friendly"}
+              parentCallback={callbackPets}
             />
           )}
           defaultvalue={false}
@@ -204,6 +222,7 @@ export default function Questionnaire({ route, navigation }) {
               value={value}
               trueLabel={"Yes"}
               falseLabel={"No"}
+              parentCallback={callbackZoomFriendly}
             />
           )}
           defaultvalue={false}
@@ -220,6 +239,7 @@ export default function Questionnaire({ route, navigation }) {
               value={value}
               trueLabel={"Yes"}
               falseLabel={"No"}
+              parentCallback={callbackZoomOthersUsing}
             />
           )}
           defaultvalue={false}
