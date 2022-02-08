@@ -139,7 +139,7 @@ const cleanlinessValidation = (val) =>{
  
   if(rege.test(val)){
    var temp = parseInt(val);
-      if(temp<=10){
+      if((temp<=10) && (temp !=0)){
        
           setCleanliness({cleanliness: val});
           setData({
