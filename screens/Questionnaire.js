@@ -478,12 +478,38 @@ const cleanlinessValidation = (val) =>{
             onPress={prevQuestion}
             style={styles.buttonLeft}
           />
-          {questionNumber < 8 && (
+        
+          {questionNumber < 8 &&   (
+            <View>
+            {(data.locationValid && data.check_location &&(questionNumber == 1))?  
             <Button
               title="Next"
               onPress={nextQuestion}
               style={styles.buttonRight}
             />
+            :null }
+            {(data.budgetValid && data.check_Budget &&(questionNumber ==2))?  
+            <Button
+              title="Next"
+              onPress={nextQuestion}
+              style={styles.buttonRight}
+            />
+            :null }
+             {(data.cleanlinessValid && data.check_Cleanliness &&(questionNumber ==4))?  
+            <Button
+              title="Next"
+              onPress={nextQuestion}
+              style={styles.buttonRight}
+            />
+            :null }
+                 {((questionNumber ==3)||(questionNumber >=5 && questionNumber <8) )?  
+            <Button
+              title="Next"
+              onPress={nextQuestion}
+              style={styles.buttonRight}
+            />
+            :null }
+           </View>
           )}
           {questionNumber == 8 && (
             <Button
