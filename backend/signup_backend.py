@@ -4,8 +4,7 @@ import mysql.connector
 from mysql.connector import errorcode
 
 signup_blueprint = Blueprint('signup', __name__)
-email = ''
-password = ''
+
 
 
 @signup_blueprint.route('/signup', methods=['POST'])
@@ -17,6 +16,8 @@ def signup():
     firstName = request.json['firstName']
     lastName = request.json['lastName']
     birthDay = request.json['birthDay']
+    global email
+    global password
     email =  request.json['email']
     phone = request.json['phone']
     password =  request.json['password']
