@@ -2,27 +2,34 @@ from flask import Blueprint, app, request, json
 import os
 import mysql.connector
 from mysql.connector import errorcode
-from login_backend import email, password
+import signup_backend
 
-questionaire_blueprint = Blueprint('login_backend', __name__)
+questionaire_blueprint = Blueprint('questionnaire', __name__)
 
-@app.route('/questionaire', methods=['GET', 'POST'])
+@questionaire_blueprint.route('/questionnaire', methods=['GET', 'POST'])
 def questionaire_table_creation(): 
     cnx = mysql.connector.connect(user='root', password='',
                               host='127.0.0.1')
-    userid = request.json['userid']
+
+
+    email = signup_backend.email
+    password = signup_backend.password
+
+
     zipcode_location = request.json['location']
     budget = request.json['budget']
-    roommate_yes_no =  request.json['roommate_yes_no']
     cleanliness = request.json['cleanliness']
+    roommate_yes_no =  request.json['roommate']
     smoker = request.json['smoker']
     pets = request.json['pets']
     zoom_friendly  = request.json['zoom_friendly']
     zoom_others_using = request.json['zoom_others_using']
 
 
+
+
         
-    questionaire_insertion = ("INSERT INTO SeniorProject.questionnaire VALUES (NULL, SELECT userid FROM SeniorProject.Users WHERE (email = %s) AND password = %s, %s, %s, %s, %s, %s, %s, %s, %s)")
+    questionaire_insertion = ("INSERT INTO SeniorProject.questionnaire VALUES (NULL, (SELECT userid FROM SeniorProject.Users WHERE (email = %s) AND (password = %s)), %s, %s, %s, %s, %s, %s, %s, %s)")
     questionaire_answers = (email, password, zipcode_location, budget, roommate_yes_no, cleanliness, smoker, pets, zoom_friendly, zoom_others_using)
     cursor = cnx.cursor()
     

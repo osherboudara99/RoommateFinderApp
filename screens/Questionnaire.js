@@ -63,8 +63,32 @@ export default function Questionnaire({ route, navigation }) {
   const [pets, setPets] = React.useState(false);
   const [zoom_friendly, setZoom_friendly] = React.useState(false);
   const [zoom_others_using, setZoom_others_using] = React.useState(false);
-  const [budget, setBudget] = React.useState(false);
-  const [cleanliness, setCleanliness] = React.useState(false);
+  const [budget, setBudget] = React.useState("");
+  const [cleanliness, setCleanliness] = React.useState("");
+  const [temp, setTemp] = React.useState("");
+
+
+  const insert_questionnaire_Data = () => {
+
+    fetch('http://127.0.0.1:5000/questionnaire', {
+        method:'POST',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify({ location:location.location, budget:budget.budget, roommate, cleanliness:cleanliness.cleanliness, smoker, pets, zoom_friendly, zoom_others_using})
+    })
+    .then(resp => resp.text())
+    .then(data => {
+        console.log(data);
+        if(data === "executed")
+        {
+            console.log(route.params)
+            route.params.setIsLoggedIn(true);
+        }
+    })
+    .catch(error => console.log(error))
+
+}
 
   const budgetValidation = (val) =>{
     var rege =  /^[0-9]+$/;
@@ -514,7 +538,7 @@ const cleanlinessValidation = (val) =>{
           {questionNumber == 8 && (
             <Button
               title="Submit"
-              onPress={() => Submission()} //Cyrus code: handleSubmit(onSubmit)
+              onPress={() => {insert_questionnaire_Data();} } //Cyrus code: handleSubmit(onSubmit)
               style={styles.buttonRight}
             />
           )}

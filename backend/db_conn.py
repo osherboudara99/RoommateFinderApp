@@ -4,6 +4,7 @@ import mysql.connector
 from mysql.connector import errorcode
 from login_backend import login_blueprint
 from signup_backend import signup_blueprint
+from questionnaire_insertion import questionaire_blueprint
 from flask_cors import CORS, cross_origin
 
 
@@ -45,16 +46,16 @@ def connect():
         cursor.execute("CREATE TABLE IF NOT EXISTS SeniorProject.questionnaire ( \
     `questionaire_id` int(10) unsigned NOT NULL AUTO_INCREMENT, \
     `userid` int(10) DEFAULT NULL, \
-    `zipcode_location` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, \
-    `budget` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, \
+    `zipcode_location` int(5) unsigned NOT NULL, \
+    `budget` int NOT NULL, \
     `roommates_yes_no` BOOLEAN NOT NULL, \
-    `cleanliness` int(2) unsigned NOT NULL, \
-    `smoker` BOOLEAN NOT NULL,\
-    `pets` BOOLEAN NOT NULL,\
-    `zoom_friendly` BOOLEAN NOT NULL,\
-    `zoom_others_using` BOOLEAN NOT NULL,\
+    `cleanliness` int(2) unsigned NOT NULL,  \
+    `smoker` BOOLEAN NOT NULL, \
+    `pets` BOOLEAN NOT NULL, \
+    `zoom_friendly` BOOLEAN NOT NULL, \
+    `zoom_others_using` BOOLEAN NOT NULL,  \
     PRIMARY KEY (`questionaire_id`), \
-    CONSTRAINT `qs_user_id` FOREIGN KEY (`userid`) REFERENCES `SeniorProject.Users` (`userid`)\
+    CONSTRAINT `qs_user_id_1` FOREIGN KEY (`userid`) REFERENCES `Users` (`userid`) \
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci")
     
         cursor.close()
@@ -71,6 +72,8 @@ def connect():
 app.register_blueprint(login_blueprint)
 
 app.register_blueprint(signup_blueprint)
+
+app.register_blueprint(questionaire_blueprint)
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', 
