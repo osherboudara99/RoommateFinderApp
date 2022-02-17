@@ -62,7 +62,7 @@ const ProfileScreen = ({ route, navigation }) => {
             </TouchableOpacity>
           </View>
           <View style={{ marginTop: 10 }} />
-          {!personalityTestTaken ? (
+          {personalityTestTaken ? (
             <View style={{ alignSelf: "center" }}>
               <Text style={[styles.text, { fontSize: 45, color: "#ffffffb2" }]}>
                 The Architect
