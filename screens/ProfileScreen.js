@@ -16,8 +16,10 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.titleBar}>
-          <Ionicons name="ellipsis-vertical" size={30} color="#fff"></Ionicons>
+        <View style={styles.dm}>
+        <TouchableOpacity onPress={() => console.log("personality quiz")}>
+        <Ionicons name="newspaper-outline" size={30} color="#fff"></Ionicons>
+        </TouchableOpacity>
         </View>
         <View style={{ alignSelf: "center" }}>
           <View style={styles.profileImage}>
@@ -27,13 +29,7 @@ export default function App() {
               resizeMode="center"
             ></Image>
           </View>
-          <View style={styles.dm}>
-            <MaterialIcons
-              name="chat"
-              size={18}
-              color="#DFD8C8"
-            ></MaterialIcons>
-          </View>
+        
           <View style={styles.active}></View>
           <View style={styles.add}>
             <Ionicons
@@ -75,11 +71,7 @@ export default function App() {
         <View style={{ margin: 25 }}>
           <View style={[styles.rowLineUp, { marginBottom: 10 }]}>
             <Text style={[styles.text, { fontSize: 25 }]}>Questionnaire</Text>
-            <TouchableOpacity
-              onPress={() => console.log("editing questionnaire")}
-            >
-              <FontAwesome5 name="edit" size={22} color="#dae4d6" />
-            </TouchableOpacity>
+           
           </View>
           <View style={{ marginTop: 15 }} />
           <View style={styles.QuestionnaireAnswers}>

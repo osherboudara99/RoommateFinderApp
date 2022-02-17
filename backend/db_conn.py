@@ -55,6 +55,7 @@ def connect():
     `zoom_friendly` BOOLEAN NOT NULL, \
     `zoom_others_using` BOOLEAN NOT NULL,  \
     PRIMARY KEY (`questionaire_id`), \
+    UNIQUE KEY `user_UNIQUE` (`userid`), \
     CONSTRAINT `qs_user_id_1` FOREIGN KEY (`userid`) REFERENCES `Users` (`userid`) \
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci")
     
