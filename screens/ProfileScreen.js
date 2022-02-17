@@ -12,15 +12,14 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Avatar, Icon, Divider } from "react-native-elements";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-export default function App() {
+const ProfileScreen = ({ route, navigation }) => {
+  //const [personalityTestTaken, setPersonalityTestTaken] = React.useState(false)
+
+  const personalityTestTaken = route.params;
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.dm}>
-        <TouchableOpacity onPress={() => console.log("personality quiz")}>
-        <Ionicons name="newspaper-outline" size={30} color="#fff"></Ionicons>
-        </TouchableOpacity>
-        </View>
         <View style={{ alignSelf: "center" }}>
           <View style={styles.profileImage}>
             <Image
@@ -29,7 +28,7 @@ export default function App() {
               resizeMode="center"
             ></Image>
           </View>
-        
+
           <View style={styles.active}></View>
           <View style={styles.add}>
             <Ionicons
@@ -48,6 +47,42 @@ export default function App() {
             Los Angeles, CA
           </Text>
         </View>
+
+        <Divider
+          orientation="horizontal"
+          style={{ marginTop: 10, marginHorizontal: 25 }}
+        />
+        <View style={{ margin: 25 }}>
+          <View style={[styles.rowLineUp, { marginBottom: 10 }]}>
+            <Text style={[styles.text, { fontSize: 25 }]}>Personality</Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("PersonalityTest")}
+            >
+              <Ionicons name="newspaper-outline" size={22} color="#dae4d6" />
+            </TouchableOpacity>
+          </View>
+          <View style={{ marginTop: 10 }} />
+          {!personalityTestTaken ? (
+            <View style={{ alignSelf: "center" }}>
+              <Text style={[styles.text, { fontSize: 45, color: "#ffffffb2" }]}>
+                The Architect
+              </Text>
+              <View style={[styles.personalityImage, { marginLeft: 75 }]}>
+                <Image
+                  source={require("../src/assets/ProfileScreen/theArchitect.png")}
+                  resizeMode="center"
+                  style={styles.image}
+                ></Image>
+              </View>
+            </View>
+          ) : (
+            <Text style={[styles.text, styles.subText]}>
+              Take the personality test to find out your personality type and
+              match with others!
+            </Text>
+          )}
+        </View>
+
         <Divider
           orientation="horizontal"
           style={{ marginTop: 10, marginHorizontal: 25 }}
@@ -71,7 +106,6 @@ export default function App() {
         <View style={{ margin: 25 }}>
           <View style={[styles.rowLineUp, { marginBottom: 10 }]}>
             <Text style={[styles.text, { fontSize: 25 }]}>Questionnaire</Text>
-           
           </View>
           <View style={{ marginTop: 15 }} />
           <View style={styles.QuestionnaireAnswers}>
@@ -199,7 +233,9 @@ export default function App() {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
+
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -231,6 +267,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#ecf1ea",
     fontWeight: "750",
+  },
+  personalityImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 100,
+    overflow: "hidden",
   },
   profileImage: {
     width: 200,
