@@ -54,7 +54,9 @@ const ProfileScreen = ({ route, navigation }) => {
         />
         <View style={{ margin: 25 }}>
           <View style={[styles.rowLineUp, { marginBottom: 10 }]}>
-            <Text style={[styles.text, { fontSize: 25 }]}>Personality</Text>
+            <Text style={[styles.text, { fontSize: 25 }]}>
+              Personality Type
+            </Text>
             <TouchableOpacity
               onPress={() => navigation.navigate("PersonalityTest")}
             >

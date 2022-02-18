@@ -20,6 +20,8 @@ import Input from "../src/components/Input";
 import Question from "../src/components/Question";
 import Button from "../src/components/Button";
 
+import Slider from "@react-native-community/slider";
+
 export default function Questionnaire({ route, navigation }) {
   const window = useWindowDimensions();
 
@@ -228,64 +230,39 @@ export default function Questionnaire({ route, navigation }) {
   // implement submit once the Questionnaire API is finished
   console.log(errors);
 
+  const [sliderData1, setSliderData1] = useState(5);
+  const [sliderData2, setSliderData2] = useState(2);
+  const [sliderData3, setSliderData3] = useState(2);
+  const [sliderData4, setSliderData4] = useState(2);
+
   return (
     <View style={styles.container}>
       <View style={[styles.form, { width: window.width - 20 }]}>
-        <Text style={styles.header}>Question {questionNumber}/8</Text>
+        <Text style={styles.header}>Question {questionNumber}/10</Text>
 
         <Question
-          question="What is your location?"
+          question="How outgoing are you?"
           display={questionNumber == 1}
           control={control}
           rules={{ required: true, min: 5 }}
           render={({ field: { onChange, onBlur, value } }) => (
-            <View style={{ flexDirection: "column" }}>
-              <View style={{ flexDirection: "row" }}>
-                <TextInput
-                  style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
-                  onChange={onChange}
-                  onChangeText={(val) => locationValidation(val)}
-                  onBlur={onBlur}
-                  value={value}
-                  keyboardType="number-pad"
-                  placeholder="Enter Zip Code"
+            <View style={{ flexDirection: "row", marginBottom: 25 }}>
+              <View style={{ marginRight: "auto", marginTop: -8 }}>
+                <Slider
+                  maximumValue={10}
+                  minimumValue={0}
+                  minimumTrackTintColor="#5CD85E"
+                  maximumTrackTintColor="#097969"
+                  step={1}
+                  value={sliderData1}
+                  onValueChange={(sliderValue) => setSliderData1(sliderValue)}
+                  thumbTintColor="#1B5E20"
+                  //style={{ alignSelf: "center" }}
+                  style={{ width: 250, height: 40 }}
                 />
-
-                <View style={{ marginLeft: "auto" }}>
-                  {data.check_location ? (
-                    <Animatable.View animation="bounceIn">
-                      <Feather name="check-circle" color="green" size={25} />
-                    </Animatable.View>
-                  ) : null}
-                  {data.locationValid ? null : (
-                    <Animatable.View animation="fadeInLeft" duration={500}>
-                      <Text style={styles.errorMsg}>
-                        {" "}
-                        <FontAwesome
-                          name="exclamation-circle"
-                          color="red"
-                          size={25}
-                        />{" "}
-                      </Text>
-                    </Animatable.View>
-                  )}
-                </View>
               </View>
-              <View>
-                {data.locationValid ? null : (
-                  <Animatable.View animation="fadeInLeft" duration={500}>
-                    <Text
-                      style={{
-                        flexDirection: "column",
-                        marginBottom: "auto",
-                        color: "#ae0700",
-                      }}
-                    >
-                      {" "}
-                      Zip code is invalid, please try again.
-                    </Text>
-                  </Animatable.View>
-                )}
+              <View style={{ marginLeft: "auto" }}>
+                <Text style={{ fontSize: 18 }}>{sliderData1}</Text>
               </View>
             </View>
           )}
@@ -294,57 +271,41 @@ export default function Questionnaire({ route, navigation }) {
         />
 
         <Question
-          question="What is your budget amount?"
+          question="What do you prefer: movie, book, or theatre play?"
           display={questionNumber == 2}
           control={control}
           rules={{ required: true, min: 5 }}
           render={({ field: { onChange, onBlur, value } }) => (
-            <View style={{ flexDirection: "column" }}>
-              <View style={{ flexDirection: "row" }}>
-                <TextInput
-                  style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
-                  onChange={onChange}
-                  onChangeText={(val) => budgetValidation(val)}
-                  onBlur={onBlur}
-                  value={value}
-                  keyboardType="number-pad"
-                  placeholder="Price range in $"
+            <View style={{ flexDirection: "row", marginBottom: 25 }}>
+              <View style={{ marginRight: "auto", marginTop: -8 }}>
+                <Slider
+                  maximumValue={3}
+                  minimumValue={1}
+                  minimumTrackTintColor="#5CD85E"
+                  maximumTrackTintColor="#097969"
+                  step={1}
+                  value={sliderData2}
+                  onValueChange={(sliderValue) => setSliderData2(sliderValue)}
+                  thumbTintColor="#1B5E20"
+                  //style={{ alignSelf: "center" }}
+                  style={{ width: 200, height: 40 }}
                 />
-
-                <View style={{ marginLeft: "auto" }}>
-                  {data.check_Budget ? (
-                    <Animatable.View animation="bounceIn">
-                      <Feather name="check-circle" color="green" size={25} />
-                    </Animatable.View>
-                  ) : null}
-                  {data.budgetValid ? null : (
-                    <Animatable.View animation="fadeInLeft" duration={500}>
-                      <Text style={styles.errorMsg}>
-                        {" "}
-                        <FontAwesome
-                          name="exclamation-circle"
-                          color="red"
-                          size={25}
-                        />{" "}
-                      </Text>
-                    </Animatable.View>
-                  )}
-                </View>
               </View>
-              <View>
-                {data.budgetValid ? null : (
-                  <Animatable.View animation="fadeInLeft" duration={500}>
-                    <Text
-                      style={{
-                        flexDirection: "column",
-                        marginBottom: "auto",
-                        color: "#ae0700",
-                      }}
-                    >
-                      {" "}
-                      Budget amount is invalid, please try again.
-                    </Text>
-                  </Animatable.View>
+              <View style={{ marginLeft: "auto" }}>
+                {sliderData2 === 1 ? (
+                  <Text style={{ fontSize: 18 }}>Movie</Text>
+                ) : (
+                  <Text />
+                )}
+                {sliderData2 === 2 ? (
+                  <Text style={{ fontSize: 18 }}>Book</Text>
+                ) : (
+                  <Text />
+                )}
+                {sliderData2 === 3 ? (
+                  <Text style={{ fontSize: 18 }}>Theatre Play</Text>
+                ) : (
+                  <Text />
                 )}
               </View>
             </View>
@@ -354,7 +315,7 @@ export default function Questionnaire({ route, navigation }) {
         />
 
         <Question
-          question="Are you seeking roommates for a place or do you need to join a place with roommates?"
+          question="Are you easily disappointed?"
           display={questionNumber == 3}
           control={control}
           rules={{ required: true }}
@@ -362,8 +323,8 @@ export default function Questionnaire({ route, navigation }) {
             <BooleanQuestionnaireSwitch
               parentCallback={callbackRoomate}
               value={value}
-              trueLabel={"Seeking"}
-              falseLabel={"Joining"}
+              trueLabel={"Yes"}
+              falseLabel={"No"}
             />
           )}
           defaultvalue={false}
@@ -371,57 +332,41 @@ export default function Questionnaire({ route, navigation }) {
         />
 
         <Question
-          question="On a scale of 1 to 10, how clean would you consider yourself?"
+          question="How frequently do you make friends?"
           display={questionNumber == 4}
           control={control}
           rules={{ required: true, min: 2 }}
           render={({ field: { onChange, onBlur, value } }) => (
-            <View style={{ flexDirection: "column" }}>
-              <View style={{ flexDirection: "row" }}>
-                <TextInput
-                  style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
-                  onChange={onChange}
-                  onChangeText={(value) => cleanlinessValidation(value)}
-                  onBlur={onBlur}
-                  value={value}
-                  keyboardType="number-pad"
-                  placeholder="Anywhere from 1-10"
+            <View style={{ flexDirection: "row", marginBottom: 25 }}>
+              <View style={{ marginRight: "auto", marginTop: -8 }}>
+                <Slider
+                  maximumValue={3}
+                  minimumValue={1}
+                  minimumTrackTintColor="#5CD85E"
+                  maximumTrackTintColor="#097969"
+                  step={1}
+                  value={sliderData3}
+                  onValueChange={(sliderValue) => setSliderData3(sliderValue)}
+                  thumbTintColor="#1B5E20"
+                  //style={{ alignSelf: "center" }}
+                  style={{ width: 200, height: 40 }}
                 />
-
-                <View style={{ marginLeft: "auto" }}>
-                  {data.check_Cleanliness ? (
-                    <Animatable.View animation="bounceIn">
-                      <Feather name="check-circle" color="green" size={25} />
-                    </Animatable.View>
-                  ) : null}
-                  {data.cleanlinessValid ? null : (
-                    <Animatable.View animation="fadeInLeft" duration={500}>
-                      <Text style={styles.errorMsg}>
-                        {" "}
-                        <FontAwesome
-                          name="exclamation-circle"
-                          color="red"
-                          size={25}
-                        />{" "}
-                      </Text>
-                    </Animatable.View>
-                  )}
-                </View>
               </View>
-              <View>
-                {data.cleanlinessValid ? null : (
-                  <Animatable.View animation="fadeInLeft" duration={500}>
-                    <Text
-                      style={{
-                        flexDirection: "column",
-                        marginBottom: "auto",
-                        color: "#ae0700",
-                      }}
-                    >
-                      {" "}
-                      Cleanliness number is invalid, please try again.
-                    </Text>
-                  </Animatable.View>
+              <View style={{ marginLeft: "auto" }}>
+                {sliderData3 === 1 ? (
+                  <Text style={{ fontSize: 18 }}>Never</Text>
+                ) : (
+                  <Text />
+                )}
+                {sliderData3 === 2 ? (
+                  <Text style={{ fontSize: 18 }}>Sometimes</Text>
+                ) : (
+                  <Text />
+                )}
+                {sliderData3 === 3 ? (
+                  <Text style={{ fontSize: 18 }}>Frequently</Text>
+                ) : (
+                  <Text />
                 )}
               </View>
             </View>
@@ -431,15 +376,15 @@ export default function Questionnaire({ route, navigation }) {
         />
 
         <Question
-          question="Would you consider yourself a smoker or non-smoker?"
+          question="Do you like to stay busy?"
           display={questionNumber == 5}
           control={control}
           rules={{ required: true }}
           render={({ field: { onChange, onBlur, value } }) => (
             <BooleanQuestionnaireSwitch
               value={value}
-              trueLabel={"Smoker"}
-              falseLabel={"Non-smoker"}
+              trueLabel={"Yes"}
+              falseLabel={"No"}
               parentCallback={callbackSmoker}
             />
           )}
@@ -448,15 +393,15 @@ export default function Questionnaire({ route, navigation }) {
         />
 
         <Question
-          question="Would you consider yourself pet-friendly or not pet-friendly?"
+          question="Is your go-to reaction in a problem to cheat your way out of it?"
           display={questionNumber == 6}
           control={control}
           rules={{ required: true }}
           render={({ field: { onChange, onBlur, value } }) => (
             <BooleanQuestionnaireSwitch
               value={value}
-              trueLabel={"Pet-friendly"}
-              falseLabel={"Not Pet-friendly"}
+              trueLabel={"Yes"}
+              falseLabel={"No"}
               parentCallback={callbackPets}
             />
           )}
@@ -465,7 +410,7 @@ export default function Questionnaire({ route, navigation }) {
         />
 
         <Question
-          question="Zoom Related: Do you use zoom?"
+          question="Are you afraid of conflict?"
           display={questionNumber == 7}
           control={control}
           rules={{ required: true }}
@@ -482,7 +427,7 @@ export default function Questionnaire({ route, navigation }) {
         />
 
         <Question
-          question="Zoom Related: Are you okay with others using Zoom?"
+          question="Are you generally passionate about social causes?"
           display={questionNumber == 8}
           control={control}
           rules={{ required: true }}
@@ -498,6 +443,67 @@ export default function Questionnaire({ route, navigation }) {
           name="okayWithZoom"
         />
 
+        <Question
+          question="How often do you like to travel?"
+          display={questionNumber == 9}
+          control={control}
+          rules={{ required: true, min: 2 }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <View style={{ flexDirection: "row", marginBottom: 25 }}>
+              <View style={{ marginRight: "auto", marginTop: -8 }}>
+                <Slider
+                  maximumValue={3}
+                  minimumValue={1}
+                  minimumTrackTintColor="#5CD85E"
+                  maximumTrackTintColor="#097969"
+                  step={1}
+                  value={sliderData4}
+                  onValueChange={(sliderValue) => setSliderData4(sliderValue)}
+                  thumbTintColor="#1B5E20"
+                  //style={{ alignSelf: "center" }}
+                  style={{ width: 200, height: 40 }}
+                />
+              </View>
+              <View style={{ marginLeft: "auto" }}>
+                {sliderData4 === 1 ? (
+                  <Text style={{ fontSize: 18 }}>Never</Text>
+                ) : (
+                  <Text />
+                )}
+                {sliderData4 === 2 ? (
+                  <Text style={{ fontSize: 18 }}>Sometimes</Text>
+                ) : (
+                  <Text />
+                )}
+                {sliderData4 === 3 ? (
+                  <Text style={{ fontSize: 18 }}>Frequently</Text>
+                ) : (
+                  <Text />
+                )}
+              </View>
+            </View>
+          )}
+          name="Travel"
+          defaultValue=""
+        />
+
+        <Question
+          question="Would you consider yourself an introvert or extrovert?"
+          display={questionNumber == 10}
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <BooleanQuestionnaireSwitch
+              value={value}
+              trueLabel={"Introvert"}
+              falseLabel={"Extrovert"}
+              parentCallback={callbackZoomOthersUsing}
+            />
+          )}
+          defaultvalue={false}
+          name="okayWithZoom1"
+        />
+
         <View style={styles.formNavigation}>
           <Button
             title="Back"
@@ -506,44 +512,16 @@ export default function Questionnaire({ route, navigation }) {
             style={styles.buttonLeft}
           />
 
-          {questionNumber < 8 && (
+          {questionNumber < 10 && (
             <View>
-              {data.locationValid &&
-              data.check_location &&
-              questionNumber == 1 ? (
-                <Button
-                  title="Next"
-                  onPress={nextQuestion}
-                  style={styles.buttonRight}
-                />
-              ) : null}
-              {data.budgetValid && data.check_Budget && questionNumber == 2 ? (
-                <Button
-                  title="Next"
-                  onPress={nextQuestion}
-                  style={styles.buttonRight}
-                />
-              ) : null}
-              {data.cleanlinessValid &&
-              data.check_Cleanliness &&
-              questionNumber == 4 ? (
-                <Button
-                  title="Next"
-                  onPress={nextQuestion}
-                  style={styles.buttonRight}
-                />
-              ) : null}
-              {questionNumber == 3 ||
-              (questionNumber >= 5 && questionNumber < 8) ? (
-                <Button
-                  title="Next"
-                  onPress={nextQuestion}
-                  style={styles.buttonRight}
-                />
-              ) : null}
+              <Button
+                title="Next"
+                onPress={nextQuestion}
+                style={styles.buttonRight}
+              />
             </View>
           )}
-          {questionNumber == 8 && (
+          {questionNumber == 10 && (
             <Button
               title="Submit"
               onPress={() => {
