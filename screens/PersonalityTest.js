@@ -45,25 +45,8 @@ export default function Questionnaire({ route, navigation }) {
     cleanlinessValid: true,
     smokeOrNot: false,
     petsOrNot: false,
-    zoomOrNot: false,
-    okayWithZoom: false,
-    locationValid: true,
-    roommates_boolean: false,
-    check_location: false,
-    check_Budget: false,
-    check_Cleanliness: false,
   });
 
-  const [location, setLocation] = React.useState("");
-
-  const [roommate, setRoommate_yes_no] = React.useState(false);
-  const [smoker, setSmoker] = React.useState(false);
-  const [pets, setPets] = React.useState(false);
-  const [zoom_friendly, setZoom_friendly] = React.useState(false);
-  const [zoom_others_using, setZoom_others_using] = React.useState(false);
-  const [budget, setBudget] = React.useState("");
-  const [cleanliness, setCleanliness] = React.useState("");
-  const [temp, setTemp] = React.useState("");
 
   const personalityTestTaken = React.useState(true);
 
@@ -71,137 +54,8 @@ export default function Questionnaire({ route, navigation }) {
     navigation.navigate("ProfileScreen", personalityTestTaken);
   };
 
-  const insert_questionnaire_Data = () => {
-    fetch("http://127.0.0.1:5000/questionnaire", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        location: location.location,
-        budget: budget.budget,
-        roommate,
-        cleanliness: cleanliness.cleanliness,
-        smoker,
-        pets,
-        zoom_friendly,
-        zoom_others_using,
-      }),
-    })
-      .then((resp) => resp.text())
-      .then((data) => {
-        console.log(data);
-        if (data === "executed") {
-          console.log(route.params);
-          route.params.setIsLoggedIn(true);
-        }
-      })
-      .catch((error) => console.log(error));
-  };
-
-  const budgetValidation = (val) => {
-    var rege = /^[0-9]+$/;
-
-    if (rege.test(val)) {
-      if (val.trim().length !== 0) {
-        setBudget({ budget: val });
-        setData({
-          ...data,
-          budgetValid: true,
-          check_Budget: true,
-        });
-      } else {
-        setBudget({ budget: val });
-        setData({
-          ...data,
-          budgetValid: false,
-          check_Budget: false,
-        });
-      }
-    } else {
-      setBudget({ budget: val });
-      setData({
-        ...data,
-        budgetValid: false,
-        check_Budget: false,
-      });
-    }
-  };
-  const locationValidation = (val) => {
-    var rege = /^\d{5}$/;
-
-    if (rege.test(val)) {
-      if (val.trim().length == 5) {
-        setLocation({ location: val });
-        setData({
-          ...data,
-          locationValid: true,
-          check_location: true,
-        });
-      } else {
-        setLocation({ location: val });
-        setData({
-          ...data,
-          locationValid: false,
-          check_location: false,
-        });
-      }
-    } else {
-      setLocation({ location: val });
-      setData({
-        ...data,
-        locationValid: false,
-        check_location: false,
-      });
-    }
-  };
-  const cleanlinessValidation = (val) => {
-    var rege = /^[0-9]+$/;
-
-    if (rege.test(val)) {
-      var temp = parseInt(val);
-      if (temp <= 10 && temp != 0) {
-        setCleanliness({ cleanliness: val });
-        setData({
-          ...data,
-          cleanlinessValid: true,
-          check_Cleanliness: true,
-        });
-      } else {
-        setCleanliness({ cleanliness: val });
-        setData({
-          ...data,
-          cleanlinessValid: false,
-          check_Cleanliness: false,
-        });
-      }
-    } else {
-      setCleanliness({ cleanliness: val });
-      setData({
-        ...data,
-        cleanlinessValid: false,
-        check_Cleanliness: false,
-      });
-    }
-  };
-
-  const callbackRoomate = useCallback((val) => {
-    setRoommate_yes_no(val);
-  }, []);
-
-  const callbackSmoker = useCallback((val) => {
-    setSmoker(val);
-  }, []);
-  const callbackPets = useCallback((val) => {
-    setPets(val);
-  }, []);
-  const callbackZoomFriendly = useCallback((val) => {
-    setZoom_friendly(val);
-  }, []);
-  const callbackZoomOthersUsing = useCallback((val) => {
-    setZoom_others_using(val);
-  }, []);
-
+ 
+  
   const Submission = () => {
     handleSubmit(onSubmit);
 
@@ -230,10 +84,10 @@ export default function Questionnaire({ route, navigation }) {
   // implement submit once the Questionnaire API is finished
   console.log(errors);
 
-  const [sliderData1, setSliderData1] = useState(5);
-  const [sliderData2, setSliderData2] = useState(2);
-  const [sliderData3, setSliderData3] = useState(2);
-  const [sliderData4, setSliderData4] = useState(2);
+  const [outgoing, setOutgoing] = useState(5);
+  const [entertainment, setEntertainment] = useState(2);
+  const [friend_frequency, setFriendFrequency] = useState(2);
+  const [travel, setTravel] = useState(2);
 
   return (
     <View style={styles.container}>
@@ -254,19 +108,19 @@ export default function Questionnaire({ route, navigation }) {
                   minimumTrackTintColor="#5CD85E"
                   maximumTrackTintColor="#097969"
                   step={1}
-                  value={sliderData1}
-                  onValueChange={(sliderValue) => setSliderData1(sliderValue)}
+                  value={outgoing}
+                  onValueChange={(sliderValue) => setOutgoing(sliderValue)}
                   thumbTintColor="#1B5E20"
                   //style={{ alignSelf: "center" }}
                   style={{ width: 250, height: 40 }}
                 />
               </View>
               <View style={{ marginLeft: "auto" }}>
-                <Text style={{ fontSize: 18 }}>{sliderData1}</Text>
+                <Text style={{ fontSize: 18 }}>{outgoing}</Text>
               </View>
             </View>
           )}
-          name="Location"
+          name="Outgoing"
           defaultValue=""
         />
 
@@ -284,25 +138,25 @@ export default function Questionnaire({ route, navigation }) {
                   minimumTrackTintColor="#5CD85E"
                   maximumTrackTintColor="#097969"
                   step={1}
-                  value={sliderData2}
-                  onValueChange={(sliderValue) => setSliderData2(sliderValue)}
+                  value={entertainment}
+                  onValueChange={(sliderValue) => setEntertainment(sliderValue)}
                   thumbTintColor="#1B5E20"
                   //style={{ alignSelf: "center" }}
                   style={{ width: 200, height: 40 }}
                 />
               </View>
               <View style={{ marginLeft: "auto" }}>
-                {sliderData2 === 1 ? (
+                {entertainment === 1 ? (
                   <Text style={{ fontSize: 18 }}>Movie</Text>
                 ) : (
                   <Text />
                 )}
-                {sliderData2 === 2 ? (
+                {entertainment === 2 ? (
                   <Text style={{ fontSize: 18 }}>Book</Text>
                 ) : (
                   <Text />
                 )}
-                {sliderData2 === 3 ? (
+                {entertainment === 3 ? (
                   <Text style={{ fontSize: 18 }}>Theatre Play</Text>
                 ) : (
                   <Text />
@@ -310,7 +164,7 @@ export default function Questionnaire({ route, navigation }) {
               </View>
             </View>
           )}
-          name="Budget"
+          name="Entertainment"
           defaultValue=""
         />
 
@@ -328,7 +182,7 @@ export default function Questionnaire({ route, navigation }) {
             />
           )}
           defaultvalue={false}
-          name="othersUsingZoom"
+          name="disappointment"
         />
 
         <Question
@@ -345,25 +199,25 @@ export default function Questionnaire({ route, navigation }) {
                   minimumTrackTintColor="#5CD85E"
                   maximumTrackTintColor="#097969"
                   step={1}
-                  value={sliderData3}
-                  onValueChange={(sliderValue) => setSliderData3(sliderValue)}
+                  value={friend_frequency}
+                  onValueChange={(sliderValue) => setFriendFrequency(sliderValue)}
                   thumbTintColor="#1B5E20"
                   //style={{ alignSelf: "center" }}
                   style={{ width: 200, height: 40 }}
                 />
               </View>
               <View style={{ marginLeft: "auto" }}>
-                {sliderData3 === 1 ? (
+                {friend_frequency === 1 ? (
                   <Text style={{ fontSize: 18 }}>Never</Text>
                 ) : (
                   <Text />
                 )}
-                {sliderData3 === 2 ? (
+                {friend_frequency === 2 ? (
                   <Text style={{ fontSize: 18 }}>Sometimes</Text>
                 ) : (
                   <Text />
                 )}
-                {sliderData3 === 3 ? (
+                {friend_frequency === 3 ? (
                   <Text style={{ fontSize: 18 }}>Frequently</Text>
                 ) : (
                   <Text />
@@ -371,7 +225,7 @@ export default function Questionnaire({ route, navigation }) {
               </View>
             </View>
           )}
-          name="Cleanliness"
+          name="friend_frequency"
           defaultValue=""
         />
 
@@ -389,7 +243,7 @@ export default function Questionnaire({ route, navigation }) {
             />
           )}
           defaultvalue={false}
-          name="smokerOrNot"
+          name="busy"
         />
 
         <Question
@@ -406,7 +260,7 @@ export default function Questionnaire({ route, navigation }) {
             />
           )}
           defaultvalue={false}
-          name="petsOrNot"
+          name="cheat_or_not"
         />
 
         <Question
@@ -423,7 +277,7 @@ export default function Questionnaire({ route, navigation }) {
             />
           )}
           defaultvalue={false}
-          name="zoomOrNot"
+          name="conflict"
         />
 
         <Question
@@ -440,7 +294,7 @@ export default function Questionnaire({ route, navigation }) {
             />
           )}
           defaultvalue={false}
-          name="okayWithZoom"
+          name="social_causes"
         />
 
         <Question
@@ -457,25 +311,25 @@ export default function Questionnaire({ route, navigation }) {
                   minimumTrackTintColor="#5CD85E"
                   maximumTrackTintColor="#097969"
                   step={1}
-                  value={sliderData4}
-                  onValueChange={(sliderValue) => setSliderData4(sliderValue)}
+                  value={travel}
+                  onValueChange={(sliderValue) => setTravel(sliderValue)}
                   thumbTintColor="#1B5E20"
                   //style={{ alignSelf: "center" }}
                   style={{ width: 200, height: 40 }}
                 />
               </View>
               <View style={{ marginLeft: "auto" }}>
-                {sliderData4 === 1 ? (
+                {travel === 1 ? (
                   <Text style={{ fontSize: 18 }}>Never</Text>
                 ) : (
                   <Text />
                 )}
-                {sliderData4 === 2 ? (
+                {travel === 2 ? (
                   <Text style={{ fontSize: 18 }}>Sometimes</Text>
                 ) : (
                   <Text />
                 )}
-                {sliderData4 === 3 ? (
+                {travel === 3 ? (
                   <Text style={{ fontSize: 18 }}>Frequently</Text>
                 ) : (
                   <Text />
@@ -501,7 +355,7 @@ export default function Questionnaire({ route, navigation }) {
             />
           )}
           defaultvalue={false}
-          name="okayWithZoom1"
+          name="intro_extro_vert"
         />
 
         <View style={styles.formNavigation}>
