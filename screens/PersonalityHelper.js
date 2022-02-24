@@ -33,14 +33,14 @@ const PersonalityHelper = ({ route, navigation }) => {
           <Text style={[styles.text, { fontSize: 30, alignSelf: "center" }]}>
             The Observer
           </Text>
-          <View style={[styles.personalityImage, { marginLeft: 75 }]}>
+          <View style={[styles.personalityImage, { alignSelf: "center" }]}>
             <Image
               source={require("../src/assets/ProfileScreen/theArchitect.png")}
               resizeMode="center"
               style={styles.image}
             ></Image>
           </View>
-          <Text style={styles.text}>
+          <Text style={[styles.text, { fontSize: 18 }]}>
             {" "}
             This person is a complete introvert. Being the observer, they
             "observe" the room before associating with others. They are self
@@ -86,5 +86,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  image: {
+    flex: 1,
+    height: undefined,
+    width: undefined,
   },
 });
