@@ -109,6 +109,59 @@ const PersonalityHelper = ({ route, navigation }) => {
           orientation="horizontal"
           style={{ marginTop: 10, marginHorizontal: 25 }}
         />
+
+        <View style={[styles.container, { alignSelf: "center" }]}>
+          <Text style={[styles.text, { fontSize: 30, marginLeft: 5 }]}>
+            The Adventurer
+          </Text>
+          <View style={{ flexDirection: "row", marginTop: 10 }}>
+            <View style={[styles.personalityImage, { alignSelf: "center" }]}>
+              <Image
+                source={require("../src/assets/ProfileScreen/theAdventurer.png")}
+                resizeMode="center"
+                style={styles.image}
+              ></Image>
+            </View>
+            <Text style={[styles.text, { fontSize: 16, color: "#eef5eb" }]}>
+              {" "}
+              This person is a semi-extrovert. Being the adventurer, they are
+              open-minded and approach life eager for new experiences. They are
+              people with grounded warmth and durability to stay in the moment
+              which helps them unlock exciting potential.
+            </Text>
+          </View>
+        </View>
+
+        <Divider
+          orientation="horizontal"
+          style={{ marginTop: 10, marginHorizontal: 25 }}
+        />
+        <View style={[styles.container, { alignSelf: "center" }]}>
+          <Text style={[styles.text, { fontSize: 30, marginLeft: 5 }]}>
+            The Entertainer
+          </Text>
+          <View style={{ flexDirection: "row", marginTop: 10 }}>
+            <View style={[styles.personalityImage, { alignSelf: "center" }]}>
+              <Image
+                source={require("../src/assets/ProfileScreen/theEntertainer.png")}
+                resizeMode="center"
+                style={styles.image}
+              ></Image>
+            </View>
+            <Text style={[styles.text, { fontSize: 18, color: "#eef5eb" }]}>
+              {" "}
+              This person is a complete extrovert. Being the entertainer, this
+              person loves vibrant experiences, engaging in life eagerly and
+              taking pleasure in discovering the unknown. They love the
+              spotlight and the world is their stage.
+            </Text>
+          </View>
+        </View>
+
+        <Divider
+          orientation="horizontal"
+          style={{ marginTop: 10, marginHorizontal: 25 }}
+        />
       </ScrollView>
     </SafeAreaView>
   );
