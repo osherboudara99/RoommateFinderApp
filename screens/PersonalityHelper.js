@@ -29,28 +29,35 @@ const PersonalityHelper = ({ route, navigation }) => {
           </View>
         </View>
 
+        <Divider
+          orientation="horizontal"
+          style={{ marginTop: 10, marginHorizontal: 25 }}
+        />
         <View style={[styles.container, { alignSelf: "center" }]}>
-          <Text style={[styles.text, { fontSize: 30, alignSelf: "center" }]}>
+          <Text style={[styles.text, { fontSize: 30, marginLeft: 5 }]}>
             The Observer
           </Text>
-          <View style={[styles.personalityImage, { alignSelf: "center" }]}>
-            <Image
-              source={require("../src/assets/ProfileScreen/theArchitect.png")}
-              resizeMode="center"
-              style={styles.image}
-            ></Image>
+          <View style={{ flexDirection: "row", marginTop: 10 }}>
+            <View style={[styles.personalityImage, { alignSelf: "center" }]}>
+              <Image
+                source={require("../src/assets/ProfileScreen/theArchitect.png")}
+                resizeMode="center"
+                style={styles.image}
+              ></Image>
+            </View>
+            <Text style={[styles.text, { fontSize: 18, color: "#eef5eb" }]}>
+              {" "}
+              This person is a complete introvert. Being the observer, they
+              "observe" the room before associating with others. They are self
+              sufficient, non-demanding, thoughtful and unobtrusive.
+            </Text>
           </View>
-          <Text style={[styles.text, { fontSize: 18 }]}>
-            {" "}
-            This person is a complete introvert. Being the observer, they
-            "observe" the room before associating with others. They are self
-            sufficient, non-demanding, thoughtful and unobtrusive.
-          </Text>
-          <Divider
-            orientation="horizontal"
-            style={{ marginTop: 10, marginHorizontal: 25 }}
-          />
         </View>
+
+        <Divider
+          orientation="horizontal"
+          style={{ marginTop: 10, marginHorizontal: 25 }}
+        />
       </ScrollView>
     </SafeAreaView>
   );
