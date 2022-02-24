@@ -40,7 +40,7 @@ const PersonalityHelper = ({ route, navigation }) => {
           <View style={{ flexDirection: "row", marginTop: 10 }}>
             <View style={[styles.personalityImage, { alignSelf: "center" }]}>
               <Image
-                source={require("../src/assets/ProfileScreen/theArchitect.png")}
+                source={require("../src/assets/ProfileScreen/theObserver.png")}
                 resizeMode="center"
                 style={styles.image}
               ></Image>
@@ -50,6 +50,57 @@ const PersonalityHelper = ({ route, navigation }) => {
               This person is a complete introvert. Being the observer, they
               "observe" the room before associating with others. They are self
               sufficient, non-demanding, thoughtful and unobtrusive.
+            </Text>
+          </View>
+        </View>
+
+        <Divider
+          orientation="horizontal"
+          style={{ marginTop: 10, marginHorizontal: 25 }}
+        />
+        <View style={[styles.container, { alignSelf: "center" }]}>
+          <Text style={[styles.text, { fontSize: 30, marginLeft: 5 }]}>
+            The Sentinel
+          </Text>
+          <View style={{ flexDirection: "row", marginTop: 10 }}>
+            <View style={[styles.personalityImage, { alignSelf: "center" }]}>
+              <Image
+                source={require("../src/assets/ProfileScreen/theSentinel.png")}
+                resizeMode="center"
+                style={styles.image}
+              ></Image>
+            </View>
+            <Text style={[styles.text, { fontSize: 18, color: "#eef5eb" }]}>
+              {" "}
+              This person is a semi-introvert. Being sentinel, they are quiet
+              and they are confident in who they are. They are self motivated
+              beings, taking pride in their good character and competence.
+            </Text>
+          </View>
+        </View>
+
+        <Divider
+          orientation="horizontal"
+          style={{ marginTop: 10, marginHorizontal: 25 }}
+        />
+        <View style={[styles.container, { alignSelf: "center" }]}>
+          <Text style={[styles.text, { fontSize: 30, marginLeft: 5 }]}>
+            The Architect
+          </Text>
+          <View style={{ flexDirection: "row", marginTop: 10 }}>
+            <View style={[styles.personalityImage, { alignSelf: "center" }]}>
+              <Image
+                source={require("../src/assets/ProfileScreen/theArchitect.png")}
+                resizeMode="center"
+                style={styles.image}
+              ></Image>
+            </View>
+            <Text style={[styles.text, { fontSize: 17, color: "#eef5eb" }]}>
+              {" "}
+              This person is between an extrovert and an introvert. Being the
+              architect, they are intuitive, rational and quick-witted. They
+              derive their self-esteem from their knowledge and mental acuity
+              and are not afraid to speak up when required.
             </Text>
           </View>
         </View>
