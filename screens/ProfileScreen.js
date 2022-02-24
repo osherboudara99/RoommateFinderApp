@@ -54,9 +54,17 @@ const ProfileScreen = ({ route, navigation }) => {
         />
         <View style={{ margin: 25 }}>
           <View style={[styles.rowLineUp, { marginBottom: 10 }]}>
-            <Text style={[styles.text, { fontSize: 25 }]}>
-              Personality Type
-            </Text>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={[styles.text, { fontSize: 25 }]}>
+                Personality Type
+              </Text>
+              <TouchableOpacity
+                style={{ marginTop: 5, marginLeft: 5 }}
+                onPress={() => navigation.navigate("PersonalityHelper")}
+              >
+                <Ionicons name="ios-help-circle" size={22} color="#dce3da" />
+              </TouchableOpacity>
+            </View>
             <TouchableOpacity
               onPress={() => navigation.navigate("PersonalityTest")}
             >
