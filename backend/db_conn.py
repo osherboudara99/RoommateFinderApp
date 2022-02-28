@@ -5,6 +5,10 @@ from mysql.connector import errorcode
 from login_backend import login_blueprint
 from signup_backend import signup_blueprint
 from questionnaire_insertion import questionaire_blueprint
+from profile_insertion import profile_blueprint
+from profile_screen_select import profile_screen_blueprint
+from profile_pic_insertion import profile_pic_blueprint
+from profile_pic_select import profile_pic_select_blueprint
 from flask_cors import CORS, cross_origin
 
 
@@ -19,6 +23,7 @@ app.config['CORS_HEADER'] = 'Content-Type'
 @app.route('/', methods=['GET', 'POST'])
 def connect(): 
     try:
+        ##cnx = mysql.connector.connect(user='seniorproject', password='', host='38.34.124.120')
         cnx = mysql.connector.connect(user='root', password='',
                               host='127.0.0.1')
 
@@ -58,6 +63,32 @@ def connect():
     UNIQUE KEY `user_UNIQUE` (`userid`), \
     CONSTRAINT `qs_user_id_1` FOREIGN KEY (`userid`) REFERENCES `Users` (`userid`) \
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci")
+
+
+        cursor.execute("CREATE TABLE IF NOT EXISTS SeniorProject.profile ( \
+    `profile_id` int(10) unsigned NOT NULL AUTO_INCREMENT, \
+    `userid` int(10) DEFAULT NULL, \
+    `questionaire_id` int(10) DEFAULT NULL, \
+    `personality_type` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL, \
+    `description` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL, \
+    PRIMARY KEY (`profile_id`), \
+    UNIQUE KEY `user_UNIQUE` (`userid`), \
+    UNIQUE KEY `questionaire_UNIQUE` (`questionaire_id`), \
+    CONSTRAINT `qs_user_id_1` FOREIGN KEY (`userid`) REFERENCES `Users` (`userid`) \
+    CONSTRAINT `qs_questionaire_id_1` FOREIGN KEY (`questionaire_id`) REFERENCES `questionaire` (`questionaire_id`) \
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci")
+
+
+        cursor.execute("CREATE TABLE IF NOT EXISTS SeniorProject.profile_picture ( \
+    `userid` int(10) DEFAULT NULL, \
+    `questionaire_id` int(10) DEFAULT NULL, \
+    `profile_pic` LONGBLOB DEFAULT NULL, \
+    PRIMARY KEY (`profile_id`), \
+    UNIQUE KEY `user_UNIQUE` (`userid`), \
+    UNIQUE KEY `questionaire_UNIQUE` (`questionaire_id`), \
+    CONSTRAINT `qs_user_id_1` FOREIGN KEY (`userid`) REFERENCES `Users` (`userid`) \
+    CONSTRAINT `qs_questionaire_id_1` FOREIGN KEY (`questionaire_id`) REFERENCES `questionaire` (`questionaire_id`) \
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci")
     
         cursor.close()
         cnx.close()
@@ -75,6 +106,14 @@ app.register_blueprint(login_blueprint)
 app.register_blueprint(signup_blueprint)
 
 app.register_blueprint(questionaire_blueprint)
+
+app.register_blueprint(profile_blueprint)
+
+app.register_blueprint(profile_screen_blueprint)
+
+app.register_blueprint(profile_pic_blueprint)
+
+app.register_blueprint(profile_pic_select_blueprint)
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', 

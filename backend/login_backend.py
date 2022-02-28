@@ -9,6 +9,7 @@ login_blueprint = Blueprint('login', __name__)
 
 @login_blueprint.route('/login', methods=['GET', 'POST'])
 def login(): 
+    ##cnx = mysql.connector.connect(user='seniorproject', password='', host='38.34.124.120')
     cnx = mysql.connector.connect(user='root', password='',
                               host='127.0.0.1')
 

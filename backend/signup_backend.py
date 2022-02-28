@@ -9,6 +9,7 @@ signup_blueprint = Blueprint('signup', __name__)
 
 @signup_blueprint.route('/signup', methods=['POST'])
 def signup():
+    ##cnx = mysql.connector.connect(user='seniorproject', password='', host='38.34.124.120')
 
 
     cnx = mysql.connector.connect(user='root', password='',

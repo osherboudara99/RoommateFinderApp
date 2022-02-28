@@ -7,7 +7,8 @@ import signup_backend
 questionaire_blueprint = Blueprint('questionnaire', __name__)
 
 @questionaire_blueprint.route('/questionnaire', methods=['GET', 'POST'])
-def questionaire_table_creation(): 
+def questionaire_table_creation():
+    ##cnx = mysql.connector.connect(user='seniorproject', password='', host='38.34.124.120') 
     cnx = mysql.connector.connect(user='root', password='',
                               host='127.0.0.1')
 
