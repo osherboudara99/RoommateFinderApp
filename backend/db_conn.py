@@ -70,12 +70,11 @@ def connect():
     `userid` int(10) DEFAULT NULL, \
     `questionaire_id` int(10) DEFAULT NULL, \
     `personality_type` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL, \
-    `description` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL, \
+    `description` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL, \
     PRIMARY KEY (`profile_id`), \
     UNIQUE KEY `user_UNIQUE` (`userid`), \
     UNIQUE KEY `questionaire_UNIQUE` (`questionaire_id`), \
-    CONSTRAINT `qs_user_id_1` FOREIGN KEY (`userid`) REFERENCES `Users` (`userid`) \
-    CONSTRAINT `qs_questionaire_id_1` FOREIGN KEY (`questionaire_id`) REFERENCES `questionaire` (`questionaire_id`) \
+    CONSTRAINT `qs_user_id_2` FOREIGN KEY (`userid`) REFERENCES `Users` (`userid`) \
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci")
 
 
@@ -83,11 +82,9 @@ def connect():
     `userid` int(10) DEFAULT NULL, \
     `questionaire_id` int(10) DEFAULT NULL, \
     `profile_pic` LONGBLOB DEFAULT NULL, \
-    PRIMARY KEY (`profile_id`), \
     UNIQUE KEY `user_UNIQUE` (`userid`), \
     UNIQUE KEY `questionaire_UNIQUE` (`questionaire_id`), \
-    CONSTRAINT `qs_user_id_1` FOREIGN KEY (`userid`) REFERENCES `Users` (`userid`) \
-    CONSTRAINT `qs_questionaire_id_1` FOREIGN KEY (`questionaire_id`) REFERENCES `questionaire` (`questionaire_id`) \
+    CONSTRAINT `qs_user_id_3` FOREIGN KEY (`userid`) REFERENCES `Users` (`userid`) \
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci")
     
         cursor.close()
