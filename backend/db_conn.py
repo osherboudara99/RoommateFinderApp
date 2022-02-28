@@ -8,8 +8,6 @@ from questionnaire_insertion import questionaire_blueprint
 from flask_cors import CORS, cross_origin
 
 
-
-
 app = Flask(__name__)
 
 cors = CORS(app)
@@ -17,12 +15,10 @@ app.config['CORS_HEADER'] = 'Content-Type'
 
 
 @app.route('/', methods=['GET', 'POST'])
-def connect(): 
+def connect():
     try:
         cnx = mysql.connector.connect(user='root', password='',
-                              host='127.0.0.1')
-
-        
+                                      host='127.0.0.1')
 
         cursor = cnx.cursor()
 
@@ -42,7 +38,6 @@ def connect():
   CHECK (`phone` NOT LIKE '%[^0-9]%' AND LENGTH(`phone`) = 10) \
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci")
 
-
         cursor.execute("CREATE TABLE IF NOT EXISTS SeniorProject.questionnaire ( \
     `questionaire_id` int(10) unsigned NOT NULL AUTO_INCREMENT, \
     `userid` int(10) DEFAULT NULL, \
@@ -58,7 +53,7 @@ def connect():
     UNIQUE KEY `user_UNIQUE` (`userid`), \
     CONSTRAINT `qs_user_id_1` FOREIGN KEY (`userid`) REFERENCES `Users` (`userid`) \
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci")
-    
+
         cursor.close()
         cnx.close()
         return "success"
@@ -70,6 +65,7 @@ def connect():
         else:
             return err
 
+
 app.register_blueprint(login_blueprint)
 
 app.register_blueprint(signup_blueprint)
@@ -77,8 +73,5 @@ app.register_blueprint(signup_blueprint)
 app.register_blueprint(questionaire_blueprint)
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', 
+    app.run(host='127.0.0.1',
             port=5000, debug=True)
-    
-    
-    

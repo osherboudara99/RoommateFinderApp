@@ -47,6 +47,9 @@ export default function Questionnaire({ route, navigation }) {
     petsOrNot: false,
   });
 
+  const testFunc = () => {
+    console.log("test");
+  };
 
   const personalityTestTaken = React.useState(true);
 
@@ -54,8 +57,6 @@ export default function Questionnaire({ route, navigation }) {
     navigation.navigate("ProfileScreen", personalityTestTaken);
   };
 
- 
-  
   const Submission = () => {
     handleSubmit(onSubmit);
 
@@ -175,10 +176,10 @@ export default function Questionnaire({ route, navigation }) {
           rules={{ required: true }}
           render={({ field: { onChange, onBlur, value } }) => (
             <BooleanQuestionnaireSwitch
-              parentCallback={callbackRoomate}
               value={value}
               trueLabel={"Yes"}
               falseLabel={"No"}
+              parentCallback={testFunc}
             />
           )}
           defaultvalue={false}
@@ -200,7 +201,9 @@ export default function Questionnaire({ route, navigation }) {
                   maximumTrackTintColor="#097969"
                   step={1}
                   value={friend_frequency}
-                  onValueChange={(sliderValue) => setFriendFrequency(sliderValue)}
+                  onValueChange={(sliderValue) =>
+                    setFriendFrequency(sliderValue)
+                  }
                   thumbTintColor="#1B5E20"
                   //style={{ alignSelf: "center" }}
                   style={{ width: 200, height: 40 }}
@@ -239,7 +242,7 @@ export default function Questionnaire({ route, navigation }) {
               value={value}
               trueLabel={"Yes"}
               falseLabel={"No"}
-              parentCallback={callbackSmoker}
+              parentCallback={testFunc}
             />
           )}
           defaultvalue={false}
@@ -256,7 +259,7 @@ export default function Questionnaire({ route, navigation }) {
               value={value}
               trueLabel={"Yes"}
               falseLabel={"No"}
-              parentCallback={callbackPets}
+              parentCallback={testFunc}
             />
           )}
           defaultvalue={false}
@@ -273,7 +276,7 @@ export default function Questionnaire({ route, navigation }) {
               value={value}
               trueLabel={"Yes"}
               falseLabel={"No"}
-              parentCallback={callbackZoomFriendly}
+              parentCallback={testFunc}
             />
           )}
           defaultvalue={false}
@@ -290,7 +293,7 @@ export default function Questionnaire({ route, navigation }) {
               value={value}
               trueLabel={"Yes"}
               falseLabel={"No"}
-              parentCallback={callbackZoomOthersUsing}
+              parentCallback={testFunc}
             />
           )}
           defaultvalue={false}
@@ -351,7 +354,7 @@ export default function Questionnaire({ route, navigation }) {
               value={value}
               trueLabel={"Introvert"}
               falseLabel={"Extrovert"}
-              parentCallback={callbackZoomOthersUsing}
+              parentCallback={testFunc}
             />
           )}
           defaultvalue={false}
