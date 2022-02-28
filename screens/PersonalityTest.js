@@ -1,3 +1,4 @@
+
 import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -47,26 +48,91 @@ export default function Questionnaire({ route, navigation }) {
     petsOrNot: false,
   });
 
+  const testFunc = () => {
+    console.log("test");
+  };
 
   const personalityTestTaken = React.useState(true);
 
   const navigateBackToProfileScreen = () => {
+    var total=0;
+    var personality ="";
+    var descr = "";
+      if(outgoing >=7 ){
+        total+=2;
+      }else if (outgoing<7 && outgoing>=4 ){
+        total+=1;
+      }
+      if(entertainment == 3){
+        total+=2;
+      }else if (entertainment ==1){
+        total+=1;
+      }
+      if(friend_frequency ==3){
+        total+=2;
+      }else if (friend_frequency ==2){
+        total+=1;
+      }
+      if(travel ==3){
+        total+=2;
+      }else if (travel ==2){
+        total+=1;
+      } 
+      if(!disappointed){
+        total+=1;
+      }
+      if(busy){
+        total+=1;
+      }
+      if(!conflict){
+        total+=1;
+      }
+      if(passionate){
+        total+=1;
+      }
+      if(!introvertExtrovert){
+        total+=2;
+      }
+      if(total<=2){
+        personality="The Observer";
+        descr=  "This person is a complete introvert. Being the observer, they observe the room before associating with others. They are self sufficient, non-demanding, thoughtful and unobtrusive.";
+      } else if(total<=5 && total >=3){
+        personality="The Sentinel";
+        descr= "This person is a semi-introvert. Being sentinel, they are quiet and they are confident in who they are. They are self motivate beings, taking pride in their good character and competence.";
+      }else if(total<=8 && total >=6){
+        personality="The Architect"
+        descr = "This person is between an extrovert and an introvert. Being the architect, they are intuitive, rational and quick-witted. They derive their self-esteem from their knowledge and mental acuity and are not afraid to speak up when required."
+      }else if(total<=11 && total >=9){
+        personality="The Adventurer "
+        descr =" This person is a semi-extrovert. Being the adventurer, they are open-minded and approach life eager for new experiences. They are people with grounded warmth and durability to stay in the moment which helps them unlock exciting potential."
+      }else{
+        personality="The Entertainer "
+        descr=" This person is a complete extrovert. Being the entertainer, this person loves vibrant experiences, engaging in life eagerly and taking pleasure in discovering the unknown. They love the spotlight and the world is their stage."
+      }
+
+      fetch('http://127.0.0.1:5000/profile', {
+        method:'POST',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify({personality,descr})
+    })
+    .then(resp => resp.text())
+    .then(data => {
+        console.log(data);
+        if(data === "executed")
+        {
+            console.log(route.params)
+            route.params.setIsLoggedIn(true);
+        }
+    })
+    .catch(error => console.log(error))
     navigation.navigate("ProfileScreen", personalityTestTaken);
   };
 
- 
-  
   const Submission = () => {
     handleSubmit(onSubmit);
 
-    console.log("loc:" + location);
-    console.log("budget:" + budget);
-    console.log("cleanliness:" + cleanliness);
-    console.log("roommate:" + roommate);
-    console.log("smoker:" + smoker);
-    console.log("pets:" + pets);
-    console.log("zoom friendly:" + zoom_friendly);
-    console.log("zoom others using:" + zoom_others_using);
 
     //console.log("test");
     //console.log(errors);
@@ -88,7 +154,26 @@ export default function Questionnaire({ route, navigation }) {
   const [entertainment, setEntertainment] = useState(2);
   const [friend_frequency, setFriendFrequency] = useState(2);
   const [travel, setTravel] = useState(2);
-
+  const [disappointed, setDisappointed_yes_no] = useState(0);
+  const [busy, setBusy_yes_no] = useState(0);
+  const [conflict, setConflict_yes_no] = useState(0);
+  const [passionate, setPassionate_yes_no] = useState(0);
+  const [introvertExtrovert, setIntrovertExtrovert_yes_no] = useState(0);
+  const callbackDisappointed = useCallback((val) => {
+    setDisappointed_yes_no(val);
+  }, []);
+  const callbackBusy = useCallback((val) => {
+    setBusy_yes_no(val);
+  }, []);
+  const callbackConflict = useCallback((val) => {
+    setConflict_yes_no(val);
+  }, []);
+  const callbackPassionate = useCallback((val) => {
+    setPassionate_yes_no(val);
+  }, []);
+  const callbackIntrovertExtrovert= useCallback((val) => {
+    setIntrovertExtrovert_yes_no(val);
+  }, []);
   return (
     <View style={styles.container}>
       <View style={[styles.form, { width: window.width - 20 }]}>
@@ -175,10 +260,10 @@ export default function Questionnaire({ route, navigation }) {
           rules={{ required: true }}
           render={({ field: { onChange, onBlur, value } }) => (
             <BooleanQuestionnaireSwitch
-              parentCallback={callbackRoomate}
               value={value}
               trueLabel={"Yes"}
               falseLabel={"No"}
+              parentCallback={callbackDisappointed}
             />
           )}
           defaultvalue={false}
@@ -200,7 +285,9 @@ export default function Questionnaire({ route, navigation }) {
                   maximumTrackTintColor="#097969"
                   step={1}
                   value={friend_frequency}
-                  onValueChange={(sliderValue) => setFriendFrequency(sliderValue)}
+                  onValueChange={(sliderValue) =>
+                    setFriendFrequency(sliderValue)
+                  }
                   thumbTintColor="#1B5E20"
                   //style={{ alignSelf: "center" }}
                   style={{ width: 200, height: 40 }}
@@ -239,7 +326,7 @@ export default function Questionnaire({ route, navigation }) {
               value={value}
               trueLabel={"Yes"}
               falseLabel={"No"}
-              parentCallback={callbackSmoker}
+              parentCallback={callbackBusy}
             />
           )}
           defaultvalue={false}
@@ -256,7 +343,7 @@ export default function Questionnaire({ route, navigation }) {
               value={value}
               trueLabel={"Yes"}
               falseLabel={"No"}
-              parentCallback={callbackPets}
+              parentCallback={testFunc}
             />
           )}
           defaultvalue={false}
@@ -273,7 +360,7 @@ export default function Questionnaire({ route, navigation }) {
               value={value}
               trueLabel={"Yes"}
               falseLabel={"No"}
-              parentCallback={callbackZoomFriendly}
+              parentCallback={callbackConflict}
             />
           )}
           defaultvalue={false}
@@ -290,7 +377,7 @@ export default function Questionnaire({ route, navigation }) {
               value={value}
               trueLabel={"Yes"}
               falseLabel={"No"}
-              parentCallback={callbackZoomOthersUsing}
+              parentCallback={callbackPassionate}
             />
           )}
           defaultvalue={false}
@@ -351,7 +438,7 @@ export default function Questionnaire({ route, navigation }) {
               value={value}
               trueLabel={"Introvert"}
               falseLabel={"Extrovert"}
-              parentCallback={callbackZoomOthersUsing}
+              parentCallback={callbackIntrovertExtrovert}
             />
           )}
           defaultvalue={false}
