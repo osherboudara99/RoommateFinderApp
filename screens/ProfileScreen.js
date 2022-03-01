@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -17,6 +17,30 @@ const ProfileScreen = ({ route, navigation }) => {
 
   const personalityTestTaken = route.params;
 
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [location, setLocation] = React.useState("");
+  const [roommate, setRoommate_yes_no] = React.useState(false);
+  const [smoker, setSmoker] = React.useState(false);
+  const [pets, setPets] = React.useState(false);
+  const [zoom_friendly, setZoom_friendly] = React.useState(false);
+  //const [zoom_others_using, setZoom_others_using] = React.useState(false);
+  const [budget, setBudget] = React.useState("");
+  const [cleanliness, setCleanliness] = React.useState("");
+
+  const fetchProfileScreen = () => {
+    fetch("http://127.0.0.1:5000/profile_screen", {
+      method: "GET",
+    })
+      .then((resp) => resp.text())
+      .then((article) => {
+        var data = article.split(" ");
+        console.log(data);
+        setFirstName(data[2]);
+        setLastName(data[3]);
+      });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -28,6 +52,13 @@ const ProfileScreen = ({ route, navigation }) => {
               resizeMode="center"
             ></Image>
           </View>
+
+          <TouchableOpacity
+            style={{ marginTop: 5, marginLeft: 5 }}
+            onPress={fetchProfileScreen()}
+          >
+            <Ionicons name="refresh" size={22} color="#dce3da" />
+          </TouchableOpacity>
 
           <View style={styles.active}></View>
           <View style={styles.add}>
@@ -41,7 +72,7 @@ const ProfileScreen = ({ route, navigation }) => {
         </View>
         <View style={styles.infoContainer}>
           <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>
-            Bob Smith
+            {firstName} {lastName}
           </Text>
           <Text style={[styles.text, { color: "#ffffffb2", fontSize: 14 }]}>
             Los Angeles, CA
