@@ -34,8 +34,6 @@ const ProfileScreen = ({ route, navigation }) => {
     })
       .then((resp) => resp.text())
       .then((article) => {
-        console.log(article);
-        console.log(article[0])
         var data = article.split(" ");
         for (let i = 0; i < data.length; i++) {
           data[i] = data[i].replace(',','');
@@ -84,6 +82,22 @@ const ProfileScreen = ({ route, navigation }) => {
       });
   };
 
+  const fetchPersonality = () => {
+    fetch("http://127.0.0.1:5000/personality_test_select", {
+      method: "GET",
+    })
+      .then((resp) => resp.text())
+      .then((article) => {
+        var data = article.split(",");
+        console.log(data);
+      });
+  };
+  const functionCombined = () => {
+    fetchProfileScreen();
+    fetchPersonality();
+}  
+
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -98,7 +112,7 @@ const ProfileScreen = ({ route, navigation }) => {
 
           <TouchableOpacity
             style={{ marginTop: 5, marginLeft: 5 }}
-            onPress={fetchProfileScreen()}
+            onPress={functionCombined()}
           >
             <Ionicons name="refresh" size={22} color="#dce3da" />
           </TouchableOpacity>

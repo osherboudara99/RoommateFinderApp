@@ -3,6 +3,8 @@ import os
 import mysql.connector
 from mysql.connector import errorcode
 import signup_backend
+import logged_or_signed
+import login_backend
 
 profile_blueprint = Blueprint('profile', __name__)
 
@@ -13,8 +15,12 @@ def profile_insertion():
                               host='127.0.0.1')
 
 
-    email = signup_backend.email
-    password = signup_backend.password
+    if(logged_or_signed.didUserSignup):
+        email = signup_backend.email
+        password = signup_backend.password
+    elif(logged_or_signed.didUserLogin):
+        email = login_backend.email
+        password = login_backend.password
 
     personality_type = request.json['personality']
     description  = request.json['descr']
