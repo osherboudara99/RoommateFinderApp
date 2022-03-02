@@ -9,6 +9,7 @@ from profile_insertion import profile_blueprint
 from profile_screen_select import profile_screen_blueprint
 from profile_pic_insertion import profile_pic_blueprint
 from profile_pic_select import profile_pic_select_blueprint
+from personality_test_select import personality_test_select_blueprint
 from flask_cors import CORS, cross_origin
 
 
@@ -111,6 +112,8 @@ app.register_blueprint(profile_screen_blueprint)
 app.register_blueprint(profile_pic_blueprint)
 
 app.register_blueprint(profile_pic_select_blueprint)
+
+app.register_blueprint(personality_test_select_blueprint)
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', 

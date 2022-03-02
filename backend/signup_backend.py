@@ -2,6 +2,7 @@ from flask import Blueprint, app, request, json
 import os
 import mysql.connector
 from mysql.connector import errorcode
+import logged_or_signed
 
 signup_blueprint = Blueprint('signup', __name__)
 
@@ -18,8 +19,6 @@ def signup():
     global email
     global password
 
-    global didUserSignup
-    didUserSignup = False
     email = request.json['email']
     phone = request.json['phone']
     password = request.json['password']
@@ -34,7 +33,9 @@ def signup():
         cnx.commit()
         cursor.close()
         cnx.close()
-        didUserSignup = True
+        
+        logged_or_signed.didUserSignup = True
+        logged_or_signed.didUserLogin = False
         return "executed"
     except mysql.connector.IntegrityError as err:
         cursor.close()

@@ -4,6 +4,7 @@ import mysql.connector
 from mysql.connector import errorcode
 import login_backend
 import signup_backend
+import logged_or_signed
 
 
 profile_screen_blueprint = Blueprint('profile_screen', __name__)
@@ -15,10 +16,10 @@ def profile_screen_select():
     cnx = mysql.connector.connect(user='root', password='',
                                   host='127.0.0.1')
 
-    if(signup_backend.didUserSignup):
+    if(logged_or_signed.didUserSignup):
         email = signup_backend.email
         password = signup_backend.password
-    else:
+    elif(logged_or_signed.didUserLogin):
         email = login_backend.email
         password = login_backend.password
     #email = "test@test.com"

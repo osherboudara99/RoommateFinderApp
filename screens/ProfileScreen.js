@@ -34,10 +34,53 @@ const ProfileScreen = ({ route, navigation }) => {
     })
       .then((resp) => resp.text())
       .then((article) => {
+        console.log(article);
+        console.log(article[0])
         var data = article.split(" ");
-        console.log(data);
+        for (let i = 0; i < data.length; i++) {
+          data[i] = data[i].replace(',','');
+          data[i] = data[i].replace(/[']/g,"");
+        }
+        //console.log(data);
         setFirstName(data[2]);
         setLastName(data[3]);
+        setLocation(data[4]);
+        setBudget(data[5]);
+        if(data[6] == 1){
+          data[6] = 'Seeking roommates for a place';
+          setRoommate_yes_no(data[6]);
+        }
+        else{
+          data[6] = 'Joining a place with roommates';
+          setRoommate_yes_no(data[6]);
+        }
+        if(data[7] == 1){
+          data[7] = 'Smoker';
+          setSmoker(data[7]);
+        }
+        else{
+          data[7] = 'Non-Smoker';
+          setSmoker(data[7]);
+        }
+        if(data[8] == 1){
+          data[8] = 'Pet-Friendly';
+          setPets(data[8]);
+        }
+        else{
+          data[8] = 'Not Pet-Friendly';
+          setPets(data[8]);
+        }
+        setCleanliness(data[9]);
+        data[10] = data[10].replace(')', '');
+        data[10] = data[10].replace(']', '');
+        if(data[10] == 1){
+          data[10] = 'Zoom-Friendly';
+          setZoom_friendly(data[10]);
+        }
+        else{
+          data[10] = 'Not Zoom-Friendly';
+          setZoom_friendly(data[10]);
+        }
       });
   };
 
@@ -75,7 +118,7 @@ const ProfileScreen = ({ route, navigation }) => {
             {firstName} {lastName}
           </Text>
           <Text style={[styles.text, { color: "#ffffffb2", fontSize: 14 }]}>
-            Los Angeles, CA
+            {location}
           </Text>
         </View>
 
@@ -156,8 +199,8 @@ const ProfileScreen = ({ route, navigation }) => {
               color="#dae4d6"
               style={{ marginRight: 10 }}
             />
-            <Text style={[styles.text, styles.subText]}>Location: </Text>
-            <Text style={[styles.text, styles.subTextRight]}>Los Angeles</Text>
+            <Text style={[styles.text, styles.subText]}>Zipcode: </Text>
+            <Text style={[styles.text, styles.subTextRight]}>{location}</Text>
           </View>
           <View style={styles.QuestionnaireAnswers}>
             <FontAwesome5
@@ -167,7 +210,7 @@ const ProfileScreen = ({ route, navigation }) => {
               style={{ marginRight: 10 }}
             />
             <Text style={[styles.text, styles.subText]}>Budget: </Text>
-            <Text style={[styles.text, styles.subTextRight]}>1500$</Text>
+            <Text style={[styles.text, styles.subTextRight]}>${budget}</Text>
           </View>
           <View style={styles.QuestionnaireAnswers}>
             <FontAwesome5
@@ -177,7 +220,7 @@ const ProfileScreen = ({ route, navigation }) => {
               style={{ marginRight: 10 }}
             />
             <Text style={[styles.text, styles.subText]}>Roommate Status: </Text>
-            <Text style={[styles.text, styles.subTextRight]}>Seeking</Text>
+            <Text style={[styles.text, styles.subTextRight]}>{roommate}</Text>
           </View>
           <View style={styles.QuestionnaireAnswers}>
             <FontAwesome5
@@ -187,7 +230,7 @@ const ProfileScreen = ({ route, navigation }) => {
               style={{ marginRight: 10 }}
             />
             <Text style={[styles.text, styles.subText]}>Smoking Status: </Text>
-            <Text style={[styles.text, styles.subTextRight]}>Non-Smoker</Text>
+            <Text style={[styles.text, styles.subTextRight]}>{smoker}</Text>
           </View>
           <View style={styles.QuestionnaireAnswers}>
             <FontAwesome5
@@ -197,7 +240,7 @@ const ProfileScreen = ({ route, navigation }) => {
               style={{ marginRight: 10 }}
             />
             <Text style={[styles.text, styles.subText]}>Cleanliness: </Text>
-            <Text style={[styles.text, styles.subTextRight]}>8/10</Text>
+            <Text style={[styles.text, styles.subTextRight]}>{cleanliness}/10</Text>
           </View>
           <View style={styles.QuestionnaireAnswers}>
             <FontAwesome5
@@ -207,7 +250,7 @@ const ProfileScreen = ({ route, navigation }) => {
               style={{ marginRight: 10 }}
             />
             <Text style={[styles.text, styles.subText]}>Zoom preference: </Text>
-            <Text style={[styles.text, styles.subTextRight]}>Friendly</Text>
+            <Text style={[styles.text, styles.subTextRight]}>{zoom_friendly}</Text>
           </View>
           <View style={styles.QuestionnaireAnswers}>
             <FontAwesome5
@@ -217,7 +260,7 @@ const ProfileScreen = ({ route, navigation }) => {
               style={{ marginRight: 10 }}
             />
             <Text style={[styles.text, styles.subText]}>Pet preference:</Text>{" "}
-            <Text style={[styles.text, styles.subTextRight]}> Friendly</Text>
+            <Text style={[styles.text, styles.subTextRight]}> {pets}</Text>
           </View>
         </View>
         <Divider

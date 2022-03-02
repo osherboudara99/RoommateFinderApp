@@ -2,6 +2,7 @@ from flask import Blueprint, app, request
 import os
 import mysql.connector
 from mysql.connector import errorcode
+import logged_or_signed
 
 login_blueprint = Blueprint('login', __name__)
 
@@ -30,6 +31,8 @@ def login():
     if values and values[0][0] == email and values[0][1] == password:
         cursor.close()
         cnx.close()
+        logged_or_signed.didUserSignup = False
+        logged_or_signed.didUserLogin = True
         return "logged in"
     else:
         cursor.close()
