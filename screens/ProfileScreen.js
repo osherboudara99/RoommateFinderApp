@@ -28,6 +28,10 @@ const ProfileScreen = ({ route, navigation }) => {
   const [budget, setBudget] = React.useState("");
   const [cleanliness, setCleanliness] = React.useState("");
 
+  const [personalityTypeName, setPersonalityTypeName] = React.useState("");
+  const [personalityTypeDescription, setPersonalityTypeDescription] =
+    React.useState("");
+
   const fetchProfileScreen = () => {
     fetch("http://127.0.0.1:5000/profile_screen", {
       method: "GET",
@@ -35,48 +39,46 @@ const ProfileScreen = ({ route, navigation }) => {
       .then((resp) => resp.text())
       .then((article) => {
         var data = article.split(" ");
+
         for (let i = 0; i < data.length; i++) {
-          data[i] = data[i].replace(',','');
-          data[i] = data[i].replace(/[']/g,"");
+          data[i] = data[i].replace(",", "");
+          data[i] = data[i].replace(/[']/g, "");
         }
+        console.log("profileArticle: ", article);
         //console.log(data);
         setFirstName(data[2]);
         setLastName(data[3]);
         setLocation(data[4]);
         setBudget(data[5]);
-        if(data[6] == 1){
-          data[6] = 'Seeking roommates for a place';
+        if (data[6] == 1) {
+          data[6] = "Seeking roommates for a place";
+          setRoommate_yes_no(data[6]);
+        } else {
+          data[6] = "Joining a place with roommates";
           setRoommate_yes_no(data[6]);
         }
-        else{
-          data[6] = 'Joining a place with roommates';
-          setRoommate_yes_no(data[6]);
-        }
-        if(data[7] == 1){
-          data[7] = 'Smoker';
+        if (data[7] == 1) {
+          data[7] = "Smoker";
+          setSmoker(data[7]);
+        } else {
+          data[7] = "Non-Smoker";
           setSmoker(data[7]);
         }
-        else{
-          data[7] = 'Non-Smoker';
-          setSmoker(data[7]);
-        }
-        if(data[8] == 1){
-          data[8] = 'Pet-Friendly';
+        if (data[8] == 1) {
+          data[8] = "Pet-Friendly";
           setPets(data[8]);
-        }
-        else{
-          data[8] = 'Not Pet-Friendly';
+        } else {
+          data[8] = "Not Pet-Friendly";
           setPets(data[8]);
         }
         setCleanliness(data[9]);
-        data[10] = data[10].replace(')', '');
-        data[10] = data[10].replace(']', '');
-        if(data[10] == 1){
-          data[10] = 'Zoom-Friendly';
+        data[10] = data[10].replace(")", "");
+        data[10] = data[10].replace("]", "");
+        if (data[10] == 1) {
+          data[10] = "Zoom-Friendly";
           setZoom_friendly(data[10]);
-        }
-        else{
-          data[10] = 'Not Zoom-Friendly';
+        } else {
+          data[10] = "Not Zoom-Friendly";
           setZoom_friendly(data[10]);
         }
       });
@@ -88,15 +90,24 @@ const ProfileScreen = ({ route, navigation }) => {
     })
       .then((resp) => resp.text())
       .then((article) => {
-        var data = article.split(",");
-        console.log(data);
+        var data = article.split("', '", 2);
+
+        console.log("article: ", article);
+        console.log("data: ", data);
+        data[0] = data[0].replace("(", "");
+        data[0] = data[0].replace("[", "");
+        data[0] = data[0].replace("'", "");
+
+        setPersonalityTypeName(data[0]);
+        setPersonalityTypeDescription(data[1]);
+
+        console.log("personalityTypeDesc: ", personalityTypeDescription);
       });
   };
   const functionCombined = () => {
     fetchProfileScreen();
     fetchPersonality();
-}  
-
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -160,10 +171,10 @@ const ProfileScreen = ({ route, navigation }) => {
             </TouchableOpacity>
           </View>
           <View style={{ marginTop: 10 }} />
-          {personalityTestTaken ? (
+          {personalityTypeName != "]" ? (
             <View style={{ alignSelf: "center" }}>
               <Text style={[styles.text, { fontSize: 45, color: "#ffffffb2" }]}>
-                The Architect
+                {personalityTypeName}
               </Text>
               <View style={[styles.personalityImage, { marginLeft: 75 }]}>
                 <Image
@@ -193,9 +204,16 @@ const ProfileScreen = ({ route, navigation }) => {
             </TouchableOpacity>
           </View>
           <View style={{ marginTop: 15 }} />
-          <Text style={[styles.text, styles.subText]}>
-            I am a new user who is learning to use the roommate finder app!
-          </Text>
+
+          {personalityTypeDescription != undefined ? (
+            <Text style={[styles.text, styles.subText]}>
+              {personalityTypeDescription}
+            </Text>
+          ) : (
+            <Text style={[styles.text, styles.subText]}>
+              I am a new user wanting to do good in life
+            </Text>
+          )}
         </View>
         <Divider
           orientation="horizontal"
@@ -254,7 +272,9 @@ const ProfileScreen = ({ route, navigation }) => {
               style={{ marginRight: 10 }}
             />
             <Text style={[styles.text, styles.subText]}>Cleanliness: </Text>
-            <Text style={[styles.text, styles.subTextRight]}>{cleanliness}/10</Text>
+            <Text style={[styles.text, styles.subTextRight]}>
+              {cleanliness}/10
+            </Text>
           </View>
           <View style={styles.QuestionnaireAnswers}>
             <FontAwesome5
@@ -264,7 +284,9 @@ const ProfileScreen = ({ route, navigation }) => {
               style={{ marginRight: 10 }}
             />
             <Text style={[styles.text, styles.subText]}>Zoom preference: </Text>
-            <Text style={[styles.text, styles.subTextRight]}>{zoom_friendly}</Text>
+            <Text style={[styles.text, styles.subTextRight]}>
+              {zoom_friendly}
+            </Text>
           </View>
           <View style={styles.QuestionnaireAnswers}>
             <FontAwesome5
