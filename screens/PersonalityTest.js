@@ -130,7 +130,7 @@ export default function Questionnaire({ route, navigation }) {
         }
       })
       .catch((error) => console.log(error));
-    navigation.navigate("ProfileScreen", personalityTestTaken);
+    navigation.push("ProfileScreen", personalityTestTaken);
   };
 
   const Submission = () => {

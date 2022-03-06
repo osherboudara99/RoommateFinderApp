@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -104,6 +104,12 @@ const ProfileScreen = ({ route, navigation }) => {
         console.log("personalityTypeDesc: ", personalityTypeDescription);
       });
   };
+
+  useEffect(() => {
+    fetchProfileScreen();
+    fetchPersonality();
+  }, []);
+
   const functionCombined = () => {
     fetchProfileScreen();
     fetchPersonality();
