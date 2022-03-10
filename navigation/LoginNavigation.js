@@ -6,7 +6,7 @@ import LoginError from "../screens/SignInError";
 import SignUpError from "../screens/SignUpError";
 import React, { useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import SplashScreen from "../screens/SplashScreen";
+import SplashScreen from "../screens/Questionnaire";
 
 const LoginStack = createNativeStackNavigator();
 

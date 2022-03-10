@@ -6,23 +6,20 @@ import {
   StyleSheet,
   useWindowDimensions,
   TextInput,
-  
-
-    TouchableOpacity, 
-    Dimensions,
- 
-    Platform,
- 
-    StatusBar
+  TouchableOpacity,
+  Dimensions,
+  Platform,
+  StatusBar,
 } from "react-native";
-import * as Animatable from 'react-native-animatable';
+import * as Animatable from "react-native-animatable";
 //import LinearGradient from 'react-native-linear-gradient';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Feather from 'react-native-vector-icons/Feather';
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Feather from "react-native-vector-icons/Feather";
 import BooleanQuestionnaireSwitch from "../src/components/BooleanQuestionnaireSwitch";
 import Input from "../src/components/Input";
 import Question from "../src/components/Question";
 import Button from "../src/components/Button";
+import { grey } from "@mui/material/colors";
 
 export default function Questionnaire({ route, navigation }) {
   const window = useWindowDimensions();
@@ -53,12 +50,17 @@ export default function Questionnaire({ route, navigation }) {
     roommates_boolean: false,
     check_location: false,
     check_Budget: false,
-    check_Cleanliness:false
+    check_Cleanliness: false,
   });
 
   const [location, setLocation] = React.useState("");
+  const [student, setStudent] = React.useState(false);
+  const [workingProfessional, setWorkingProfessional] = React.useState(false);
+  const [jobTitle, setJobTitle] = React.useState("");
+  const [guestsOften, setGuestsOften] = React.useState(false);
 
   const [roommate, setRoommate_yes_no] = React.useState(false);
+
   const [smoker, setSmoker] = React.useState(false);
   const [pets, setPets] = React.useState(false);
   const [zoom_friendly, setZoom_friendly] = React.useState(false);
@@ -67,135 +69,132 @@ export default function Questionnaire({ route, navigation }) {
   const [cleanliness, setCleanliness] = React.useState("");
   const [temp, setTemp] = React.useState("");
 
-
   const insert_questionnaire_Data = () => {
-
-    fetch('http://127.0.0.1:5000/questionnaire', {
-        method:'POST',
-        headers: {
-            'Content-Type':'application/json'
-        },
-        body: JSON.stringify({ location:location.location, budget:budget.budget, roommate, cleanliness:cleanliness.cleanliness, smoker, pets, zoom_friendly, zoom_others_using})
+    fetch("http://127.0.0.1:5000/questionnaire", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        location: location.location,
+        budget: budget.budget,
+        roommate,
+        cleanliness: cleanliness.cleanliness,
+        smoker,
+        pets,
+        zoom_friendly,
+        zoom_others_using,
+      }),
     })
-    .then(resp => resp.text())
-    .then(data => {
+      .then((resp) => resp.text())
+      .then((data) => {
         console.log(data);
-        if(data === "executed")
-        {
-            console.log(route.params)
-            route.params.setIsLoggedIn(true);
+        if (data === "executed") {
+          console.log(route.params);
+          route.params.setIsLoggedIn(true);
         }
-    })
-    .catch(error => console.log(error))
+      })
+      .catch((error) => console.log(error));
+  };
 
-}
+  const budgetValidation = (val) => {
+    var rege = /^[0-9]+$/;
 
-  const budgetValidation = (val) =>{
-    var rege =  /^[0-9]+$/;
-   
-    if(rege.test(val)){
-        if(val.trim().length !== 0){
-         
-            setBudget({budget: val});
-            setData({
-                ...data,
-                budgetValid:true,
-                check_Budget:true,
-            });
-            }
-            else{
-              setBudget({budget: val});
-            setData({
-                ...data,
-                budgetValid:false,
-                check_Budget:false,
-            });
-            }
-
-    }
-    else{
-  
-      setBudget({budget: val});
-      setData({
+    if (rege.test(val)) {
+      if (val.trim().length !== 0) {
+        setBudget({ budget: val });
+        setData({
           ...data,
-          budgetValid:false,
-          check_Budget:false,
-      });
+          budgetValid: true,
+          check_Budget: true,
+        });
+      } else {
+        setBudget({ budget: val });
+        setData({
+          ...data,
+          budgetValid: false,
+          check_Budget: false,
+        });
       }
-}
-  const locationValidation = (val) =>{
-    var rege = /^\d{5}$/;
-   
-    if(rege.test(val)){
-     
-        if(val.trim().length == 5){
-         
-            setLocation({location: val});
-            setData({
-                ...data,
-                locationValid:true,
-                check_location:true,
-            });
-            }
-            else{
-              setLocation({location: val});
-            setData({
-                ...data,
-                locationValid:false,
-                check_location:false,
-            });
-            }
-
-    }
-    else{
-  
-      setLocation({location: val});
+    } else {
+      setBudget({ budget: val });
       setData({
-          ...data,
-          locationValid:false,
-          check_location:false,
-      });
-      
-}
-}
-const cleanlinessValidation = (val) =>{
-  var rege =  /^[0-9]+$/;
- 
-  if(rege.test(val)){
-   var temp = parseInt(val);
-      if((temp<=10) && (temp !=0)){
-       
-          setCleanliness({cleanliness: val});
-          setData({
-              ...data,
-              cleanlinessValid:true,
-              check_Cleanliness:true,
-          });
-          }
-          else{
-            setCleanliness({cleanliness: val});
-          setData({
-              ...data,
-              cleanlinessValid:false,
-              check_Cleanliness:false,
-          });
-          }
-
-  }
-  else{
-
-    setCleanliness({cleanliness: val});
-    setData({
         ...data,
-        cleanlinessValid:false,
-        check_Cleanliness:false,
-    });
-    
-}
-}
+        budgetValid: false,
+        check_Budget: false,
+      });
+    }
+  };
+  const locationValidation = (val) => {
+    var rege = /^\d{5}$/;
+
+    if (rege.test(val)) {
+      if (val.trim().length == 5) {
+        setLocation({ location: val });
+        setData({
+          ...data,
+          locationValid: true,
+          check_location: true,
+        });
+      } else {
+        setLocation({ location: val });
+        setData({
+          ...data,
+          locationValid: false,
+          check_location: false,
+        });
+      }
+    } else {
+      setLocation({ location: val });
+      setData({
+        ...data,
+        locationValid: false,
+        check_location: false,
+      });
+    }
+  };
+  const cleanlinessValidation = (val) => {
+    var rege = /^[0-9]+$/;
+
+    if (rege.test(val)) {
+      var temp = parseInt(val);
+      if (temp <= 10 && temp != 0) {
+        setCleanliness({ cleanliness: val });
+        setData({
+          ...data,
+          cleanlinessValid: true,
+          check_Cleanliness: true,
+        });
+      } else {
+        setCleanliness({ cleanliness: val });
+        setData({
+          ...data,
+          cleanlinessValid: false,
+          check_Cleanliness: false,
+        });
+      }
+    } else {
+      setCleanliness({ cleanliness: val });
+      setData({
+        ...data,
+        cleanlinessValid: false,
+        check_Cleanliness: false,
+      });
+    }
+  };
 
   const callbackRoomate = useCallback((val) => {
     setRoommate_yes_no(val);
+  }, []);
+
+  const callbackStudent = useCallback((val) => {
+    setStudent(val);
+  }, []);
+  const callbackWorkingProfessional = useCallback((val) => {
+    setWorkingProfessional(val);
+  }, []);
+  const callbackGuestsOften = useCallback((val) => {
+    setGuestsOften(val);
   }, []);
 
   const callbackSmoker = useCallback((val) => {
@@ -230,6 +229,8 @@ const cleanlinessValidation = (val) =>{
     //route.params.setIsLoggedIn(true);
   };
 
+  const getZipcodeNames = () => {};
+
   const {
     control,
     handleSubmit,
@@ -242,7 +243,7 @@ const cleanlinessValidation = (val) =>{
   return (
     <View style={styles.container}>
       <View style={[styles.form, { width: window.width - 20 }]}>
-        <Text style={styles.header}>Question {questionNumber}/8</Text>
+        <Text style={styles.header}>Question {questionNumber}/11</Text>
 
         <Question
           question="What is your location?"
@@ -250,49 +251,55 @@ const cleanlinessValidation = (val) =>{
           control={control}
           rules={{ required: true, min: 5 }}
           render={({ field: { onChange, onBlur, value } }) => (
-            <View style={ {flexDirection:"column"}}>
-            <View style={ {flexDirection:"row"}}>
-            <TextInput
-              style={{ width: 250, marginLeft: 5, marginRight: "auto"}}
-              onChange={onChange}
-              onChangeText={(val) => locationValidation(val)}
-              onBlur={onBlur}
-              value={value}
-              keyboardType="number-pad"
-              placeholder="Enter Zip Code"
-            />
-           
-              <View style={{  marginLeft: "auto",}}>
-            {data.check_location ? 
-                <Animatable.View
-                    animation="bounceIn"
-                >
-                    <Feather 
-                        name="check-circle"
-                        color="green"
-                        size={25}
-                    />
-                </Animatable.View>
-                : null}
-                {data.locationValid ? null : 
-<Animatable.View animation ="fadeInLeft" duration={500}>
-<Text style ={styles.errorMsg} > <FontAwesome 
-                    name="exclamation-circle"
-                    color="red"
-                    size={25}
-                /> </Text>
-               
-</Animatable.View>}
-</View>
-          </View>
-         <View>
-             {data.locationValid ? null : 
-<Animatable.View animation ="fadeInLeft" duration={500}>
+            <View style={{ flexDirection: "column" }}>
+              <View style={{ flexDirection: "row" }}>
+                <TextInput
+                  style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
+                  onChange={onChange}
+                  onChangeText={(val) => locationValidation(val)}
+                  onBlur={onBlur}
+                  value={value}
+                  keyboardType="number-pad"
+                  placeholder="Enter Zip Code"
+                />
 
-                <Text style={{flexDirection:"column",  marginBottom: "auto", color: '#ae0700'}}> Zip code is invalid, please try again.</Text>
-</Animatable.View>}
-</View>
-</View>
+                <View style={{ marginLeft: "auto" }}>
+                  {data.check_location ? (
+                    <Animatable.View animation="bounceIn">
+                      <Feather name="check-circle" color="green" size={25} />
+                    </Animatable.View>
+                  ) : null}
+                  {data.locationValid ? null : (
+                    <Animatable.View animation="fadeInLeft" duration={500}>
+                      <Text style={styles.errorMsg}>
+                        {" "}
+                        <FontAwesome
+                          name="exclamation-circle"
+                          color="red"
+                          size={25}
+                        />{" "}
+                      </Text>
+                    </Animatable.View>
+                  )}
+                </View>
+              </View>
+              <View>
+                {data.locationValid ? null : (
+                  <Animatable.View animation="fadeInLeft" duration={500}>
+                    <Text
+                      style={{
+                        flexDirection: "column",
+                        marginBottom: "auto",
+                        color: "#ae0700",
+                      }}
+                    >
+                      {" "}
+                      Zip code is invalid, please try again.
+                    </Text>
+                  </Animatable.View>
+                )}
+              </View>
+            </View>
           )}
           name="Location"
           defaultValue=""
@@ -304,59 +311,135 @@ const cleanlinessValidation = (val) =>{
           control={control}
           rules={{ required: true, min: 5 }}
           render={({ field: { onChange, onBlur, value } }) => (
-        
-        
-          <View style={ {flexDirection:"column"}}>
-            <View style={ {flexDirection:"row"}}>
-            <TextInput
-            style={{ width: 250, marginLeft: 5, marginRight: "auto"}}
-              onChange={onChange}
-              onChangeText={(val) => budgetValidation(val)}
-              onBlur={onBlur}
-              value={value}
-              keyboardType="number-pad"
-              placeholder="Price range in $"
-            />
-           
-              <View style={{  marginLeft: "auto",}}>
-            {data.check_Budget ? 
-                <Animatable.View
-                    animation="bounceIn"
-                >
-                    <Feather 
-                        name="check-circle"
-                        color="green"
-                        size={25}
-                    />
-                </Animatable.View>
-                : null}
-                {data.budgetValid ? null : 
-<Animatable.View animation ="fadeInLeft" duration={500}>
-<Text style ={styles.errorMsg} > <FontAwesome 
-                    name="exclamation-circle"
-                    color="red"
-                    size={25}
-                /> </Text>
-               
-</Animatable.View>}
-</View>
-          </View>
-         <View>
-             {data.budgetValid ? null : 
-<Animatable.View animation ="fadeInLeft" duration={500}>
+            <View style={{ flexDirection: "column" }}>
+              <View style={{ flexDirection: "row" }}>
+                <TextInput
+                  style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
+                  onChange={onChange}
+                  onChangeText={(val) => budgetValidation(val)}
+                  onBlur={onBlur}
+                  value={value}
+                  keyboardType="number-pad"
+                  placeholder="Price range in $"
+                />
 
-                <Text style={{flexDirection:"column",  marginBottom: "auto", color: '#ae0700'}}> Budget amount is invalid, please try again.</Text>
-</Animatable.View>}
-</View>
-</View>
+                <View style={{ marginLeft: "auto" }}>
+                  {data.check_Budget ? (
+                    <Animatable.View animation="bounceIn">
+                      <Feather name="check-circle" color="green" size={25} />
+                    </Animatable.View>
+                  ) : null}
+                  {data.budgetValid ? null : (
+                    <Animatable.View animation="fadeInLeft" duration={500}>
+                      <Text style={styles.errorMsg}>
+                        {" "}
+                        <FontAwesome
+                          name="exclamation-circle"
+                          color="red"
+                          size={25}
+                        />{" "}
+                      </Text>
+                    </Animatable.View>
+                  )}
+                </View>
+              </View>
+              <View>
+                {data.budgetValid ? null : (
+                  <Animatable.View animation="fadeInLeft" duration={500}>
+                    <Text
+                      style={{
+                        flexDirection: "column",
+                        marginBottom: "auto",
+                        color: "#ae0700",
+                      }}
+                    >
+                      {" "}
+                      Budget amount is invalid, please try again.
+                    </Text>
+                  </Animatable.View>
+                )}
+              </View>
+            </View>
           )}
           name="Budget"
           defaultValue=""
         />
 
         <Question
-          question="Are you seeking roommates for a place or do you need to join a place with roommates?"
+          question="Are you a student?"
           display={questionNumber == 3}
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <BooleanQuestionnaireSwitch
+              parentCallback={callbackStudent}
+              value={value}
+              trueLabel={"Yes"}
+              falseLabel={"No"}
+            />
+          )}
+          defaultvalue={false}
+          name="isStudent"
+        />
+
+        <Question
+          question="Are you a working professional?"
+          display={questionNumber == 4}
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <View>
+              <BooleanQuestionnaireSwitch
+                parentCallback={callbackWorkingProfessional}
+                value={value}
+                trueLabel={"Yes"}
+                falseLabel={"No"}
+              />
+              {workingProfessional ? (
+                <TextInput
+                  style={{
+                    width: 250,
+                    marginLeft: 5,
+                    marginTop: 20,
+                    marginBottom: 10,
+                    marginRight: "auto",
+                    borderRadius: 6,
+                    borderColor: grey,
+                  }}
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  onChangeText={(value) => setJobTitle(value)}
+                  keyboardType="number-pad"
+                  placeholder="Job title"
+                />
+              ) : null}
+            </View>
+          )}
+          defaultvalue={false}
+          name="isWorking"
+        />
+
+        <Question
+          question="Do you have guests often?"
+          display={questionNumber == 5}
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <BooleanQuestionnaireSwitch
+              parentCallback={callbackGuestsOften}
+              value={value}
+              trueLabel={"Yes"}
+              falseLabel={"No"}
+            />
+          )}
+          defaultvalue={false}
+          name="guestsOften"
+        />
+
+        <Question
+          question="Are you seeking roommates for a place or do you need to join a place with roommates?"
+          display={questionNumber == 6}
           control={control}
           rules={{ required: true }}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -373,63 +456,67 @@ const cleanlinessValidation = (val) =>{
 
         <Question
           question="On a scale of 1 to 10, how clean would you consider yourself?"
-          display={questionNumber == 4}
+          display={questionNumber == 7}
           control={control}
           rules={{ required: true, min: 2 }}
           render={({ field: { onChange, onBlur, value } }) => (
-          
-          
-          <View style={ {flexDirection:"column"}}>
-            <View style={ {flexDirection:"row"}}>
-            <TextInput
-            style={{ width: 250, marginLeft: 5, marginRight: "auto"}}
-            onChange={onChange}
-            onChangeText={(value) => cleanlinessValidation(value)}
-            onBlur={onBlur}
-            value={value}
-            keyboardType="number-pad"
-            placeholder="Anywhere from 1-10"
-            />
-           
-              <View style={{  marginLeft: "auto",}}>
-            {data.check_Cleanliness ? 
-                <Animatable.View
-                    animation="bounceIn"
-                >
-                    <Feather 
-                        name="check-circle"
-                        color="green"
-                        size={25}
-                    />
-                </Animatable.View>
-                : null}
-                {data.cleanlinessValid ? null : 
-<Animatable.View animation ="fadeInLeft" duration={500}>
-<Text style ={styles.errorMsg} > <FontAwesome 
-                    name="exclamation-circle"
-                    color="red"
-                    size={25}
-                /> </Text>
-               
-</Animatable.View>}
-</View>
-          </View>
-         <View>
-             {data.cleanlinessValid ? null : 
-<Animatable.View animation ="fadeInLeft" duration={500}>
+            <View style={{ flexDirection: "column" }}>
+              <View style={{ flexDirection: "row" }}>
+                <TextInput
+                  style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
+                  onChange={onChange}
+                  onChangeText={(value) => cleanlinessValidation(value)}
+                  onBlur={onBlur}
+                  value={value}
+                  keyboardType="number-pad"
+                  placeholder="Anywhere from 1-10"
+                />
 
-                <Text style={{flexDirection:"column",  marginBottom: "auto", color: '#ae0700'}}> Cleanliness number is invalid, please try again.</Text>
-</Animatable.View>}
-</View>
-</View>
-)}
+                <View style={{ marginLeft: "auto" }}>
+                  {data.check_Cleanliness ? (
+                    <Animatable.View animation="bounceIn">
+                      <Feather name="check-circle" color="green" size={25} />
+                    </Animatable.View>
+                  ) : null}
+                  {data.cleanlinessValid ? null : (
+                    <Animatable.View animation="fadeInLeft" duration={500}>
+                      <Text style={styles.errorMsg}>
+                        {" "}
+                        <FontAwesome
+                          name="exclamation-circle"
+                          color="red"
+                          size={25}
+                        />{" "}
+                      </Text>
+                    </Animatable.View>
+                  )}
+                </View>
+              </View>
+              <View>
+                {data.cleanlinessValid ? null : (
+                  <Animatable.View animation="fadeInLeft" duration={500}>
+                    <Text
+                      style={{
+                        flexDirection: "column",
+                        marginBottom: "auto",
+                        color: "#ae0700",
+                      }}
+                    >
+                      {" "}
+                      Cleanliness number is invalid, please try again.
+                    </Text>
+                  </Animatable.View>
+                )}
+              </View>
+            </View>
+          )}
           name="Cleanliness"
           defaultValue=""
         />
 
         <Question
           question="Would you consider yourself a smoker or non-smoker?"
-          display={questionNumber == 5}
+          display={questionNumber == 8}
           control={control}
           rules={{ required: true }}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -446,7 +533,7 @@ const cleanlinessValidation = (val) =>{
 
         <Question
           question="Would you consider yourself pet-friendly or not pet-friendly?"
-          display={questionNumber == 6}
+          display={questionNumber == 9}
           control={control}
           rules={{ required: true }}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -463,7 +550,7 @@ const cleanlinessValidation = (val) =>{
 
         <Question
           question="Zoom Related: Do you use zoom?"
-          display={questionNumber == 7}
+          display={questionNumber == 10}
           control={control}
           rules={{ required: true }}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -480,7 +567,7 @@ const cleanlinessValidation = (val) =>{
 
         <Question
           question="Zoom Related: Are you okay with others using Zoom?"
-          display={questionNumber == 8}
+          display={questionNumber == 11}
           control={control}
           rules={{ required: true }}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -502,43 +589,68 @@ const cleanlinessValidation = (val) =>{
             onPress={prevQuestion}
             style={styles.buttonLeft}
           />
-        
-          {questionNumber < 8 &&   (
+
+          {questionNumber === 4 && !workingProfessional ? (
+            <Button
+              title="Next"
+              onPress={nextQuestion}
+              style={styles.buttonRight}
+            />
+          ) : null}
+
+          {questionNumber === 4 && workingProfessional && jobTitle != "" ? (
+            <Button
+              title="Next"
+              onPress={nextQuestion}
+              style={styles.buttonRight}
+            />
+          ) : null}
+
+          {questionNumber < 11 && (
             <View>
-            {(data.locationValid && data.check_location &&(questionNumber == 1))?  
-            <Button
-              title="Next"
-              onPress={nextQuestion}
-              style={styles.buttonRight}
-            />
-            :null }
-            {(data.budgetValid && data.check_Budget &&(questionNumber ==2))?  
-            <Button
-              title="Next"
-              onPress={nextQuestion}
-              style={styles.buttonRight}
-            />
-            :null }
-             {(data.cleanlinessValid && data.check_Cleanliness &&(questionNumber ==4))?  
-            <Button
-              title="Next"
-              onPress={nextQuestion}
-              style={styles.buttonRight}
-            />
-            :null }
-                 {((questionNumber ==3)||(questionNumber >=5 && questionNumber <8) )?  
-            <Button
-              title="Next"
-              onPress={nextQuestion}
-              style={styles.buttonRight}
-            />
-            :null }
-           </View>
+              {data.locationValid &&
+              data.check_location &&
+              questionNumber == 1 ? (
+                <Button
+                  title="Next"
+                  onPress={nextQuestion}
+                  style={styles.buttonRight}
+                />
+              ) : null}
+              {data.budgetValid && data.check_Budget && questionNumber == 2 ? (
+                <Button
+                  title="Next"
+                  onPress={nextQuestion}
+                  style={styles.buttonRight}
+                />
+              ) : null}
+              {data.cleanlinessValid &&
+              data.check_Cleanliness &&
+              questionNumber == 7 ? (
+                <Button
+                  title="Next"
+                  onPress={nextQuestion}
+                  style={styles.buttonRight}
+                />
+              ) : null}
+              {questionNumber == 3 ||
+              (questionNumber >= 5 && questionNumber <= 6) ||
+              (questionNumber >= 8 && questionNumber < 11) ? (
+                <Button
+                  title="Next"
+                  onPress={nextQuestion}
+                  style={styles.buttonRight}
+                />
+              ) : null}
+            </View>
           )}
-          {questionNumber == 8 && (
+
+          {questionNumber == 11 && (
             <Button
               title="Submit"
-              onPress={() => {insert_questionnaire_Data();} } //Cyrus code: handleSubmit(onSubmit)
+              onPress={() => {
+                insert_questionnaire_Data();
+              }} //Cyrus code: handleSubmit(onSubmit)
               style={styles.buttonRight}
             />
           )}

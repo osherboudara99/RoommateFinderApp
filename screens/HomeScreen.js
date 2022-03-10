@@ -32,7 +32,7 @@ const HomeScreen = ({ navigation }) => {
       img: require("../src/assets/homescreen/roommate2.jpg"),
     },
   ];
-  const categoryList = ["Listings", "Roommates"];
+  const categoryList = ["Roommates", "Listings"];
 
   const ListCategories = () => {
     return (
@@ -274,8 +274,8 @@ const HomeScreen = ({ navigation }) => {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ paddingLeft: 20, paddingVertical: 20 }}
             vertical
-            data={listings}
-            renderItem={({ item }) => <Card house={item} />}
+            data={roommates}
+            renderItem={({ item }) => <CardRoommate roommate={item} />}
           />
         ) : (
           <FlatList
@@ -283,8 +283,8 @@ const HomeScreen = ({ navigation }) => {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ paddingLeft: 20, paddingVertical: 20 }}
             vertical
-            data={roommates}
-            renderItem={({ item }) => <CardRoommate roommate={item} />}
+            data={listings}
+            renderItem={({ item }) => <Card house={item} />}
           />
         )}
       </ScrollView>
