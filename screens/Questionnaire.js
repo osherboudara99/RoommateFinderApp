@@ -435,7 +435,7 @@ export default function Questionnaire({ route, navigation }) {
                 />
               ) : null}
              <View style={{ marginLeft: "auto",flexDirection :"row" }}>
-                  {data.check_WorkingProfessional ? (
+                  {data.check_WorkingProfessional && workingProfessional ? (
                     <Animatable.View animation="bounceIn">
                       <Feather name="check-circle" color="green" size={25} />
                     </Animatable.View>
@@ -657,7 +657,7 @@ export default function Questionnaire({ route, navigation }) {
             />
           ) : null}
 
-          {questionNumber === 4 && workingProfessional && data.jobTitleValid ? (
+          {questionNumber === 4 && workingProfessional && data.jobTitleValid && data.check_WorkingProfessional ? (
             <Button
               title="Next"
               onPress={nextQuestion}

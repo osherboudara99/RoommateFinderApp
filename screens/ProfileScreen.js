@@ -55,35 +55,59 @@ const ProfileScreen = ({ route, navigation }) => {
         setLocation(data[4]);
         setBudget(data[5]);
         if (data[6] == 1) {
-          data[6] = "Seeking roommates for a place";
-          setRoommate_yes_no(data[6]);
+          data[6] = "Yes";
+          setStudent(data[6]);
         } else {
-          data[6] = "Joining a place with roommates";
-          setRoommate_yes_no(data[6]);
+          data[6] = "No";
+          setStudent(data[6]);
         }
         if (data[7] == 1) {
-          data[7] = "Smoker";
-          setSmoker(data[7]);
+          data[7] = "Yes";
+          setWorkingProfessional(data[7]);
         } else {
-          data[7] = "Non-Smoker";
-          setSmoker(data[7]);
+          data[7] = "No";
+          setWorkingProfessional(data[7]);
         }
-        if (data[8] == 1) {
-          data[8] = "Pet-Friendly";
-          setPets(data[8]);
+        
+        setJobTitle(data[8]);
+
+        if (data[9] == 1) {
+          data[9] = "Yes";
+          setGuestsOften(data[9]);
         } else {
-          data[8] = "Not Pet-Friendly";
-          setPets(data[8]);
+          data[9] = "No";
+          setGuestsOften(data[9]);
         }
-        setCleanliness(data[9]);
-        data[10] = data[10].replace(")", "");
-        data[10] = data[10].replace("]", "");
         if (data[10] == 1) {
-          data[10] = "Zoom-Friendly";
-          setZoom_friendly(data[10]);
+          data[10] = "Seeking roommates for a place";
+          setRoommate_yes_no(data[10]);
         } else {
-          data[10] = "Not Zoom-Friendly";
-          setZoom_friendly(data[10]);
+          data[10] = "Joining a place with roommates";
+          setRoommate_yes_no(data[10]);
+        }
+        if (data[11] == 1) {
+          data[11] = "Smoker";
+          setSmoker(data[11]);
+        } else {
+          data[11] = "Non-Smoker";
+          setSmoker(data[11]);
+        }
+        if (data[12] == 1) {
+          data[12] = "Pet-Friendly";
+          setPets(data[12]);
+        } else {
+          data[12] = "Not Pet-Friendly";
+          setPets(data[12]);
+        }
+        setCleanliness(data[13]);
+        data[14] = data[14].replace(")", "");
+        data[14] = data[14].replace("]", "");
+        if (data[14] == 1) {
+          data[14] = "Zoom-Friendly";
+          setZoom_friendly(data[14]);
+        } else {
+          data[14] = "Not Zoom-Friendly";
+          setZoom_friendly(data[14]);
         }
       });
   };
@@ -253,6 +277,47 @@ const ProfileScreen = ({ route, navigation }) => {
             />
             <Text style={[styles.text, styles.subText]}>Budget: </Text>
             <Text style={[styles.text, styles.subTextRight]}>${budget}</Text>
+          </View>
+          <View style={styles.QuestionnaireAnswers}>
+            <FontAwesome5
+              name="user-graduate"
+              size={24}
+              color="#dae4d6"
+              style={{ marginRight: 10 }}
+            />
+            <Text style={[styles.text, styles.subText]}>Student? </Text>
+            <Text style={[styles.text, styles.subTextRight]}>{student}</Text>
+          </View>
+          <View style={styles.QuestionnaireAnswers}>
+            <FontAwesome5
+              name="user-tie"
+              size={24}
+              color="#dae4d6"
+              style={{ marginRight: 10 }}
+            />
+            <Text style={[styles.text, styles.subText]}>Working Professional? </Text>
+            <Text style={[styles.text, styles.subTextRight]}>{workingProfessional}</Text>
+          </View>
+          {workingProfessional != "No" && (
+          <View style={styles.QuestionnaireAnswers}>
+            <FontAwesome5
+              name="address-card"
+              size={24}
+              color="#dae4d6"
+              style={{ marginRight: 10 }}
+            />
+            <Text style={[styles.text, styles.subText]}>Job Title: </Text>
+            <Text style={[styles.text, styles.subTextRight]}>{jobTitle}</Text>
+          </View>)}
+          <View style={styles.QuestionnaireAnswers}>
+            <FontAwesome5
+              name="users"
+              size={24}
+              color="#dae4d6"
+              style={{ marginRight: 10 }}
+            />
+            <Text style={[styles.text, styles.subText]}>Guests Often? </Text>
+            <Text style={[styles.text, styles.subTextRight]}>{guestsOften}</Text>
           </View>
           <View style={styles.QuestionnaireAnswers}>
             <FontAwesome5

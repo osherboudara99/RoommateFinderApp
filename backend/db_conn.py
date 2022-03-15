@@ -36,11 +36,11 @@ def connect():
 
         cursor.execute("CREATE TABLE IF NOT EXISTS SeniorProject.Users ( \
   `userid` int(10) NOT NULL AUTO_INCREMENT, \
-  `firstName` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci, \
-  `lastName` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, \
-  `phone` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, \
-  `password` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, \
-  `email` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL, \
+  `firstName` varchar(320) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci, \
+  `lastName` varchar(320) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, \
+  `phone` varchar(320) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, \
+  `password` varchar(320) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, \
+  `email` varchar(320) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL, \
   `birthDay` DATE DEFAULT NULL,\
   PRIMARY KEY (`userid`), \
   UNIQUE KEY `phone_UNIQUE` (`phone`), \
@@ -56,7 +56,7 @@ def connect():
     `budget` int NOT NULL, \
     `student` BOOLEAN NOT NULL, \
     `working_professional` BOOLEAN NOT NULL, \
-    `job_title` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL, \
+    `job_title` varchar(320) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL, \
     `guests_often` BOOLEAN NOT NULL, \
     `roommates_yes_no` BOOLEAN NOT NULL, \
     `cleanliness` int(2) unsigned NOT NULL,  \

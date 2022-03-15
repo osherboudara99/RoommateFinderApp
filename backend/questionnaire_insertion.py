@@ -2,7 +2,6 @@ from flask import Blueprint, app, request, json
 import os
 import mysql.connector
 from mysql.connector import errorcode
-from pymysql import NULL
 import signup_backend
 
 questionaire_blueprint = Blueprint('questionnaire', __name__)
@@ -25,7 +24,7 @@ def questionaire_table_creation():
     try:
         job_title = request.json['jobTitle']
     except:
-        job_title = NULL
+        job_title = None
     guests_often = request.json['guestsOften']
     cleanliness = request.json['cleanliness']
     roommate_yes_no =  request.json['roommate']

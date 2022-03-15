@@ -77,6 +77,7 @@ const HomeScreen = ({ navigation }) => {
     return (
       <Pressable
         activeOpacity={0.8}
+        style={{ size:22, color: COLORS.dark}}
         onPress={() => navigation.navigate("DetailsListingScreen", house)}
       >
         <View style={style.card}>
@@ -107,7 +108,7 @@ const HomeScreen = ({ navigation }) => {
 
             {/* Location text */}
 
-            <Text style={{ color: COLORS.grey, fontSize: 14, marginTop: 5 }}>
+            <Text style={{ color: COLORS.green, fontSize: 14, marginTop: 5 }}>
               {house.location}
             </Text>
 
@@ -136,6 +137,7 @@ const HomeScreen = ({ navigation }) => {
     return (
       <Pressable
         activeOpacity={0.8}
+        style={{ size:22, color: COLORS.dark}}
         onPress={() => navigation.navigate("DetailsRoommateScreen", roommate)}
       >
         <View style={style.card}>
@@ -166,14 +168,14 @@ const HomeScreen = ({ navigation }) => {
 
             {/* Location text */}
 
-            <Text style={{ color: COLORS.grey, fontSize: 14, marginTop: 5 }}>
+            <Text style={{ color: COLORS.green, fontSize: 14, marginTop: 5 }}>
               {roommate.location}
             </Text>
 
             {/* Facilities container */}
             <View style={{ marginTop: 10, flexDirection: "row" }}>
               <View style={style.facility}>
-                <FontAwesome5 name="dog" size={18} color="#dae4d6" />
+                <FontAwesome5 name="dog" size={18}  color={COLORS.dark} />
                 <Text> </Text>
                 {roommate.petFriendly ? (
                   <FontAwesome5 name="check" size={18} color="green" />
@@ -186,7 +188,7 @@ const HomeScreen = ({ navigation }) => {
                 )}
               </View>
               <View style={style.facility}>
-                <FontAwesome5 name="smoking" size={18} color="#dae4d6" />
+                <FontAwesome5 name="smoking" size={18} color={COLORS.dark} />
                 <Text> </Text>
                 {roommate.smokingFriendly ? (
                   <FontAwesome5 name="check" size={18} color="green" />
@@ -199,7 +201,7 @@ const HomeScreen = ({ navigation }) => {
                 )}
               </View>
               <View style={style.facility}>
-                <FontAwesome5 name="desktop" size={18} color="#dae4d6" />
+                <FontAwesome5 name="desktop" size={18} color={COLORS.dark} />
                 <Text> </Text>
                 {roommate.zoomFriendly ? (
                   <FontAwesome5 name="check" size={18} color="green" />
@@ -375,7 +377,7 @@ const style = StyleSheet.create({
     height: 120,
     borderRadius: 15,
   },
-  facility: { flexDirection: "row", marginRight: 15 },
-  facilityText: { marginLeft: 5, color: COLORS.grey },
+  facility: { flexDirection: "row", marginRight: 15, size:22 },
+  facilityText: { marginLeft: 5, color: COLORS.green },
 });
 export default HomeScreen;
