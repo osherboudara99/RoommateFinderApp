@@ -40,6 +40,7 @@ export default function Questionnaire({ route, navigation }) {
 
   const [data, setData] = React.useState({
     budgetValid: true,
+    jobTitleValid:true,
     othersUsingZoom: false,
     cleanlinessValid: true,
     smokeOrNot: false,
@@ -51,6 +52,7 @@ export default function Questionnaire({ route, navigation }) {
     check_location: false,
     check_Budget: false,
     check_Cleanliness: false,
+    check_WorkingProfessional: false,
   });
 
   const [location, setLocation] = React.useState("");
@@ -124,6 +126,25 @@ export default function Questionnaire({ route, navigation }) {
         check_Budget: false,
       });
     }
+  };
+  
+  const workingValidation = (val) => {
+      if (val.trim().length !== 0) {
+      setJobTitle({jobTitle: val });
+        setData({
+          ...data,
+          jobTitleValid:true,
+          check_WorkingProfessional: true,
+        });
+      } else {
+        setJobTitle({jobTitle: val });
+        setData({
+          ...data,
+        jobTitleValid:false,
+          check_WorkingProfessional: false,
+        });
+      }
+    
   };
   const locationValidation = (val) => {
     var rege = /^\d{5}$/;
@@ -372,6 +393,7 @@ export default function Questionnaire({ route, navigation }) {
           rules={{ required: true }}
           render={({ field: { onChange, onBlur, value } }) => (
             <BooleanQuestionnaireSwitch
+        
               parentCallback={callbackStudent}
               value={value}
               trueLabel={"Yes"}
@@ -395,25 +417,58 @@ export default function Questionnaire({ route, navigation }) {
                 trueLabel={"Yes"}
                 falseLabel={"No"}
               />
+            <View style={{ flexDirection: "column" }}>
+              <View style={{ flexDirection: "row" }}>
               {workingProfessional ? (
                 <TextInput
-                  style={{
-                    width: 250,
-                    marginLeft: 5,
-                    marginTop: 20,
-                    marginBottom: 10,
-                    marginRight: "auto",
-                    borderRadius: 6,
-                    borderColor: grey,
-                  }}
+                style={{ width: 250, marginLeft: 5, marginRight: "auto",  marginBottom: 10, marginTop: 10,}}
                   onChange={onChange}
                   onBlur={onBlur}
                   value={value}
-                  onChangeText={(value) => setJobTitle(value)}
+                  onChangeText={(value) => workingValidation(value)}
                   keyboardType="number-pad"
                   placeholder="Job title"
                 />
               ) : null}
+             <View style={{ marginLeft: "auto",flexDirection :"row" }}>
+                  {data.check_WorkingProfessional ? (
+                    <Animatable.View animation="bounceIn">
+                      <Feather name="check-circle" color="green" size={25} />
+                    </Animatable.View>
+                  ) : null}
+                  {data.jobTitleValid? null : (
+                    <Animatable.View animation="fadeInLeft" duration={500}>
+                      <Text style={styles.errorMsg}>
+                        {" "}
+                        <FontAwesome
+                          name="exclamation-circle"
+                          color="red"
+                          size={25}
+                        />{" "}
+                      </Text>
+                    </Animatable.View>
+                  )}
+             </View>
+       
+            </View>
+              <View>
+                {data.jobTitleValid ? null : (
+                  <Animatable.View animation="fadeInLeft" duration={500}>
+                    <Text
+                      style={{
+                        flexDirection: "column",
+                        color: "#ae0700",
+                        marginBottom: 10,
+                      }}
+                    >
+                      {" "}
+                     Job title is invalid. Try Again
+                    </Text>
+                  </Animatable.View>
+                )}
+             </View>
+            </View>
+          
             </View>
           )}
           defaultvalue={false}
@@ -598,7 +653,7 @@ export default function Questionnaire({ route, navigation }) {
             />
           ) : null}
 
-          {questionNumber === 4 && workingProfessional && jobTitle != "" ? (
+          {questionNumber === 4 && workingProfessional && data.jobTitleValid ? (
             <Button
               title="Next"
               onPress={nextQuestion}
@@ -704,11 +759,14 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   buttonLeft: {
-    marginLeft: "auto",
+   // marginLeft: "auto",
+   marginLeft:65,
     marginRight: 5,
+    justifyContent: "center",
   },
   buttonRight: {
     marginLeft: 5,
-    marginRight: "auto",
+    justifyContent: "center",
+    //marginRight: "auto",
   },
 });

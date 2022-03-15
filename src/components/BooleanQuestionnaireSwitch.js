@@ -27,7 +27,7 @@ const BooleanQuestionnaireSwitch = ({
 
   return (
     <View>
-      <Switch onValueChange={toggleIsYes} value={isYes} {...props} />
+      <Switch onValueChange={toggleIsYes}  value={isYes} {...props} />
       <Text {...props}>{message}</Text>
     </View>
   );
