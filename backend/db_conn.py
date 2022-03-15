@@ -54,6 +54,10 @@ def connect():
     `userid` int(10) DEFAULT NULL, \
     `zipcode_location` int(5) unsigned NOT NULL, \
     `budget` int NOT NULL, \
+    `student` BOOLEAN NOT NULL, \
+    `working_professional` BOOLEAN NOT NULL, \
+    `job_title` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL, \
+    `guests_often` BOOLEAN NOT NULL, \
     `roommates_yes_no` BOOLEAN NOT NULL, \
     `cleanliness` int(2) unsigned NOT NULL,  \
     `smoker` BOOLEAN NOT NULL, \

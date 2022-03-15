@@ -27,6 +27,10 @@ const ProfileScreen = ({ route, navigation }) => {
   //const [zoom_others_using, setZoom_others_using] = React.useState(false);
   const [budget, setBudget] = React.useState("");
   const [cleanliness, setCleanliness] = React.useState("");
+  const [student, setStudent] = React.useState(false);
+  const [workingProfessional, setWorkingProfessional] = React.useState(false);
+  const [jobTitle, setJobTitle] = React.useState("");
+  const [guestsOften, setGuestsOften] = React.useState(false);
 
   const [personalityTypeName, setPersonalityTypeName] = React.useState("");
   const [personalityTypeDescription, setPersonalityTypeDescription] =

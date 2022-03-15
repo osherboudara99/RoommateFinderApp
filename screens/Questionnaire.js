@@ -80,6 +80,10 @@ export default function Questionnaire({ route, navigation }) {
       body: JSON.stringify({
         location: location.location,
         budget: budget.budget,
+        student,
+        workingProfessional,
+        jobTitle: jobTitle.jobTitle,
+        guestsOften,
         roommate,
         cleanliness: cleanliness.cleanliness,
         smoker,

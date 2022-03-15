@@ -25,7 +25,7 @@ def profile_screen_select():
     #email = "test@test.com"
     #password = "1234"
 
-    profile_screen_select = ("SELECT * FROM (SELECT email, password, firstName, lastName, zipcode_location, budget, roommates_yes_no, smoker, pets, cleanliness, zoom_friendly FROM SeniorProject.Users AS u LEFT JOIN SeniorProject.questionnaire AS q ON u.userid = q.userid  UNION SELECT email, password, firstName, lastName, zipcode_location, budget, roommates_yes_no, smoker, pets, cleanliness, zoom_friendly FROM SeniorProject.Users AS u RIGHT JOIN SeniorProject.questionnaire AS q ON u.userid = q.userid) AS a WHERE (email = %s) AND (password = %s)")
+    profile_screen_select = ("SELECT * FROM (SELECT email, password, firstName, lastName, zipcode_location, budget, student, working_professional, job_title, guests_often, roommates_yes_no, smoker, pets, cleanliness, zoom_friendly FROM SeniorProject.Users AS u LEFT JOIN SeniorProject.questionnaire AS q ON u.userid = q.userid  UNION SELECT email, password, firstName, lastName, zipcode_location, budget, student, working_professional, job_title, guests_often, roommates_yes_no, smoker, pets, cleanliness, zoom_friendly FROM SeniorProject.Users AS u RIGHT JOIN SeniorProject.questionnaire AS q ON u.userid = q.userid) AS a WHERE (email = %s) AND (password = %s)")
     profile_info = (email, password)
     cursor = cnx.cursor(buffered=True)
 
