@@ -12,6 +12,8 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Avatar, Icon, Divider } from "react-native-elements";
 import { FontAwesome5 } from "@expo/vector-icons";
 
+import ZIPCODES from "../src/consts/zipcodes";
+
 const ProfileScreen = ({ route, navigation }) => {
   //const [personalityTestTaken, setPersonalityTestTaken] = React.useState(false)
 
@@ -68,7 +70,7 @@ const ProfileScreen = ({ route, navigation }) => {
           data[7] = "No";
           setWorkingProfessional(data[7]);
         }
-        
+
         setJobTitle(data[8]);
 
         if (data[9] == 1) {
@@ -177,7 +179,7 @@ const ProfileScreen = ({ route, navigation }) => {
             {firstName} {lastName}
           </Text>
           <Text style={[styles.text, { color: "#ffffffb2", fontSize: 14 }]}>
-            {location}
+            {ZIPCODES[location]}
           </Text>
         </View>
 
@@ -295,20 +297,25 @@ const ProfileScreen = ({ route, navigation }) => {
               color="#dae4d6"
               style={{ marginRight: 10 }}
             />
-            <Text style={[styles.text, styles.subText]}>Working Professional? </Text>
-            <Text style={[styles.text, styles.subTextRight]}>{workingProfessional}</Text>
+            <Text style={[styles.text, styles.subText]}>
+              Working Professional?{" "}
+            </Text>
+            <Text style={[styles.text, styles.subTextRight]}>
+              {workingProfessional}
+            </Text>
           </View>
           {workingProfessional != "No" && (
-          <View style={styles.QuestionnaireAnswers}>
-            <FontAwesome5
-              name="address-card"
-              size={24}
-              color="#dae4d6"
-              style={{ marginRight: 10 }}
-            />
-            <Text style={[styles.text, styles.subText]}>Job Title: </Text>
-            <Text style={[styles.text, styles.subTextRight]}>{jobTitle}</Text>
-          </View>)}
+            <View style={styles.QuestionnaireAnswers}>
+              <FontAwesome5
+                name="address-card"
+                size={24}
+                color="#dae4d6"
+                style={{ marginRight: 10 }}
+              />
+              <Text style={[styles.text, styles.subText]}>Job Title: </Text>
+              <Text style={[styles.text, styles.subTextRight]}>{jobTitle}</Text>
+            </View>
+          )}
           <View style={styles.QuestionnaireAnswers}>
             <FontAwesome5
               name="users"
@@ -317,7 +324,9 @@ const ProfileScreen = ({ route, navigation }) => {
               style={{ marginRight: 10 }}
             />
             <Text style={[styles.text, styles.subText]}>Guests Often? </Text>
-            <Text style={[styles.text, styles.subTextRight]}>{guestsOften}</Text>
+            <Text style={[styles.text, styles.subTextRight]}>
+              {guestsOften}
+            </Text>
           </View>
           <View style={styles.QuestionnaireAnswers}>
             <FontAwesome5
