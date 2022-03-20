@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import DetailsListingScreen from "../screens/DetailsListingScreen";
 import DetailsRoommateScreen from "../screens/DetailsRoommateScreen";
+import RoommateIconsHelper from "../screens/RoommateIconsHelper";
 
 import chatScreen from "../screens/chatScreen";
 
@@ -30,6 +31,11 @@ const HomeNavigation = ({ navigation, route }) => {
         name="chatScreen"
         component={chatScreen}
         options={{ title: "chatScreen", headerShown: false }}
+      />
+        <HomeStack.Screen
+        name="RoommateIconsHelper"
+        component={RoommateIconsHelper}
+        options={{ title: "RoommateIconsHelper", headerShown: false }}
       />
     </HomeStack.Navigator>
   );

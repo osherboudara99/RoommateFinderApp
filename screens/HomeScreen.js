@@ -11,8 +11,10 @@ import {
   Image,
   Pressable,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import COLORS from "../src/consts/colors";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import Icon from "react-native-vector-icons/MaterialIcons";
 const { width } = Dimensions.get("screen"); //old code
 import listings from "../src/consts/listings";
@@ -32,7 +34,7 @@ const HomeScreen = ({ navigation }) => {
       img: require("../src/assets/homescreen/roommate2.jpg"),
     },
   ];
-  const categoryList = ["Roommates", "Listings"];
+  const categoryList = ["Roommates ", "Listings"];
 
   const ListCategories = () => {
     return (
@@ -48,7 +50,20 @@ const HomeScreen = ({ navigation }) => {
                 index == selectedCategoryIndex && style.activeCategoryListText,
               ]}
             >
+            <View style={{ flexDirection: "row" }}>
               {category}
+              {category !="Listings" ? (
+              <Pressable
+                style={{  marginLeft: 5, paddingBottom: 5,marginTop: 0, fontSize: 18 }}
+                onPress={() => {
+                  navigation.navigate("RoommateIconsHelper");
+                }}
+              >
+             
+                <Ionicons name="ios-help-circle" size={22} color={COLORS.dark}/>
+              </Pressable>
+              ):(<View></View>)}
+              </View>
             </Text>
           </Pressable>
         ))}
@@ -348,6 +363,7 @@ const style = StyleSheet.create({
   },
   categoryListText: {
     fontSize: 16,
+    marginLeft: "auto", 
     fontWeight: "bold",
     paddingBottom: 5,
     color: COLORS.grey,
