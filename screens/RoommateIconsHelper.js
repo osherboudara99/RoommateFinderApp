@@ -18,7 +18,8 @@ const PersonalityHelper = ({ route, navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{ marginLeft: 10, marginTop: 10 }}>
+        <View style={{ marginLeft: 10, marginTop: 10,    flexDirection: "row",
+    alignItems: "center",}}>
           <View style={styles.headerBtn}>
             <Icon
               style={{ marginLeft: 5 }}
@@ -26,30 +27,26 @@ const PersonalityHelper = ({ route, navigation }) => {
               size={20}
               onPress={navigation.goBack}
             />
+           
           </View>
+          <Text style={[styles.text_header, { alignSelf: "center" }]}> Icon Meanings </Text>
         </View>
 
         <Divider
           orientation="horizontal"
           style={{ marginTop: 10, marginHorizontal: 25 }}
         />
-        <View style={[styles.container, { alignSelf: "center" }]}>
+        <View style={[styles.container, { alignSelf: "left" }]}>
           <Text style={[styles.text, { fontSize: 30, marginLeft: 5 }]}>
-            The Observer
+            Dog Icon
           </Text>
-          <View style={{ flexDirection: "row", marginTop: 10 }}>
-            <View style={[styles.personalityImage, { alignSelf: "center" }]}>
-              <Image
-                source={require("../src/assets/ProfileScreen/theObserver.png")}
-                resizeMode="center"
-                style={styles.image}
-              ></Image>
+          <View style={{ flexDirection: "row", marginTop: 10, marginLeft:10, marginRight: 10 }}>
+            <View style={[styles.personalityImage]}>
+            <FontAwesome5 name="dog" size={70} marginRight={20} color={COLORS.dark} />
             </View>
             <Text style={[styles.text, { fontSize: 18, color: "#eef5eb" }]}>
               {" "}
-              This person is a complete introvert. Being the observer, they
-              "observe" the room before associating with others. They are self
-              sufficient, non-demanding, thoughtful and unobtrusive.
+              This icon will have a green check beside it to let you know this person is pet friendly or not pet friendly.
             </Text>
           </View>
         </View>
@@ -58,23 +55,17 @@ const PersonalityHelper = ({ route, navigation }) => {
           orientation="horizontal"
           style={{ marginTop: 10, marginHorizontal: 25 }}
         />
-        <View style={[styles.container, { alignSelf: "center" }]}>
+        <View style={[styles.container, { alignSelf: "left" }]}>
           <Text style={[styles.text, { fontSize: 30, marginLeft: 5 }]}>
-            The Sentinel
+            Smoking Icon
           </Text>
-          <View style={{ flexDirection: "row", marginTop: 10 }}>
-            <View style={[styles.personalityImage, { alignSelf: "center" }]}>
-              <Image
-                source={require("../src/assets/ProfileScreen/theSentinel.png")}
-                resizeMode="center"
-                style={styles.image}
-              ></Image>
+          <View style={{ flexDirection: "row", marginTop: 10, marginLeft:10, marginRight: 10  }}>
+            <View style={[styles.personalityImage]}>
+            <FontAwesome5 name="smoking" size={60} marginRight={20} color={COLORS.dark} />
             </View>
             <Text style={[styles.text, { fontSize: 18, color: "#eef5eb" }]}>
               {" "}
-              This person is a semi-introvert. Being sentinel, they are quiet
-              and they are confident in who they are. They are self motivated
-              beings, taking pride in their good character and competence.
+              This icon will have a green check beside it to let you know this person smokes or does not smoke.
             </Text>
           </View>
         </View>
@@ -83,77 +74,57 @@ const PersonalityHelper = ({ route, navigation }) => {
           orientation="horizontal"
           style={{ marginTop: 10, marginHorizontal: 25 }}
         />
-        <View style={[styles.container, { alignSelf: "center" }]}>
+       <View style={[styles.container, { alignSelf: "left" }]}>
           <Text style={[styles.text, { fontSize: 30, marginLeft: 5 }]}>
-            The Architect
+            Computer Icon
           </Text>
-          <View style={{ flexDirection: "row", marginTop: 10 }}>
-            <View style={[styles.personalityImage, { alignSelf: "center" }]}>
-              <Image
-                source={require("../src/assets/ProfileScreen/theArchitect.png")}
-                resizeMode="center"
-                style={styles.image}
-              ></Image>
-            </View>
-            <Text style={[styles.text, { fontSize: 17, color: "#eef5eb" }]}>
-              {" "}
-              This person is between an extrovert and an introvert. Being the
-              architect, they are intuitive, rational and quick-witted. They
-              derive their self-esteem from their knowledge and mental acuity
-              and are not afraid to speak up when required.
-            </Text>
-          </View>
-        </View>
-
-        <Divider
-          orientation="horizontal"
-          style={{ marginTop: 10, marginHorizontal: 25 }}
-        />
-
-        <View style={[styles.container, { alignSelf: "center" }]}>
-          <Text style={[styles.text, { fontSize: 30, marginLeft: 5 }]}>
-            The Adventurer
-          </Text>
-          <View style={{ flexDirection: "row", marginTop: 10 }}>
-            <View style={[styles.personalityImage, { alignSelf: "center" }]}>
-              <Image
-                source={require("../src/assets/ProfileScreen/theAdventurer.png")}
-                resizeMode="center"
-                style={styles.image}
-              ></Image>
-            </View>
-            <Text style={[styles.text, { fontSize: 16, color: "#eef5eb" }]}>
-              {" "}
-              This person is a semi-extrovert. Being the adventurer, they are
-              open-minded and approach life eager for new experiences. They are
-              people with grounded warmth and durability to stay in the moment
-              which helps them unlock exciting potential.
-            </Text>
-          </View>
-        </View>
-
-        <Divider
-          orientation="horizontal"
-          style={{ marginTop: 10, marginHorizontal: 25 }}
-        />
-        <View style={[styles.container, { alignSelf: "center" }]}>
-          <Text style={[styles.text, { fontSize: 30, marginLeft: 5 }]}>
-            The Entertainer
-          </Text>
-          <View style={{ flexDirection: "row", marginTop: 10 }}>
-            <View style={[styles.personalityImage, { alignSelf: "center" }]}>
-              <Image
-                source={require("../src/assets/ProfileScreen/theEntertainer.png")}
-                resizeMode="center"
-                style={styles.image}
-              ></Image>
+          <View style={{ flexDirection: "row", marginTop: 10, marginLeft:10, marginRight:10 }}>
+            <View style={[styles.personalityImage]}>
+            <FontAwesome5 name="desktop" size={65} marginRight={10} color={COLORS.dark} />
             </View>
             <Text style={[styles.text, { fontSize: 18, color: "#eef5eb" }]}>
               {" "}
-              This person is a complete extrovert. Being the entertainer, this
-              person loves vibrant experiences, engaging in life eagerly and
-              taking pleasure in discovering the unknown. They love the
-              spotlight and the world is their stage.
+              This icon will have a green check beside it to let you know this person is zoom friendly 
+              and uses zoom or does not mind zoom being used around them.
+            </Text>
+          </View>
+        </View>
+
+        <Divider
+          orientation="horizontal"
+          style={{ marginTop: 10, marginHorizontal: 25 }}
+        />
+
+      <View style={[styles.container, { alignSelf: "left" }]}>
+          <Text style={[styles.text, { fontSize: 30, marginLeft: 5 }]}>
+            Student Icon
+          </Text>
+          <View style={{ flexDirection: "row", marginTop: 10, marginLeft:10, marginRight:10 }}>
+            <View style={[styles.personalityImage]}>
+            <FontAwesome5    name="user-graduate" size={70} marginRight={10} color={COLORS.dark} />
+            </View>
+            <Text style={[styles.text, { fontSize: 18, color: "#eef5eb" }]}>
+              {" "}
+              This icon will have a green check beside it to let you know this person is a student.
+            </Text>
+          </View>
+        </View>
+
+        <Divider
+          orientation="horizontal"
+          style={{ marginTop: 10, marginHorizontal: 25 }}
+        />
+        <View style={[styles.container, { alignSelf: "left" }]}>
+          <Text style={[styles.text, { fontSize: 30, marginLeft: 5 }]}>
+            Working Professional Icon
+          </Text>
+          <View style={{ flexDirection: "row", marginTop: 10, marginLeft:10, marginRight:10 }}>
+            <View style={[styles.personalityImage]}>
+            <FontAwesome5  name="user-tie" size={70} marginRight={10} color={COLORS.dark} />
+            </View>
+            <Text style={[styles.text, { fontSize: 18, color: "#eef5eb" }]}>
+              {" "}
+              This icon will have a green check beside it to let you know this person is a working professional.
             </Text>
           </View>
         </View>
@@ -181,7 +152,7 @@ const styles = StyleSheet.create({
   personalityImage: {
     width: 100,
     height: 100,
-    borderRadius: 100,
+   
     overflow: "hidden",
   },
 
@@ -202,5 +173,11 @@ const styles = StyleSheet.create({
     flex: 1,
     height: undefined,
     width: undefined,
+  },
+  text_header: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 30,
+    flex:2, alignItems:'center'
   },
 });
