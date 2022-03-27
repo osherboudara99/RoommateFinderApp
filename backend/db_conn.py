@@ -96,7 +96,7 @@ def connect():
     `gallery_id` int(10) NOT NULL AUTO_INCREMENT, \
     `userid` int(10) DEFAULT NULL, \
     `gallery_pic` LONGBLOB DEFAULT NULL, \
-    CONSTRAINT `qs_user_id_3` FOREIGN KEY (`userid`) REFERENCES `Users` (`userid`) \
+    CONSTRAINT `user_id_4` FOREIGN KEY (`userid`) REFERENCES `Users` (`userid`) \
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci")
     
         cursor.close()
