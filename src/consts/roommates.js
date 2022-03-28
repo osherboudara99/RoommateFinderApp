@@ -1,7 +1,7 @@
 const listings = [
   {
     id: "1",
-    title: "Clean Friendly Woman",
+    title: "Slippser Klothezoff",
     location: "West Los Angeles",
     budget: "600$",
     image: require("../assets/homescreen/roommate1.jpg"),
@@ -9,6 +9,17 @@ const listings = [
     petFriendly: true,
     smokingFriendly: false,
     zoomFriendly: true,
+    personalityTypeName: "The Architect",
+
+    student: true,
+    workingProfessional: false,
+    guestsOften: 1,
+	jobTitle: "Architecture Firm Designer",
+	roommateStatus: "Seeking Roommates",
+	cleanliness: 8,
+	
+	
+
     interiors: [
       require("../assets/homescreen/roommate1_pic1.jpg"),
       require("../assets/homescreen/roommate1_pic2.jpg"),
@@ -17,12 +28,19 @@ const listings = [
   },
   {
     id: "2",
-    title: "Business Woman ",
+    title: "Lota Miles",
     location: "Down town Los Angeles",
     budget: "500$",
     petFriendly: false,
     smokingFriendly: false,
     zoomFriendly: true,
+
+    personalityTypeName: "The Adventurer",
+
+    student: false,
+    workingProfessional: true,
+    guestsOften: 0,
+
     image: require("../assets/homescreen/roommate2.jpg"),
     details: `Super clean, fun, friendly and outgoing.`,
     interiors: [
@@ -33,12 +51,19 @@ const listings = [
   },
   {
     id: "3",
-    title: "Clean Entrepreneur ",
+    title: "Marty McMuscles",
     location: "San Fernando Valley",
     budget: "400$",
     petFriendly: false,
     smokingFriendly: true,
     zoomFriendly: true,
+
+    personalityTypeName: "The Sentinel",
+
+    student: false,
+    workingProfessional: true,
+    guestsOften: 2,
+
     image: require("../assets/homescreen/roommate3.jpg"),
     details: `Only need a place to sleep and create ideas!`,
     interiors: [
@@ -49,12 +74,19 @@ const listings = [
   },
   {
     id: "4",
-    title: "Bubbly Woman",
+    title: "Cherry Rain",
     budget: "700$",
     location: "Venice California",
     petFriendly: true,
     smokingFriendly: false,
     zoomFriendly: true,
+
+    student: true,
+    workingProfessional: false,
+    guestsOften: 3,
+
+    personalityTypeName: "The Entertainer",
+
     image: require("../assets/homescreen/roommate4.jpg"),
     details: `Outgoing, loves to party and goes to festivals often.`,
     interiors: [

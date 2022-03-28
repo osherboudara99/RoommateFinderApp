@@ -50,19 +50,29 @@ const HomeScreen = ({ navigation }) => {
                 index == selectedCategoryIndex && style.activeCategoryListText,
               ]}
             >
-            <View style={{ flexDirection: "row" }}>
-              {category}
-              {category !="Listings" ? (
-              <Pressable
-                style={{  marginLeft: 5, paddingBottom: 5,marginTop: 0, fontSize: 18 }}
-                onPress={() => {
-                  navigation.navigate("RoommateIconsHelper");
-                }}
-              >
-             
-                <Ionicons name="ios-help-circle" size={22} color={COLORS.dark}/>
-              </Pressable>
-              ):(<View></View>)}
+              <View style={{ flexDirection: "row" }}>
+                {category}
+                {category != "Listings" ? (
+                  <Pressable
+                    style={{
+                      marginLeft: 5,
+                      paddingBottom: 5,
+                      marginTop: 0,
+                      fontSize: 18,
+                    }}
+                    onPress={() => {
+                      navigation.navigate("RoommateIconsHelper");
+                    }}
+                  >
+                    <Ionicons
+                      name="ios-help-circle"
+                      size={22}
+                      color={COLORS.dark}
+                    />
+                  </Pressable>
+                ) : (
+                  <View></View>
+                )}
               </View>
             </Text>
           </Pressable>
@@ -92,7 +102,7 @@ const HomeScreen = ({ navigation }) => {
     return (
       <Pressable
         activeOpacity={0.8}
-        style={{ size:22, color: COLORS.dark}}
+        style={{ size: 22, color: COLORS.dark }}
         onPress={() => navigation.navigate("DetailsListingScreen", house)}
       >
         <View style={style.card}>
@@ -152,7 +162,7 @@ const HomeScreen = ({ navigation }) => {
     return (
       <Pressable
         activeOpacity={0.8}
-        style={{ size:22, color: COLORS.dark}}
+        style={{ size: 22, color: COLORS.dark }}
         onPress={() => navigation.navigate("DetailsRoommateScreen", roommate)}
       >
         <View style={style.card}>
@@ -190,7 +200,7 @@ const HomeScreen = ({ navigation }) => {
             {/* Facilities container */}
             <View style={{ marginTop: 10, flexDirection: "row" }}>
               <View style={style.facility}>
-                <FontAwesome5 name="dog" size={18}  color={COLORS.dark} />
+                <FontAwesome5 name="dog" size={18} color={COLORS.dark} />
                 <Text> </Text>
                 {roommate.petFriendly ? (
                   <FontAwesome5 name="check" size={18} color="green" />
@@ -226,6 +236,96 @@ const HomeScreen = ({ navigation }) => {
                     size={18}
                     color="red"
                   />
+                )}
+              </View>
+
+              <View style={style.facility}>
+                <FontAwesome5
+                  name="user-graduate"
+                  size={18}
+                  color={COLORS.dark}
+                />
+                <Text> </Text>
+                {roommate.student ? (
+                  <FontAwesome5 name="check" size={18} color="green" />
+                ) : (
+                  <MaterialCommunityIcons
+                    name="close-thick"
+                    size={18}
+                    color="red"
+                  />
+                )}
+              </View>
+              <View style={style.facility}>
+                <FontAwesome5 name="user-tie" size={18} color={COLORS.dark} />
+                <Text> </Text>
+                {roommate.workingProfessional ? (
+                  <FontAwesome5 name="check" size={18} color="green" />
+                ) : (
+                  <MaterialCommunityIcons
+                    name="close-thick"
+                    size={18}
+                    color="red"
+                  />
+                )}
+              </View>
+              <View style={style.facility}>
+                <FontAwesome5 name="house-user" size={18} color={COLORS.dark} />
+                <Text> </Text>
+                {roommate.guestsOften === 0 && (
+                  <MaterialCommunityIcons
+                    name="close-thick"
+                    size={18}
+                    color="red"
+                  />
+                )}
+
+                {roommate.guestsOften === 1 && (
+                  <View style={{ marginTop: 5 }}>
+                    <FontAwesome5
+                      style={{ marginRight: 1 }}
+                      name="user-alt"
+                      size={12}
+                      color="green"
+                    />
+                  </View>
+                )}
+                {roommate.guestsOften === 2 && (
+                  <View
+                    style={{ flex: 1, flexDirection: "row", paddingTop: 4 }}
+                  >
+                    <FontAwesome5
+                      style={{ marginRight: -1 }}
+                      name="user-alt"
+                      size={12}
+                      color="green"
+                    />
+                    <FontAwesome5
+                      style={{ marginRight: 1 }}
+                      name="user-alt"
+                      size={12}
+                      color="green"
+                    />
+                  </View>
+                )}
+                {roommate.guestsOften === 3 && (
+                  <View
+                    style={{ flex: 1, flexDirection: "row", paddingTop: 4 }}
+                  >
+                    <FontAwesome5
+                      style={{ marginRight: 1 }}
+                      name="user-alt"
+                      size={12}
+                      color="green"
+                    />
+                    <FontAwesome5
+                      style={{ marginRight: -5, marginTop: 1, marginLeft: -5 }}
+                      name="user-alt"
+                      size={12}
+                      color="green"
+                    />
+                    <FontAwesome5 name="user-alt" size={12} color="green" />
+                  </View>
                 )}
               </View>
             </View>
@@ -363,7 +463,7 @@ const style = StyleSheet.create({
   },
   categoryListText: {
     fontSize: 16,
-    marginLeft: "auto", 
+    marginLeft: "auto",
     fontWeight: "bold",
     paddingBottom: 5,
     color: COLORS.grey,
@@ -393,7 +493,7 @@ const style = StyleSheet.create({
     height: 120,
     borderRadius: 15,
   },
-  facility: { flexDirection: "row", marginRight: 15, size:22 },
+  facility: { flexDirection: "row", marginRight: 15, size: 22 },
   facilityText: { marginLeft: 5, color: COLORS.green },
 });
 export default HomeScreen;

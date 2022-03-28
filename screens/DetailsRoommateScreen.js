@@ -16,6 +16,8 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import COLORS from "../src/consts/colors";
 const { width } = Dimensions.get("screen");
 
+import { Divider } from "react-native-elements";
+
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -57,6 +59,139 @@ const DetailsScreen = ({ navigation, route }) => {
           </View>
         </View>
 
+        {/* Facilities container */}
+        <View
+          style={{
+            marginTop: 25,
+            marginBottom: -25,
+            alignSelf: "center",
+            flexDirection: "row",
+          }}
+        >
+          <View style={style.facility}>
+            <FontAwesome5 name="dog" size={18} color={COLORS.dark} />
+            <Text> </Text>
+            {roommate.petFriendly ? (
+              <FontAwesome5 name="check" size={18} color="green" />
+            ) : (
+              <MaterialCommunityIcons
+                name="close-thick"
+                size={18}
+                color="red"
+              />
+            )}
+          </View>
+          <View style={style.facility}>
+            <FontAwesome5 name="smoking" size={18} color={COLORS.dark} />
+            <Text> </Text>
+            {roommate.smokingFriendly ? (
+              <FontAwesome5 name="check" size={18} color="green" />
+            ) : (
+              <MaterialCommunityIcons
+                name="close-thick"
+                size={18}
+                color="red"
+              />
+            )}
+          </View>
+          <View style={style.facility}>
+            <FontAwesome5 name="desktop" size={18} color={COLORS.dark} />
+            <Text> </Text>
+            {roommate.zoomFriendly ? (
+              <FontAwesome5 name="check" size={18} color="green" />
+            ) : (
+              <MaterialCommunityIcons
+                name="close-thick"
+                size={18}
+                color="red"
+              />
+            )}
+          </View>
+
+          <View style={style.facility}>
+            <FontAwesome5 name="user-graduate" size={18} color={COLORS.dark} />
+            <Text> </Text>
+            {roommate.student ? (
+              <FontAwesome5 name="check" size={18} color="green" />
+            ) : (
+              <MaterialCommunityIcons
+                name="close-thick"
+                size={18}
+                color="red"
+              />
+            )}
+          </View>
+          <View style={style.facility}>
+            <FontAwesome5 name="user-tie" size={18} color={COLORS.dark} />
+            <Text> </Text>
+            {roommate.workingProfessional ? (
+              <FontAwesome5 name="check" size={18} color="green" />
+            ) : (
+              <MaterialCommunityIcons
+                name="close-thick"
+                size={18}
+                color="red"
+              />
+            )}
+          </View>
+          <View style={style.facility}>
+            <FontAwesome5 name="house-user" size={18} color={COLORS.dark} />
+            <Text> </Text>
+            {roommate.guestsOften === 0 && (
+              <MaterialCommunityIcons
+                name="close-thick"
+                size={18}
+                color="red"
+              />
+            )}
+
+            {roommate.guestsOften === 1 && (
+              <View style={{ marginTop: 5 }}>
+                <FontAwesome5
+                  style={{ marginRight: 1 }}
+                  name="user-alt"
+                  size={12}
+                  color="green"
+                />
+              </View>
+            )}
+            {roommate.guestsOften === 2 && (
+              <View style={{ flex: 1, flexDirection: "row", paddingTop: 4 }}>
+                <FontAwesome5
+                  style={{ marginRight: -1 }}
+                  name="user-alt"
+                  size={12}
+                  color="green"
+                />
+                <FontAwesome5
+                  style={{ marginRight: 1 }}
+                  name="user-alt"
+                  size={12}
+                  color="green"
+                />
+              </View>
+            )}
+            {roommate.guestsOften === 3 && (
+              <View style={{ flex: 1, flexDirection: "row", paddingTop: 4 }}>
+                <FontAwesome5
+                  style={{ marginRight: 1 }}
+                  name="user-alt"
+                  size={12}
+                  color="green"
+                />
+                <FontAwesome5
+                  style={{ marginRight: -5, marginTop: 1, marginLeft: -5 }}
+                  name="user-alt"
+                  size={12}
+                  color="green"
+                />
+                <FontAwesome5 name="user-alt" size={12} color="green" />
+              </View>
+            )}
+          </View>
+        </View>
+        {/* end of facilities container */}
+
         <View style={style.detailsContainer}>
           {/* Name and rating view container */}
           <View
@@ -78,31 +213,312 @@ const DetailsScreen = ({ navigation, route }) => {
             {roommate.location}
           </Text>
 
-          {/* Facilities container */}
-          <View style={{ flexDirection: "row", marginTop: 20 }}>
-            <View style={style.facility}>
-              <FontAwesome5 name="dog" size={18} color="#dae4d6" />
-              <Text> </Text>
-              <FontAwesome5 name="check" size={18} color="green" />
-            </View>
-            <View style={style.facility}>
-              <FontAwesome5 name="smoking" size={18} color="#dae4d6" />
-              <Text> </Text>
-              <MaterialCommunityIcons
-                name="close-thick"
-                size={18}
-                color="red"
-              />
-            </View>
-            <View style={style.facility}>
-              <FontAwesome5 name="desktop" size={18} color="#dae4d6" />
-              <Text> </Text>
-              <FontAwesome5 name="check" size={18} color="green" />
-            </View>
-          </View>
-          <Text style={{ marginTop: 20, color: COLORS.grey }}>
+          {/*About me*/}
+          <Text
+            style={{ alignSelf: "center", marginTop: 20, color: "#708090" }}
+          >
             {roommate.details}
           </Text>
+
+          <Divider
+            orientation="horizontal"
+            style={{ marginTop: 10, marginHorizontal: 25 }}
+          />
+
+          <Text
+            style={[
+              style.text,
+              {
+                marginTop: 10,
+                marginBottom: -5,
+                fontSize: 30,
+                color: "black",
+              },
+            ]}
+          >
+            {roommate.personalityTypeName}
+          </Text>
+
+          {roommate.personalityTypeName === "The Architect" && (
+            <View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginTop: 10,
+                }}
+              >
+                <View style={[style.personalityImage, { alignSelf: "center" }]}>
+                  <ImageBackground
+                    source={require("../src/assets/ProfileScreen/theArchitect.png")}
+                    resizeMode="center"
+                    style={style.backgroundImage}
+                  ></ImageBackground>
+                </View>
+                <Text style={[style.text, { fontSize: 17, color: "black" }]}>
+                  {" "}
+                  This person is between an extrovert and an introvert. Being
+                  the architect, they are intuitive, rational and quick-witted.
+                  They derive their self-esteem from their knowledge and mental
+                  acuity and are not afraid to speak up when required.
+                </Text>
+              </View>
+            </View>
+          )}
+          {roommate.personalityTypeName === "The Adventurer" && (
+            <View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginTop: 10,
+                }}
+              >
+                <View style={[style.personalityImage, { alignSelf: "center" }]}>
+                  <ImageBackground
+                    source={require("../src/assets/ProfileScreen/theAdventurer.png")}
+                    resizeMode="center"
+                    style={style.backgroundImage}
+                  ></ImageBackground>
+                </View>
+                <Text style={[style.text, { fontSize: 17, color: "black" }]}>
+                  {" "}
+                  This person is a semi-extrovert. Being the adventurer, they
+                  are open-minded and approach life eager for new experiences.
+                  They are people with grounded warmth and durability to stay in
+                  the moment which helps them unlock exciting potential.
+                </Text>
+              </View>
+            </View>
+          )}
+          {roommate.personalityTypeName === "The Entertainer" && (
+            <View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginTop: 10,
+                }}
+              >
+                <View style={[style.personalityImage, { alignSelf: "center" }]}>
+                  <ImageBackground
+                    source={require("../src/assets/ProfileScreen/theEntertainer.png")}
+                    resizeMode="center"
+                    style={style.backgroundImage}
+                  ></ImageBackground>
+                </View>
+                <Text style={[style.text, { fontSize: 17, color: "black" }]}>
+                  {" "}
+                  This person is a complete extrovert. Being the entertainer,
+                  this person loves vibrant experiences, engaging in life
+                  eagerly and taking pleasure in discovering the unknown. They
+                  love the spotlight and the world is their stage.
+                </Text>
+              </View>
+            </View>
+          )}
+          {roommate.personalityTypeName === "The Observer" && (
+            <View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginTop: 10,
+                }}
+              >
+                <View style={[style.personalityImage, { alignSelf: "center" }]}>
+                  <ImageBackground
+                    source={require("../src/assets/ProfileScreen/theObserver.png")}
+                    resizeMode="center"
+                    style={style.backgroundImage}
+                  ></ImageBackground>
+                </View>
+                <Text style={[style.text, { fontSize: 17, color: "black" }]}>
+                  {" "}
+                  This person is a complete introvert. Being the observer, they
+                  "observe" the room before associating with others. They are
+                  self sufficient, non-demanding, thoughtful and unobtrusive.
+                </Text>
+              </View>
+            </View>
+          )}
+          {roommate.personalityTypeName === "The Sentinel" && (
+            <View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginTop: 10,
+                }}
+              >
+                <View style={[style.personalityImage, { alignSelf: "center" }]}>
+                  <ImageBackground
+                    source={require("../src/assets/ProfileScreen/theSentinel.png")}
+                    resizeMode="center"
+                    style={style.backgroundImage}
+                  ></ImageBackground>
+                </View>
+                <Text style={[style.text, { fontSize: 17, color: "black" }]}>
+                  {" "}
+                  This person is a semi-introvert. Being sentinel, they are
+                  quiet and they are confident in who they are. They are self
+                  motivated beings, taking pride in their good character and
+                  competence.
+                </Text>
+              </View>
+            </View>
+          )}
+          <Divider
+            orientation="horizontal"
+            style={{ marginTop: 15, marginHorizontal: 25, marginBottom: 5 }}
+          />
+
+          <View style={{ margin: 5 }}>
+            <View style={style.QuestionnaireAnswers}>
+              <FontAwesome5
+                name="location-arrow"
+                size={24}
+                color="#212F24"
+                style={{ marginRight: 10 }}
+              />
+              <Text style={[style.text, style.subText]}>Location: </Text>
+              <Text style={[style.text, style.subTextRight]}>
+                {roommate.location}
+              </Text>
+            </View>
+            <View style={style.QuestionnaireAnswers}>
+              <FontAwesome5
+                name="money-bill"
+                size={24}
+                color="#212F24"
+                style={{ marginRight: 10 }}
+              />
+              <Text style={[style.text, style.subText]}>Budget: </Text>
+              <Text style={[style.text, style.subTextRight]}>
+                ${roommate.budget}
+              </Text>
+            </View>
+            <View style={style.QuestionnaireAnswers}>
+              <FontAwesome5
+                name="user-graduate"
+                size={24}
+                color="#212F24"
+                style={{ marginRight: 10 }}
+              />
+              <Text style={[style.text, style.subText]}>Student? </Text>
+              <Text style={[style.text, style.subTextRight]}>
+                {roommate.student === true && "Yes"}
+                {roommate.student === false && "No"}
+              </Text>
+            </View>
+            <View style={style.QuestionnaireAnswers}>
+              <FontAwesome5
+                name="user-tie"
+                size={24}
+                color="#212F24"
+                style={{ marginRight: 10 }}
+              />
+              <Text style={[style.text, style.subText]}>
+                Working Professional?{" "}
+              </Text>
+              <Text style={[style.text, style.subTextRight]}>
+                {roommate.workingProfessional === true && "Yes"}
+                {roommate.workingProfessional === false && "No"}
+              </Text>
+            </View>
+            {roommate.workingProfessional != "No" && (
+              <View style={style.QuestionnaireAnswers}>
+                <FontAwesome5
+                  name="address-card"
+                  size={24}
+                  color="#212F24"
+                  style={{ marginRight: 10 }}
+                />
+                <Text style={[style.text, style.subText]}>Job Title: </Text>
+                <Text style={[style.text, style.subTextRight]}>
+                  {roommate.jobTitle}
+                </Text>
+              </View>
+            )}
+            <View style={style.QuestionnaireAnswers}>
+              <FontAwesome5
+                name="users"
+                size={24}
+                color="#212F24"
+                style={{ marginRight: 10 }}
+              />
+              <Text style={[style.text, style.subText]}>Guests Often? </Text>
+              <Text style={[style.text, style.subTextRight]}>
+                {roommate.guestsOften != 0 && roommate.guestsOften}
+              </Text>
+            </View>
+            <View style={style.QuestionnaireAnswers}>
+              <FontAwesome5
+                name="user-friends"
+                size={24}
+                color="#212F24"
+                style={{ marginRight: 10 }}
+              />
+              <Text style={[style.text, style.subText]}>Roommate Status: </Text>
+              <Text style={[style.text, style.subTextRight]}>
+                {roommate.roommateStatus === true && "Yes"}
+                {roommate.roommateStatus === false && "No"}
+              </Text>
+            </View>
+            <View style={style.QuestionnaireAnswers}>
+              <FontAwesome5
+                name="smoking"
+                size={24}
+                color="#212F24"
+                style={{ marginRight: 10 }}
+              />
+              <Text style={[style.text, style.subText]}>Smoking Status: </Text>
+              <Text style={[style.text, style.subTextRight]}>
+                {roommate.smokingFriendly === true && "Yes"}
+                {roommate.smokingFriendly === false && "No"}
+              </Text>
+            </View>
+            <View style={style.QuestionnaireAnswers}>
+              <FontAwesome5
+                name="hands-wash"
+                size={24}
+                color="#212F24"
+                style={{ marginRight: 10 }}
+              />
+              <Text style={[style.text, style.subText]}>Cleanliness: </Text>
+              <Text style={[style.text, style.subTextRight]}>
+                {roommate.cleanliness}/10
+              </Text>
+            </View>
+
+            <View style={style.QuestionnaireAnswers}>
+              <FontAwesome5
+                name="desktop"
+                size={24}
+                color="#212F24"
+                style={{ marginRight: 10 }}
+              />
+              <Text style={[style.text, style.subText]}>Zoom preference: </Text>
+              <Text style={[style.text, style.subTextRight]}>
+                {roommate.zoomFriendly === true && "Yes"}
+                {roommate.zoomFriendly === false && "No"}
+              </Text>
+            </View>
+            <View style={style.QuestionnaireAnswers}>
+              <FontAwesome5
+                name="dog"
+                size={24}
+                color="#212F24"
+                style={{ marginRight: 10 }}
+              />
+              <Text style={[style.text, style.subText]}>Pet preference:</Text>{" "}
+              <Text style={[style.text, style.subTextRight]}>
+                {" "}
+                {roommate.petFriendly === true && "Yes"}
+                {roommate.petFriendly === false && "No"}
+              </Text>
+            </View>
+          </View>
+
+          <Divider
+            orientation="horizontal"
+            style={{ marginTop: 10, marginHorizontal: 25 }}
+          />
 
           {/* Interior list */}
           <FlatList
@@ -213,6 +629,36 @@ const style = StyleSheet.create({
     backgroundColor: COLORS.dark,
     borderRadius: 10,
     paddingHorizontal: 20,
+  },
+  text: {
+    fontFamily: "HelveticaNeue",
+    color: "#fff",
+  },
+  personalityImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 100,
+    overflow: "hidden",
+  },
+  rowLineUp: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  QuestionnaireAnswers: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  subText: {
+    fontSize: 18,
+    color: "#212F24",
+    fontWeight: "500",
+  },
+  subTextRight: {
+    fontSize: 18,
+    color: "#1A331F",
+    fontWeight: "750",
   },
   detailsContainer: { flex: 1, paddingHorizontal: 20, marginTop: 40 },
   facility: { flexDirection: "row", marginRight: 15 },

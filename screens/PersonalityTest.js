@@ -105,11 +105,11 @@ export default function Questionnaire({ route, navigation }) {
       descr =
         "This person is between an extrovert and an introvert. Being the architect, they are intuitive, rational and quick-witted. They derive their self-esteem from their knowledge and mental acuity and are not afraid to speak up when required.";
     } else if (total <= 11 && total >= 9) {
-      personality = "The Adventurer ";
+      personality = "The Adventurer";
       descr =
         " This person is a semi-extrovert. Being the adventurer, they are open-minded and approach life eager for new experiences. They are people with grounded warmth and durability to stay in the moment which helps them unlock exciting potential.";
     } else {
-      personality = "The Entertainer ";
+      personality = "The Entertainer";
       descr =
         " This person is a complete extrovert. Being the entertainer, this person loves vibrant experiences, engaging in life eagerly and taking pleasure in discovering the unknown. They love the spotlight and the world is their stage.";
     }

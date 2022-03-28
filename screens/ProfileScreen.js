@@ -212,13 +212,52 @@ const ProfileScreen = ({ route, navigation }) => {
               <Text style={[styles.text, { fontSize: 45, color: "#ffffffb2" }]}>
                 {personalityTypeName}
               </Text>
-              <View style={[styles.personalityImage, { marginLeft: 75 }]}>
-                <Image
-                  source={require("../src/assets/ProfileScreen/theArchitect.png")}
-                  resizeMode="center"
-                  style={styles.image}
-                ></Image>
-              </View>
+
+              {personalityTypeName === "The Architect" && (
+                <View style={[styles.personalityImage, { marginLeft: 75 }]}>
+                  <Image
+                    source={require("../src/assets/ProfileScreen/theArchitect.png")}
+                    resizeMode="center"
+                    style={styles.image}
+                  ></Image>
+                </View>
+              )}
+              {personalityTypeName === "The Adventurer" && (
+                <View style={[styles.personalityImage, { marginLeft: 75 }]}>
+                  <Image
+                    source={require("../src/assets/ProfileScreen/theAdventurer.png")}
+                    resizeMode="center"
+                    style={styles.image}
+                  ></Image>
+                </View>
+              )}
+              {personalityTypeName === "The Entertainer" && (
+                <View style={[styles.personalityImage, { marginLeft: 75 }]}>
+                  <Image
+                    source={require("../src/assets/ProfileScreen/theEntertainer.png")}
+                    resizeMode="center"
+                    style={styles.image}
+                  ></Image>
+                </View>
+              )}
+              {personalityTypeName === "The Observer" && (
+                <View style={[styles.personalityImage, { marginLeft: 75 }]}>
+                  <Image
+                    source={require("../src/assets/ProfileScreen/theObserver.png")}
+                    resizeMode="center"
+                    style={styles.image}
+                  ></Image>
+                </View>
+              )}
+              {personalityTypeName === "The Sentinel" && (
+                <View style={[styles.personalityImage, { marginLeft: 75 }]}>
+                  <Image
+                    source={require("../src/assets/ProfileScreen/theSentinel.png")}
+                    resizeMode="center"
+                    style={styles.image}
+                  ></Image>
+                </View>
+              )}
             </View>
           ) : (
             <Text style={[styles.text, styles.subText]}>
@@ -360,6 +399,7 @@ const ProfileScreen = ({ route, navigation }) => {
               {cleanliness}/10
             </Text>
           </View>
+          
           <View style={styles.QuestionnaireAnswers}>
             <FontAwesome5
               name="desktop"
