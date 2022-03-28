@@ -399,7 +399,7 @@ const ProfileScreen = ({ route, navigation }) => {
               {cleanliness}/10
             </Text>
           </View>
-          
+
           <View style={styles.QuestionnaireAnswers}>
             <FontAwesome5
               name="desktop"
@@ -484,7 +484,7 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#009387",
+    backgroundColor: "#398F79",
   },
   text: {
     fontFamily: "HelveticaNeue",
