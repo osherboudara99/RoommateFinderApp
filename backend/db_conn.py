@@ -85,11 +85,21 @@ def connect():
 
         cursor.execute("CREATE TABLE IF NOT EXISTS SeniorProject.profile_picture ( \
     `userid` int(10) DEFAULT NULL, \
-    `questionaire_id` int(10) DEFAULT NULL, \
     `profile_pic` LONGBLOB DEFAULT NULL, \
     UNIQUE KEY `user_UNIQUE` (`userid`), \
-    UNIQUE KEY `questionaire_UNIQUE` (`questionaire_id`), \
     CONSTRAINT `qs_user_id_3` FOREIGN KEY (`userid`) REFERENCES `Users` (`userid`) \
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci")
+
+        cursor.execute("CREATE TABLE IF NOT EXISTS SeniorProject.listings ( \
+    `userid` int(10) DEFAULT NULL, \
+    `total_rent` int NOT NULL, \
+    `bedrooms` int(3) NOT NULL, \
+    `bathrooms` int(3) NOT NULL, \
+    `total_occupants` int(4) NOT NULL, \
+    `description` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL, \
+    `date_created` DATE NOT NULL,\
+    UNIQUE KEY `user_UNIQUE` (`userid`), \
+    CONSTRAINT `user_id_5` FOREIGN KEY (`userid`) REFERENCES `Users` (`userid`) \
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci")
 
         cursor.execute("CREATE TABLE IF NOT EXISTS SeniorProject.gallery ( \
