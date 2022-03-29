@@ -133,6 +133,26 @@ const PersonalityHelper = ({ route, navigation }) => {
           orientation="horizontal"
           style={{ marginTop: 10, marginHorizontal: 25 }}
         />
+        <View style={[styles.container, { alignSelf: "left" }]}>
+          <Text style={[styles.text, { fontSize: 30, marginLeft: 5 }]}>
+            Guests Often Icon
+          </Text>
+          <View style={{ flexDirection: "row", marginTop: 10, marginLeft:10, marginRight:10 }}>
+            <View style={[styles.personalityImage]}>
+            <FontAwesome5  name="house-user" size={70} marginRight={10} color={COLORS.dark} />
+            </View>
+            <Text style={[styles.text, { fontSize: 18, color: "#eef5eb" }]}>
+              {" "}
+              This icon will have the frequency of guests this person has over.
+            </Text>
+          </View>
+        </View>
+
+
+        <Divider
+          orientation="horizontal"
+          style={{ marginTop: 10, marginHorizontal: 25 }}
+        />
       </ScrollView>
     </SafeAreaView>
   );

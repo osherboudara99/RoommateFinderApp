@@ -93,6 +93,7 @@ def connect():
         cursor.execute("CREATE TABLE IF NOT EXISTS SeniorProject.listings ( \
     `userid` int(10) DEFAULT NULL, \
     `total_rent` int NOT NULL, \
+    `square_footage` int NOT NULL, \
     `bedrooms` int(3) NOT NULL, \
     `bathrooms` int(3) NOT NULL, \
     `total_occupants` int(4) NOT NULL, \
