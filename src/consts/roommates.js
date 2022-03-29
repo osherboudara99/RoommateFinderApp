@@ -40,6 +40,9 @@ const listings = [
     student: false,
     workingProfessional: true,
     guestsOften: 0,
+	jobTitle: "Professional Dancer",
+	roommateStatus: "Seeking Roommates",
+	cleanliness: 9,
 
     image: require("../assets/homescreen/roommate2.jpg"),
     details: `Super clean, fun, friendly and outgoing.`,
@@ -63,6 +66,9 @@ const listings = [
     student: false,
     workingProfessional: true,
     guestsOften: 2,
+	jobTitle: "Architecture Firm Designer",
+	roommateStatus: "Seeking Roommates",
+	cleanliness: 5,
 
     image: require("../assets/homescreen/roommate3.jpg"),
     details: `Only need a place to sleep and create ideas!`,
@@ -84,6 +90,9 @@ const listings = [
     student: true,
     workingProfessional: false,
     guestsOften: 3,
+	jobTitle: "Architecture Firm Designer",
+	roommateStatus: "Seeking Roommates",
+	cleanliness: 4,
 
     personalityTypeName: "The Entertainer",
 
