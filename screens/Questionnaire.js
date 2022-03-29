@@ -97,7 +97,8 @@ export default function Questionnaire({ route, navigation }) {
         console.log(data);
         if (data === "executed") {
           console.log(route.params);
-          route.params.setIsLoggedIn(true);
+          navigation.navigate("SignUpProfilePic");
+          //route.params.setIsLoggedIn(true);
         }
       })
       .catch((error) => console.log(error));

@@ -1,5 +1,7 @@
 import SignUp from "../screens/SignUpScreen";
 import Questionnaire from "../screens/Questionnaire";
+
+import SignUpProfilePic from "../screens/SignUpProfilePicScreen";
 import LoginScreen from "../screens/LoginScreen";
 import OnBoardScreen from "../screens/OnBoardScreen";
 import LoginError from "../screens/SignInError";
@@ -45,6 +47,12 @@ const LoginNavigation = ({ navigation, route }) => {
       <LoginStack.Screen
         name="Questionnaire"
         component={Questionnaire}
+        options={{ headerShown: false }}
+        initialParams={{ setIsLoggedIn: route.params.setIsLoggedIn }}
+      />
+      <LoginStack.Screen
+        name="SignUpProfilePic"
+        component={SignUpProfilePic}
         options={{ headerShown: false }}
         initialParams={{ setIsLoggedIn: route.params.setIsLoggedIn }}
       />
