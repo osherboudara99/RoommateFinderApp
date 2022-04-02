@@ -146,9 +146,9 @@ const ProfileScreen = ({ route, navigation }) => {
 
   const functionCombined = () => {
     //console.log(profile_pic)
-    //fetchProfileScreen();
-    //fetchPersonality();
-    //fetchPicture();
+    fetchProfileScreen();
+    fetchPersonality();
+    fetchPicture();
   };
 
   const fetchPicture = () => {
