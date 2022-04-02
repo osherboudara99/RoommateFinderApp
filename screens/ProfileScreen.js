@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Blob
 } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Avatar, Icon, Divider } from "react-native-elements";
@@ -37,6 +38,8 @@ const ProfileScreen = ({ route, navigation }) => {
   const [personalityTypeName, setPersonalityTypeName] = React.useState("");
   const [personalityTypeDescription, setPersonalityTypeDescription] =
     React.useState("");
+
+  const [profile_pic, setProfilePic] = React.useState([]);
 
   const fetchProfileScreen = () => {
     fetch("http://127.0.0.1:5000/profile_screen", {
@@ -138,11 +141,41 @@ const ProfileScreen = ({ route, navigation }) => {
   useEffect(() => {
     fetchProfileScreen();
     fetchPersonality();
+    //fetchPicture();
   }, []);
 
   const functionCombined = () => {
     fetchProfileScreen();
     fetchPersonality();
+    //fetchPicture();
+  };
+
+  const fetchPicture = () => {
+    fetch("http://127.0.0.1:5000/profile_pic_select", {
+      method: "GET",
+    })
+      .then((article) => {
+        
+        const blobToImage = (blob) => {
+          return new Promise(resolve => {
+            var binaryData = [];
+            binaryData.push(blob);
+            const url = URL.createObjectURL(binaryData)
+            let img = new Image()
+            img.onload = () => {
+              URL.revokeObjectURL(url)
+              resolve(img)
+            }
+            img.src = url
+          })
+        }
+
+        Blob = blobToImage(article);
+        
+        setProfilePic(Blob);
+
+        console.log("Blob: ", profile_pic);
+      });
   };
 
   return (
@@ -151,6 +184,7 @@ const ProfileScreen = ({ route, navigation }) => {
         <View style={{ alignSelf: "center" }}>
           <View style={styles.profileImage}>
             <Image
+              //source={require(profile_pic)}
               source={require("../src/assets/profile-pic.jpg")}
               style={styles.image}
               resizeMode="center"

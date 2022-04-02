@@ -3,6 +3,8 @@ import os
 import mysql.connector
 from mysql.connector import errorcode
 import signup_backend
+import logged_or_signed
+import login_backend
 
 profile_pic_blueprint = Blueprint('profile_pic', __name__)
 
@@ -13,10 +15,13 @@ def profile_pic_insertion():
     cnx = mysql.connector.connect(user='root', password='',
                                   host='127.0.0.1')
 
-    #email = signup_backend.email
-    #password = signup_backend.password
-    email = "test@test.com"
-    password = "1234"
+    if(logged_or_signed.didUserSignup):
+        email = signup_backend.email
+        password = signup_backend.password
+    elif(logged_or_signed.didUserLogin):
+        email = login_backend.email
+        password = login_backend.password
+    
 
     profile_pic = request.json['profile_pic']
 

@@ -24,12 +24,11 @@ def profile_pic_select():
         
     profile_pic_select = ("SELECT profile_pic FROM SeniorProject.profile_picture AS p INNER JOIN SeniorProject.Users AS u ON u.userid = p.userid WHERE (email = %s) AND (password = %s)")
     profile_pic_info = (email, password)
-    cursor = cnx.cursor()
+    cursor = cnx.cursor(buffered=True)
 
     try:
         cursor.execute(profile_pic_select, profile_pic_info)
         cnx.commit()
-        cursor.close()
         values = cursor.fetchall()
         cnx.close()
         return str(values)
