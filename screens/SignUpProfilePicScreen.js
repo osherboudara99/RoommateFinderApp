@@ -16,11 +16,14 @@ export default function SignUpProfilePicScreen({ route, navigation }) {
       quality: 1,
     });
 
-    console.log(result);
+    //console.log(result);
 
     if (!result.cancelled) {
       setImage(result.uri);
     }
+
+    //console.log("look: "+ result.uri);
+
   };
 
   const insertPictureData = () => {
@@ -35,6 +38,7 @@ export default function SignUpProfilePicScreen({ route, navigation }) {
       .then((data) => {
         console.log(data);
         if (data === "executed") {
+          console.log("data: " + profile_pic);
           console.log(route.params);
           route.params.setIsLoggedIn(true);
           //navigation.navigate("Questionnaire");
