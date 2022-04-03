@@ -19,6 +19,10 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Avatar, Icon, Divider } from "react-native-elements";
 import { FontAwesome5 } from "@expo/vector-icons";
 const SettingsScreen = ({ route, navigation }) => {
+  const logOff= () => {
+    route.params.setIsLoggedIn(false);
+    navigation.navigate("LoginScreen");
+  };
   return (
     <SafeAreaView style={style.container}>
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -48,9 +52,9 @@ const SettingsScreen = ({ route, navigation }) => {
       paddingBottom: 40,
     }}>
   
-      <TouchableOpacity onPress={() => navigation.navigate('CreateListingsScreen')}>
+      <TouchableOpacity onPress={() => navigation.navigate('ViewListingsScreen')}>
       <View style={style.btn}>
-        <Text style={[style.text_header]}>Update A Listing!</Text>
+        <Text style={[style.text_header]}>View Your Listings!</Text>
       </View>
     </TouchableOpacity>
   </View>
@@ -65,7 +69,7 @@ const SettingsScreen = ({ route, navigation }) => {
       paddingBottom: 40,
     }}>
  
-      <TouchableOpacity onPress={() => route.params.setIsLoggedIn(false)}>
+      <TouchableOpacity onPress={() => logOff()}>
       <View style={style.btn}>
         <Text style={[style.text_header]}>Log Out</Text>
       </View>

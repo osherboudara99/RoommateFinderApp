@@ -42,56 +42,44 @@ export default function Questionnaire({ route, navigation }) {
 
   const [data, setData] = React.useState({
     rentValid: true,
-    jobTitleValid:true,
-    othersUsingZoom: false,
-    cleanlinessValid: true,
-    smokeOrNot: false,
-    petsOrNot: false,
-    zoomOrNot: false,
-    okayWithZoom: false,
-    locationValid: true,
-    roommates_boolean: false,
-    check_location: false,
+    bedroomsValid:true,
+    bathroomsValid:true,
+    titleValid: true,
+    squarefootageValid: true,
+    descrValid: true,
+    check_Squarefootage: false,
     check_Rent: false,
-    check_Cleanliness: false,
-    check_WorkingProfessional: false,
+    check_Title: false,
+    check_Bedrooms: false,
+    check_Bathrooms: false,
+    check_Descr: false,
   });
 
-  const [location, setLocation] = React.useState("");
-  const [student, setStudent] = React.useState(false);
-  const [workingProfessional, setWorkingProfessional] = React.useState(false);
-  const [jobTitle, setJobTitle] = React.useState("");
-  const [guestsOften, setGuestsOften] = React.useState(false);
+  const [squareFootage, setSquarefootage] = React.useState("");
+  const [bedrooms, setBedrooms] = React.useState("");
+  const [bathrooms, setBathrooms] = React.useState("");
+  const [title, setTitle] = React.useState("");
 
-  const [roommate, setRoommate_yes_no] = React.useState(false);
-
-  const [smoker, setSmoker] = React.useState(false);
-  const [pets, setPets] = React.useState(false);
-  const [zoom_friendly, setZoom_friendly] = React.useState(false);
-  const [zoom_others_using, setZoom_others_using] = React.useState(false);
+ 
+  
   const [rent, setRent] = React.useState("");
-  const [cleanliness, setCleanliness] = React.useState("");
-  const [temp, setTemp] = React.useState("");
+;
+  const [descr, setDescr] = React.useState("");
 
-  const insert_questionnaire_Data = () => {
+  const insert_Listing_Data = () => {
     fetch("http://127.0.0.1:5000/questionnaire", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        location: location.location,
+        squareFootage: squareFootage.squareFootage,
         rent: rent.rent,
-        student,
-        workingProfessional,
-        jobTitle: jobTitle.jobTitle,
-        guestsOften,
-        roommate,
-        cleanliness: cleanliness.cleanliness,
-        smoker,
-        pets,
-        zoom_friendly,
-        zoom_others_using,
+        bedrooms:bedrooms.bedrooms,
+        bathrooms:bathrooms.bathrooms,
+        title:title.title,
+        descr:descr.descr,
+    
       }),
     })
       .then((resp) => resp.text())
@@ -135,120 +123,155 @@ export default function Questionnaire({ route, navigation }) {
     }
   };
   
-  const workingValidation = (val) => {
-      if (val.trim().length !== 0) {
-      setJobTitle({jobTitle: val });
-        setData({
-          ...data,
-          jobTitleValid:true,
-          check_WorkingProfessional: true,
-        });
-      } else {
-        setJobTitle({jobTitle: val });
-        setData({
-          ...data,
-        jobTitleValid:false,
-          check_WorkingProfessional: false,
-        });
-      }
-    
-  };
-  const locationValidation = (val) => {
-    var rege = /^\d{5}$/;
-
-    if (rege.test(val)) {
-      if (val.trim().length == 5) {
-        setLocation({ location: val });
-        setData({
-          ...data,
-          locationValid: true,
-          check_location: true,
-        });
-      } else {
-        setLocation({ location: val });
-        setData({
-          ...data,
-          locationValid: false,
-          check_location: false,
-        });
-      }
-    } else {
-      setLocation({ location: val });
-      setData({
-        ...data,
-        locationValid: false,
-        check_location: false,
-      });
-    }
-  };
-  const cleanlinessValidation = (val) => {
+  const bedroomsValidation = (val) => {
     var rege = /^[0-9]+$/;
 
     if (rege.test(val)) {
-      var temp = parseInt(val);
-      if (temp <= 10 && temp != 0) {
-        setCleanliness({ cleanliness: val });
+      if (val.trim().length >0 && val.trim().length < 5 ) {
+        setBedrooms({ bedrooms: val });
         setData({
           ...data,
-          cleanlinessValid: true,
-          check_Cleanliness: true,
+          bedroomsValid: true,
+          check_Bedrooms: true,
         });
       } else {
-        setCleanliness({ cleanliness: val });
+        setBedrooms({ bedrooms: null });
         setData({
           ...data,
-          cleanlinessValid: false,
-          check_Cleanliness: false,
+          bedroomsValid: false,
+          check_Bedrooms: false,
         });
       }
     } else {
-      setCleanliness({ cleanliness: val });
-      setData({
-        ...data,
-        cleanlinessValid: false,
-        check_Cleanliness: false,
-      });
+        setBedrooms({ bedrooms: null });
+        setData({
+          ...data,
+          bedroomsValid: false,
+          check_Bedrooms: false,
+        });
     }
   };
+  
+  const bathroomsValidation = (val) => {
+    var r=/^(?:\d*\.(?:5|0?|00?)|\d+\.?)$/;
+    
+    if (r.test(val)) {
+      if (val.trim().length >0 && val.trim().length < 6 ) {
+        setBathrooms({ bathrooms: val });
+        setData({
+          ...data,
+          bathroomsValid: true,
+          check_Bathrooms: true,
+        });
+      } else {
+        setBathrooms({ bathrooms: null });
+        setData({
+          ...data,
+          bathroomsValid: false,
+          check_Bathrooms: false,
+        });
+      }
+    } else {
+        setBathrooms({ bathrooms: null });
+        setData({
+          ...data,
+          bathroomsValid: false,
+          check_Bathrooms: false,
+        });
+    }
+  };
+  const squarefootageValidation = (val) => {
+    var rege = /^[0-9]+$/;
 
-  const callbackRoomate = useCallback((val) => {
-    setRoommate_yes_no(val);
-  }, []);
+    if (rege.test(val)) {
+      if (val.trim().length >2) {
+        setSquarefootage({ squareFootage: val });
+        setData({
+          ...data,
+          squarefootageValid: true,
+          check_Squarefootage: true,
+        });
+      } else {
+        setSquarefootage({ squareFootage: null });
+        setData({
+          ...data,
+          squarefootageValid: false,
+          check_Squarefootage: false,
+        });
+      }
+    } else {
+        setSquarefootage({ squareFootage: null });
+        setData({
+          ...data,
+          squarefootageValid: false,
+          check_Squarefootage: false,
+        });
+    }
+  };
+  const titleValidation = (val) => {
+    if( val.trim().length >5 && val.trim().length <51 ) {
+     setTitle({
+         title: val
+     });
+     setData({
+         ...data,
+    titleValid: true,
+    check_Title:true,
+     });
+     }else{
+        setTitle({
+            title: null
+        });
+        setData({
+            ...data,
+       titleValid: false,
+       check_Title:false,
+        });
+     }
 
-  const callbackStudent = useCallback((val) => {
-    setStudent(val);
-  }, []);
-  const callbackWorkingProfessional = useCallback((val) => {
-    setWorkingProfessional(val);
-  }, []);
+ }
+ const descrValidation = (val) => {
+    if( val.trim().length >10 && val.trim().length <251 ) {
+     setDescr({
+         descr: val
+     });
+     setData({
+         ...data,
+    descrValid: true,
+    check_Descr:true,
+     });
+     }else{
+        setDescr({
+            descr: null
+        });
+        setData({
+            ...data,
+       descrValid: false,
+       check_Descr:false,
+        });
+     }
+
+ }
+
+  
+ 
   const callbackGuestsOften = useCallback((val) => {
     setGuestsOften(val);
   }, []);
 
-  const callbackSmoker = useCallback((val) => {
-    setSmoker(val);
-  }, []);
-  const callbackPets = useCallback((val) => {
-    setPets(val);
-  }, []);
-  const callbackZoomFriendly = useCallback((val) => {
-    setZoom_friendly(val);
-  }, []);
-  const callbackZoomOthersUsing = useCallback((val) => {
-    setZoom_others_using(val);
-  }, []);
+
+
+ 
 
   const Submission = () => {
     handleSubmit(onSubmit);
 
-    console.log("loc:" + location);
+    console.log("squareF:" + squareFootage);
     console.log("rent:" + rent);
     console.log("cleanliness:" + cleanliness);
-    console.log("roommate:" + roommate);
-    console.log("smoker:" + smoker);
-    console.log("pets:" + pets);
-    console.log("zoom friendly:" + zoom_friendly);
-    console.log("zoom others using:" + zoom_others_using);
+ 
+   
+   
 
     //console.log("test");
     //console.log(errors);
@@ -257,7 +280,7 @@ export default function Questionnaire({ route, navigation }) {
     //route.params.setIsLoggedIn(true);
   };
 
-  const getZipcodeNames = () => {};
+
 
   const {
     control,
@@ -286,10 +309,10 @@ export default function Questionnaire({ route, navigation }) {
     <View style={styles.container}>
   
       <View style={[styles.form, { width: window.width - 20 }]}>
-        <Text style={styles.header}>Question {questionNumber}/11</Text>
+        <Text style={styles.header}>Question {questionNumber}/6</Text>
     
         <Question
-          question="What is your location?"
+          question="What is the square footage of the entire property?"
           display={questionNumber == 1}
           control={control}
           rules={{ required: true, min: 5 }}
@@ -299,20 +322,20 @@ export default function Questionnaire({ route, navigation }) {
                 <TextInput
                   style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
                   onChange={onChange}
-                  onChangeText={(val) => locationValidation(val)}
+                  onChangeText={(val) =>  squarefootageValidation(val)}
                   onBlur={onBlur}
                   value={value}
                   keyboardType="number-pad"
-                  placeholder="Enter Zip Code"
+                  placeholder="Enter Square Footage"
                 />
 
                 <View style={{ marginLeft: "auto" }}>
-                  {data.check_location ? (
+                  {data.check_Squarefootage ? (
                     <Animatable.View animation="bounceIn">
                       <Feather name="check-circle" color="green" size={25} />
                     </Animatable.View>
                   ) : null}
-                  {data.locationValid ? null : (
+                  {data.squarefootageValid ? null : (
                     <Animatable.View animation="fadeInLeft" duration={500}>
                       <Text style={styles.errorMsg}>
                         {" "}
@@ -327,7 +350,7 @@ export default function Questionnaire({ route, navigation }) {
                 </View>
               </View>
               <View>
-                {data.locationValid ? null : (
+                {data.squarefootageValid ? null : (
                   <Animatable.View animation="fadeInLeft" duration={500}>
                     <Text
                       style={{
@@ -337,14 +360,14 @@ export default function Questionnaire({ route, navigation }) {
                       }}
                     >
                       {" "}
-                      Zip code is invalid, please try again.
+                      Square Footage is invalid, please try again.
                     </Text>
                   </Animatable.View>
                 )}
               </View>
             </View>
           )}
-          name="Location"
+          name="Square Footage"
           defaultValue=""
         />
 
@@ -408,154 +431,31 @@ export default function Questionnaire({ route, navigation }) {
           defaultValue=""
         />
 
-        <Question
-          question="Are you a student?"
+    <Question
+          question="How many bedrooms are on the property?"
           display={questionNumber == 3}
           control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <BooleanQuestionnaireSwitch
-        
-              parentCallback={callbackStudent}
-              value={value}
-              trueLabel={"Yes"}
-              falseLabel={"No"}
-            />
-          )}
-          defaultvalue={false}
-          name="isStudent"
-        />
-
-        <Question
-          question="Are you a working professional?"
-          display={questionNumber == 4}
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <View>
-              <BooleanQuestionnaireSwitch
-                parentCallback={callbackWorkingProfessional}
-                value={value}
-                trueLabel={"Yes"}
-                falseLabel={"No"}
-              />
-            <View style={{ flexDirection: "column" }}>
-              <View style={{ flexDirection: "row" }}>
-              {workingProfessional ? (
-                <TextInput
-                style={{ width: 250, marginLeft: 5, marginRight: "auto",  marginBottom: 10, marginTop: 10,}}
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  value={value}
-                  onChangeText={(value) => workingValidation(value)}
-                  keyboardType="number-pad"
-                  placeholder="Job title"
-                />
-              ) : null}
-             <View style={{ marginLeft: "auto",flexDirection :"row" }}>
-                  {data.check_WorkingProfessional && workingProfessional ? (
-                    <Animatable.View animation="bounceIn">
-                      <Feather name="check-circle" color="green" size={25} />
-                    </Animatable.View>
-                  ) : null}
-                  {data.jobTitleValid? null : (
-                    <Animatable.View animation="fadeInLeft" duration={500}>
-                      <Text style={styles.errorMsg}>
-                        {" "}
-                        <FontAwesome
-                          name="exclamation-circle"
-                          color="red"
-                          size={25}
-                        />{" "}
-                      </Text>
-                    </Animatable.View>
-                  )}
-             </View>
-       
-            </View>
-              <View>
-                {data.jobTitleValid ? null : (
-                  <Animatable.View animation="fadeInLeft" duration={500}>
-                    <Text
-                      style={{
-                        flexDirection: "column",
-                        color: "#ae0700",
-                        marginBottom: 10,
-                      }}
-                    >
-                      {" "}
-                     Job title is invalid. Try Again
-                    </Text>
-                  </Animatable.View>
-                )}
-             </View>
-            </View>
-          
-            </View>
-          )}
-          defaultvalue={false}
-          name="isWorking"
-        />
-
-        <Question
-          question="Do you have guests often?"
-          display={questionNumber == 5}
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <BooleanQuestionnaireSwitch
-              parentCallback={callbackGuestsOften}
-              value={value}
-              trueLabel={"Yes"}
-              falseLabel={"No"}
-            />
-          )}
-          defaultvalue={false}
-          name="guestsOften"
-        />
-
-        <Question
-          question="Are you seeking roommates for a place or do you need to join a place with roommates?"
-          display={questionNumber == 6}
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <BooleanQuestionnaireSwitch
-              parentCallback={callbackRoomate}
-              value={value}
-              trueLabel={"Seeking"}
-              falseLabel={"Joining"}
-            />
-          )}
-          defaultvalue={false}
-          name="othersUsingZoom"
-        />
-
-        <Question
-          question="On a scale of 1 to 10, how clean would you consider yourself?"
-          display={questionNumber == 7}
-          control={control}
-          rules={{ required: true, min: 2 }}
+          rules={{ required: true, min: 5 }}
           render={({ field: { onChange, onBlur, value } }) => (
             <View style={{ flexDirection: "column" }}>
               <View style={{ flexDirection: "row" }}>
                 <TextInput
                   style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
                   onChange={onChange}
-                  onChangeText={(value) => cleanlinessValidation(value)}
+                  onChangeText={(val) => bedroomsValidation(val)}
                   onBlur={onBlur}
                   value={value}
                   keyboardType="number-pad"
-                  placeholder="Anywhere from 1-10"
+                  placeholder="Number of bedrooms"
                 />
 
                 <View style={{ marginLeft: "auto" }}>
-                  {data.check_Cleanliness ? (
+                  {data.check_Bedrooms ? (
                     <Animatable.View animation="bounceIn">
                       <Feather name="check-circle" color="green" size={25} />
                     </Animatable.View>
                   ) : null}
-                  {data.cleanlinessValid ? null : (
+                  {data.bedroomsValid ? null : (
                     <Animatable.View animation="fadeInLeft" duration={500}>
                       <Text style={styles.errorMsg}>
                         {" "}
@@ -570,7 +470,7 @@ export default function Questionnaire({ route, navigation }) {
                 </View>
               </View>
               <View>
-                {data.cleanlinessValid ? null : (
+                {data.bedroomsValid ? null : (
                   <Animatable.View animation="fadeInLeft" duration={500}>
                     <Text
                       style={{
@@ -580,84 +480,199 @@ export default function Questionnaire({ route, navigation }) {
                       }}
                     >
                       {" "}
-                      Cleanliness number is invalid, please try again.
+                      Number of Bedrooms is invalid, please try again.
                     </Text>
                   </Animatable.View>
                 )}
               </View>
             </View>
           )}
-          name="Cleanliness"
+          name="Bedrooms"
+          defaultValue=""
+        />
+        <Question
+          question="How many bathrooms are on the property?"
+          display={questionNumber == 4}
+          control={control}
+          rules={{ required: true, min: 5 }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <View style={{ flexDirection: "column" }}>
+              <View style={{ flexDirection: "row" }}>
+                <TextInput
+                  style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
+                  onChange={onChange}
+                  onChangeText={(val) => bathroomsValidation(val)}
+                  onBlur={onBlur}
+                  value={value}
+                  keyboardType="number-pad"
+                  placeholder="Number of bathrooms"
+                />
+
+                <View style={{ marginLeft: "auto" }}>
+                  {data.check_Bathrooms ? (
+                    <Animatable.View animation="bounceIn">
+                      <Feather name="check-circle" color="green" size={25} />
+                    </Animatable.View>
+                  ) : null}
+                  {data.bathroomsValid ? null : (
+                    <Animatable.View animation="fadeInLeft" duration={500}>
+                      <Text style={styles.errorMsg}>
+                        {" "}
+                        <FontAwesome
+                          name="exclamation-circle"
+                          color="red"
+                          size={25}
+                        />{" "}
+                      </Text>
+                    </Animatable.View>
+                  )}
+                </View>
+              </View>
+              <View>
+                {data.bathroomsValid ? null : (
+                  <Animatable.View animation="fadeInLeft" duration={500}>
+                    <Text
+                      style={{
+                        flexDirection: "column",
+                        marginBottom: "auto",
+                        color: "#ae0700",
+                      }}
+                    >
+                      {" "}
+                      Number of Bathrooms is invalid, please try again.
+                    </Text>
+                  </Animatable.View>
+                )}
+              </View>
+            </View>
+          )}
+          name="Bathrooms"
           defaultValue=""
         />
 
-        <Question
-          question="Would you consider yourself a smoker or non-smoker?"
-          display={questionNumber == 8}
+    <Question
+          question="Please Create a Title for Your Listing."
+          display={questionNumber == 5}
           control={control}
-          rules={{ required: true }}
+          rules={{ required: true, min: 5 }}
           render={({ field: { onChange, onBlur, value } }) => (
-            <BooleanQuestionnaireSwitch
-              value={value}
-              trueLabel={"Smoker"}
-              falseLabel={"Non-smoker"}
-              parentCallback={callbackSmoker}
-            />
+            <View style={{ flexDirection: "column" }}>
+              <View style={{ flexDirection: "row" }}>
+                <TextInput
+                  style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
+                  onChange={onChange}
+                  onChangeText={(val) => titleValidation(val)}
+                  onBlur={onBlur}
+                  value={value}
+                  placeholder="Title potential roomates will see"
+                />
+
+                <View style={{ marginLeft: "auto" }}>
+                  {data.check_Title ? (
+                    <Animatable.View animation="bounceIn">
+                      <Feather name="check-circle" color="green" size={25} />
+                    </Animatable.View>
+                  ) : null}
+                  {data.titleValid ? null : (
+                    <Animatable.View animation="fadeInLeft" duration={500}>
+                      <Text style={styles.errorMsg}>
+                        {" "}
+                        <FontAwesome
+                          name="exclamation-circle"
+                          color="red"
+                          size={25}
+                        />{" "}
+                      </Text>
+                    </Animatable.View>
+                  )}
+                </View>
+              </View>
+              <View>
+                {data.titleValid ? null : (
+                  <Animatable.View animation="fadeInLeft" duration={500}>
+                    <Text
+                      style={{
+                        flexDirection: "column",
+                        marginBottom: "auto",
+                        color: "#ae0700",
+                      }}
+                    >
+                      {" "}
+                      Title is invalid, please try again.
+                    </Text>
+                  </Animatable.View>
+                )}
+              </View>
+            </View>
           )}
-          defaultvalue={false}
-          name="smokerOrNot"
+          name="Title"
+          defaultValue=""
+        />
+        <Question
+          question="Please Create a Description for Your Listing."
+          display={questionNumber == 6}
+          control={control}
+          rules={{ required: true, min: 5 }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <View style={{ flexDirection: "column" }}>
+              <View style={{ flexDirection: "row" }}>
+                <TextInput
+                  style={{ width: 250, height:250, marginLeft: 5, marginRight: "auto" }}
+                  onChange={onChange}
+                  onChangeText={(val) => descrValidation(val)}
+                  onBlur={onBlur}
+                  value={value}
+                  multiline={true}
+                  numberOfLines={5}          
+                  placeholder="Description potential roomates will see"
+                />
+
+                <View style={{ marginLeft: "auto" }}>
+                  {data.check_Descr? (
+                    <Animatable.View animation="bounceIn">
+                      <Feather name="check-circle" color="green" size={25} />
+                    </Animatable.View>
+                  ) : null}
+                  {data.descrValid ? null : (
+                    <Animatable.View animation="fadeInLeft" duration={500}>
+                      <Text style={styles.errorMsg}>
+                        {" "}
+                        <FontAwesome
+                          name="exclamation-circle"
+                          color="red"
+                          size={25}
+                        />{" "}
+                      </Text>
+                    </Animatable.View>
+                  )}
+                </View>
+              </View>
+              <View>
+                {data.descrValid ? null : (
+                  <Animatable.View animation="fadeInLeft" duration={500}>
+                    <Text
+                      style={{
+                        flexDirection: "column",
+                        marginBottom: "auto",
+                        color: "#ae0700",
+                      }}
+                    >
+                      {" "}
+                      Description is invalid, please try again.
+                    </Text>
+                  </Animatable.View>
+                )}
+              </View>
+            </View>
+          )}
+          name="Description"
+          defaultValue=""
         />
 
-        <Question
-          question="Would you consider yourself pet-friendly or not pet-friendly?"
-          display={questionNumber == 9}
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <BooleanQuestionnaireSwitch
-              value={value}
-              trueLabel={"Pet-friendly"}
-              falseLabel={"Not Pet-friendly"}
-              parentCallback={callbackPets}
-            />
-          )}
-          defaultvalue={false}
-          name="petsOrNot"
-        />
+       
+        
 
-        <Question
-          question="Zoom Related: Do you use zoom?"
-          display={questionNumber == 10}
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <BooleanQuestionnaireSwitch
-              value={value}
-              trueLabel={"Yes"}
-              falseLabel={"No"}
-              parentCallback={callbackZoomFriendly}
-            />
-          )}
-          defaultvalue={false}
-          name="zoomOrNot"
-        />
-
-        <Question
-          question="Zoom Related: Are you okay with others using Zoom?"
-          display={questionNumber == 11}
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <BooleanQuestionnaireSwitch
-              value={value}
-              trueLabel={"Yes"}
-              falseLabel={"No"}
-              parentCallback={callbackZoomOthersUsing}
-            />
-          )}
-          defaultvalue={false}
-          name="okayWithZoom"
-        />
+       
 
         <View style={styles.formNavigation}>
         {questionNumber > 1 ? (
@@ -669,26 +684,14 @@ export default function Questionnaire({ route, navigation }) {
           />
           ) : null}
 
-          {questionNumber === 4 && !workingProfessional ? (
-            <Button
-              title="Next"
-              onPress={nextQuestion}
-              style={styles.buttonRight}
-            />
-          ) : null}
+          
 
-          {questionNumber === 4 && workingProfessional && data.jobTitleValid && data.check_WorkingProfessional ? (
-            <Button
-              title="Next"
-              onPress={nextQuestion}
-              style={styles.buttonRight}
-            />
-          ) : null}
 
-          {questionNumber < 11 && (
+          {questionNumber < 6 && (
             <View>
-              {data.locationValid &&
-              data.check_location &&
+               
+              {data.squarefootageValid &&
+              data.check_Squarefootage &&
               questionNumber == 1 ? (
                 <Button
                   title="Next"
@@ -703,36 +706,47 @@ export default function Questionnaire({ route, navigation }) {
                   style={styles.buttonRight}
                 />
               ) : null}
-              {data.cleanlinessValid &&
-              data.check_Cleanliness &&
-              questionNumber == 7 ? (
+                {data.bedroomsValid &&
+              data.check_Bedrooms &&
+              questionNumber == 3 ? (
                 <Button
                   title="Next"
                   onPress={nextQuestion}
                   style={styles.buttonRight}
                 />
               ) : null}
-              {questionNumber == 3 ||
-              (questionNumber >= 5 && questionNumber <= 6) ||
-              (questionNumber >= 8 && questionNumber < 11) ? (
+               {data.bathroomsValid &&
+              data.check_Bathrooms &&
+              questionNumber == 4 ? (
                 <Button
                   title="Next"
                   onPress={nextQuestion}
                   style={styles.buttonRight}
                 />
               ) : null}
-            </View>
-          )}
-
-          {questionNumber == 11 && (
-            <Button
-              title="Submit"
-              onPress={() => {
-                insert_questionnaire_Data();
-              }} //Cyrus code: handleSubmit(onSubmit)
-              style={styles.buttonRight}
-            />
-          )}
+             {data.titleValid &&
+              data.check_Title &&
+              questionNumber == 5 ? (
+                <Button
+                  title="Next"
+                  onPress={nextQuestion}
+                  style={styles.buttonRight}
+                />
+              ) : null}
+          
+          </View>
+          )} 
+           {data.descrValid &&
+              data.check_Descr &&
+              questionNumber == 6  ? (
+                <Button
+                title="Submit"
+                onPress={() => {
+                  Submission();}}
+                  style={styles.buttonRight}
+                />
+              ) : null}
+         
         </View>
       </View>
     </View>

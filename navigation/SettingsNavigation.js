@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
+import LoginScreen from "../screens/LoginScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import CreateListingsScreen from "../screens/CreateListingsScreen";
-import PersonalityHelper from "../screens/PersonalityHelper";
+import ViewListingsScreen from "../screens/ViewListingsScreen";
+import DetailsViewListingScreen from "../screens/DetailsViewListingScreen"
 
 const SettingsStack = createNativeStackNavigator();
 
@@ -18,8 +19,24 @@ const SettingsNavigation = ({ navigation, route }) => {
       <SettingsStack.Screen
         name="CreateListingsScreen"
         component={CreateListingsScreen}
-        options={{ title: "PersonalityTest", headerShown: false }}
+        options={{ title: "CreateListingsScreen", headerShown: false }}
       />
+        <SettingsStack.Screen
+        name="ViewListingsScreen"
+        component={ViewListingsScreen}
+        options={{ title: "ViewListingsScreen", headerShown: false }}
+      />
+       <SettingsStack.Screen
+        name="DetailsViewListingScreen"
+        component={DetailsViewListingScreen}
+        options={{ title: "DetailsViewListingScreen", headerShown: false }}
+      />
+      <SettingsStack.Screen
+       name="LoginScreen"
+       component={LoginScreen}
+       options={{ title: "LoginScreen", headerShown: false }}
+       initialParams={{ setIsLoggedIn: route.params.setIsLoggedIn }}
+       />
     
     </SettingsStack.Navigator>
   );
