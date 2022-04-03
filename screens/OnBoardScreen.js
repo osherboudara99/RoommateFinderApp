@@ -21,12 +21,7 @@ const OnBoardScreen = ({navigation, route}) => {
         style={style.image}
       />
 
-      {/* Indicator container */}
-      <View style={style.indicatorContainer}>
-        <View style={style.indicator} />
-        <View style={style.indicator} />
-        <View style={[style.indicator, style.indicatorActive]} />
-      </View>
+    
 
       {/* Title and text container */}
       <View style={{paddingHorizontal: 20, paddingTop: 20}}>

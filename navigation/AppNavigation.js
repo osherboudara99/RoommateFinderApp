@@ -3,6 +3,7 @@ import { Text, View, Button } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeNavigation from "../navigation/HomeNavigation";
 import ProfileNavigation from "../navigation/ProfileNavigation";
+import SettingsNavigation from "../navigation/SettingsNavigation";
 import SettingsScreen from "../screens/SettingsScreen";
 
 import { Ionicons } from "@expo/vector-icons";
@@ -46,7 +47,7 @@ const AppNavigation = ({ route }) => {
       />
       <Tab.Screen
         name="Settings"
-        component={SettingsScreen}
+        component={SettingsNavigation}
         options={{ headerShown: false }}
         initialParams={{ setIsLoggedIn: route.params.setIsLoggedIn }}
       />

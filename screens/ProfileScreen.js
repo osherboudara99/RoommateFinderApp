@@ -188,14 +188,9 @@ const ProfileScreen = ({ route, navigation }) => {
             )}
           </View>
 
-          <TouchableOpacity
-            style={{ marginTop: 5, marginLeft: 5 }}
-            onPress={functionCombined()}
-          >
-            <Ionicons name="refresh" size={22} color="#dce3da" />
-          </TouchableOpacity>
+         
 
-          <View style={styles.active}></View>
+          
           <View style={styles.add}>
             <Ionicons
               name="ios-add"
