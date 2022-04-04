@@ -268,7 +268,7 @@ export default function Questionnaire({ route, navigation }) {
 
     console.log("squareF:" + squareFootage);
     console.log("rent:" + rent);
-    console.log("cleanliness:" + cleanliness);
+    //console.log("cleanliness:" + cleanliness);
  
    
    
