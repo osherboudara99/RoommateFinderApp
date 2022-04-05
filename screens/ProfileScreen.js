@@ -192,12 +192,14 @@ const ProfileScreen = ({ route, navigation }) => {
 
           
           <View style={styles.add}>
-            <Ionicons
-              name="ios-add"
-              size={48}
-              color="#DFD8C8"
-              style={{ marginTop: 6, marginLeft: 2 }}
-            ></Ionicons>
+            <TouchableOpacity onPress={() => {navigation.navigate("updateProfilePicScreen")}}>
+              <Ionicons
+                name="ios-add"
+                size={48}
+                color="#DFD8C8"
+                style={{ marginTop: 6, marginLeft: 2 }}
+              ></Ionicons>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.infoContainer}>
