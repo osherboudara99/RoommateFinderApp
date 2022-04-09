@@ -332,7 +332,7 @@ export default function Questionnaire({ route, navigation }) {
                 <View style={{ marginLeft: "auto" }}>
                   {data.check_Squarefootage ? (
                     <Animatable.View animation="bounceIn">
-                      <Feather name="check-circle" color="green" size={25} />
+                      <Feather name="check-circle" color="green" size={25} /> 
                     </Animatable.View>
                   ) : null}
                   {data.squarefootageValid ? null : (

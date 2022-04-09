@@ -50,7 +50,7 @@ export default function SignUpProfilePicScreen({ route, navigation }) {
   };
 
   const skipInsertionGenericProfilePic = () => {
-    route.params.setIsLoggedIn(true);
+    insertPictureData();
   };
 
   return (

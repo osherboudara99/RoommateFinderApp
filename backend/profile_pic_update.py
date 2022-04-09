@@ -21,18 +21,20 @@ def profile_pic_update():
     elif(logged_or_signed.didUserLogin):
         email = login_backend.email
         password = login_backend.password
+
+    profile_pic = request.json["profile_pic"]
+
         
     profile_pic_select = ("UPDATE SeniorProject.profile_picture AS p INNER JOIN SeniorProject.Users AS u ON u.userid = p.userid SET profile_pic = %s WHERE (email = %s) AND (password = %s)")
-    profile_pic_info = (email, password)
+    profile_pic_info = (profile_pic, email, password)
     cursor = cnx.cursor()
 
     try:
         cursor.execute(profile_pic_select, profile_pic_info)
         cnx.commit()
         cursor.close()
-        values = cursor.fetchall()
         cnx.close()
-        return str(values)
+        return "executed"
     except mysql.connector.IntegrityError as err:
         cursor.close()
         cnx.close()
