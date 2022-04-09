@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProfileScreen from "../screens/ProfileScreen";
 import PersonalityTest from "../screens/PersonalityTest";
 import PersonalityHelper from "../screens/PersonalityHelper";
-import updateProfilePicScreen from "../screens/updateProfilePicScreen";
 
 const ProfileStack = createNativeStackNavigator();
 
@@ -25,11 +24,6 @@ const ProfileNavigation = ({ navigation, route }) => {
         name="PersonalityHelper"
         component={PersonalityHelper}
         options={{ title: "PersonalityHelper", headerShown: false }}
-      />
-      <ProfileStack.Screen
-        name="updateProfilePicScreen"
-        component={updateProfilePicScreen}
-        options={{ title: "updateProfilePicScreen", headerShown: false }}
       />
     </ProfileStack.Navigator>
   );

@@ -13,6 +13,8 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Avatar, Icon, Divider } from "react-native-elements";
 import { FontAwesome5 } from "@expo/vector-icons";
 
+import * as ImagePicker from "expo-image-picker";
+
 import ZIPCODES from "../src/consts/zipcodes";
 
 const ProfileScreen = ({ route, navigation }) => {
@@ -138,31 +140,86 @@ const ProfileScreen = ({ route, navigation }) => {
       });
   };
 
+  const [isMounted, setMounted] = React.useState(true);
   useEffect(() => {
-    fetchProfileScreen();
-    fetchPersonality();
-    fetchPicture();
+    functionCombined();
+    return () => {
+      setMounted(false);
+    };
   }, []);
 
   const functionCombined = () => {
     //console.log(profile_pic)
-    fetchProfileScreen();
-    fetchPersonality();
-    fetchPicture();
+    if (isMounted) {
+      fetchProfileScreen();
+      fetchPersonality();
+      fetchPicture();
+    }
   };
 
   const fetchPicture = () => {
     fetch("http://127.0.0.1:5000/profile_pic_select", {
       method: "GET",
-    }).then((resp) => resp.text())
-    .then((article) => {
-      article = article.slice(4)
-      article = article.slice(0,-4);
-      //console.log("pictureFetch: " + article);
-      //console.log(article);
-      setProfilePic(article);
-      
+    })
+      .then((resp) => resp.text())
+      .then((article) => {
+        article = article.slice(4);
+        article = article.slice(0, -4);
+        //console.log("pictureFetch: " + article);
+        console.log(article);
+        if (isMounted && article != "n") setProfilePic(article);
+
+        console.log("profilepic " + profile_pic);
+        console.log(profile_pic);
+      });
+  };
+
+  const updatePicture = () => {
+    fetch("http://127.0.0.1:5000/profile_pic_update", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ profile_pic: profile_pic }),
+    })
+      .then((resp) => resp.text())
+      .then((data) => {
+        console.log(data);
+        if (data === "executed") {
+          console.log("data: " + profile_pic);
+          console.log(route.params);
+          //navigation.navigate("Questionnaire");
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const funcCombinedPickImage = () => {
+    if (isMounted) {
+      pickImage();
+      updatePicture();
+      navigation.navigate("ProfileScreen");
+    }
+  };
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
+
+    //console.log(result);
+
+    setProfilePic(result.uri);
+
+    console.log("look: " + result.uri);
+    console.log("this is image: " + profile_pic);
+
+    console.log("look: " + result.uri);
   };
 
   return (
@@ -170,7 +227,7 @@ const ProfileScreen = ({ route, navigation }) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ alignSelf: "center" }}>
           <View style={styles.profileImage}>
-            {profile_pic == null && (
+            {profile_pic === null && (
               <Image
                 //source={require(profile_pic)}
                 source={require("../src/assets/profile-pic.jpg")}
@@ -188,11 +245,8 @@ const ProfileScreen = ({ route, navigation }) => {
             )}
           </View>
 
-         
-
-          
           <View style={styles.add}>
-            <TouchableOpacity onPress={() => {navigation.navigate("updateProfilePicScreen")}}>
+            <TouchableOpacity onPress={funcCombinedPickImage}>
               <Ionicons
                 name="ios-add"
                 size={48}
@@ -288,10 +342,13 @@ const ProfileScreen = ({ route, navigation }) => {
               )}
             </View>
           ) : (
-            <Text style={[styles.text, styles.subText]}>
-              Take the personality test to find out your personality type and
-              match with others!
-            </Text>
+            <View>
+              {" "}
+              <Text style={[styles.text, styles.subText]}>
+                Take the personality test to find out your personality type and
+                match with others!
+              </Text>
+            </View>
           )}
         </View>
 
@@ -309,13 +366,19 @@ const ProfileScreen = ({ route, navigation }) => {
           <View style={{ marginTop: 15 }} />
 
           {personalityTypeDescription != undefined ? (
-            <Text style={[styles.text, styles.subText]}>
-              {personalityTypeDescription}
-            </Text>
+            <View>
+              {" "}
+              <Text style={[styles.text, styles.subText]}>
+                {personalityTypeDescription}
+              </Text>
+            </View>
           ) : (
-            <Text style={[styles.text, styles.subText]}>
-              I am a new user wanting to do good in life
-            </Text>
+            <View>
+              {" "}
+              <Text style={[styles.text, styles.subText]}>
+                I am a new user wanting to do good in life
+              </Text>
+            </View>
           )}
         </View>
         <Divider
