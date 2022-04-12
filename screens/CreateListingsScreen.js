@@ -19,7 +19,7 @@ import Feather from "react-native-vector-icons/Feather";
 import BooleanQuestionnaireSwitch from "../src/components/BooleanQuestionnaireSwitch";
 import Input from "../src/components/Input";
 import Question from "../src/components/Question";
-import COLORS from '../src/consts/colors';
+import COLORS from "../src/consts/colors";
 import Button from "../src/components/Button";
 import { grey } from "@mui/material/colors";
 
@@ -42,9 +42,10 @@ export default function Questionnaire({ route, navigation }) {
 
   const [data, setData] = React.useState({
     rentValid: true,
-    bedroomsValid:true,
-    bathroomsValid:true,
+    bedroomsValid: true,
+    bathroomsValid: true,
     titleValid: true,
+    totalOccupantsValid: true,
     squarefootageValid: true,
     descrValid: true,
     check_Squarefootage: false,
@@ -53,6 +54,7 @@ export default function Questionnaire({ route, navigation }) {
     check_Bedrooms: false,
     check_Bathrooms: false,
     check_Descr: false,
+    check_TotalOccupants: false,
   });
 
   const [squareFootage, setSquarefootage] = React.useState("");
@@ -60,10 +62,9 @@ export default function Questionnaire({ route, navigation }) {
   const [bathrooms, setBathrooms] = React.useState("");
   const [title, setTitle] = React.useState("");
 
- 
-  
+  const [totalOccupants, setTotalOccupants] = React.useState("");
+
   const [rent, setRent] = React.useState("");
-;
   const [descr, setDescr] = React.useState("");
 
   const insert_Listing_Data = () => {
@@ -75,11 +76,10 @@ export default function Questionnaire({ route, navigation }) {
       body: JSON.stringify({
         squareFootage: squareFootage.squareFootage,
         rent: rent.rent,
-        bedrooms:bedrooms.bedrooms,
-        bathrooms:bathrooms.bathrooms,
-        title:title.title,
-        descr:descr.descr,
-    
+        bedrooms: bedrooms.bedrooms,
+        bathrooms: bathrooms.bathrooms,
+        title: title.title,
+        descr: descr.descr,
       }),
     })
       .then((resp) => resp.text())
@@ -122,12 +122,12 @@ export default function Questionnaire({ route, navigation }) {
       });
     }
   };
-  
+
   const bedroomsValidation = (val) => {
     var rege = /^[0-9]+$/;
 
     if (rege.test(val)) {
-      if (val.trim().length >0 && val.trim().length < 5 ) {
+      if (val.trim().length > 0 && val.trim().length < 5) {
         setBedrooms({ bedrooms: val });
         setData({
           ...data,
@@ -143,20 +143,20 @@ export default function Questionnaire({ route, navigation }) {
         });
       }
     } else {
-        setBedrooms({ bedrooms: null });
-        setData({
-          ...data,
-          bedroomsValid: false,
-          check_Bedrooms: false,
-        });
+      setBedrooms({ bedrooms: null });
+      setData({
+        ...data,
+        bedroomsValid: false,
+        check_Bedrooms: false,
+      });
     }
   };
-  
+
   const bathroomsValidation = (val) => {
-    var r=/^(?:\d*\.(?:5|0?|00?)|\d+\.?)$/;
-    
+    var r = /^(?:\d*\.(?:5|0?|00?)|\d+\.?)$/;
+
     if (r.test(val)) {
-      if (val.trim().length >0 && val.trim().length < 6 ) {
+      if (val.trim().length > 0 && val.trim().length < 6) {
         setBathrooms({ bathrooms: val });
         setData({
           ...data,
@@ -172,19 +172,19 @@ export default function Questionnaire({ route, navigation }) {
         });
       }
     } else {
-        setBathrooms({ bathrooms: null });
-        setData({
-          ...data,
-          bathroomsValid: false,
-          check_Bathrooms: false,
-        });
+      setBathrooms({ bathrooms: null });
+      setData({
+        ...data,
+        bathroomsValid: false,
+        check_Bathrooms: false,
+      });
     }
   };
   const squarefootageValidation = (val) => {
     var rege = /^[0-9]+$/;
 
     if (rege.test(val)) {
-      if (val.trim().length >2) {
+      if (val.trim().length > 2) {
         setSquarefootage({ squareFootage: val });
         setData({
           ...data,
@@ -200,68 +200,89 @@ export default function Questionnaire({ route, navigation }) {
         });
       }
     } else {
-        setSquarefootage({ squareFootage: null });
-        setData({
-          ...data,
-          squarefootageValid: false,
-          check_Squarefootage: false,
-        });
+      setSquarefootage({ squareFootage: null });
+      setData({
+        ...data,
+        squarefootageValid: false,
+        check_Squarefootage: false,
+      });
     }
   };
   const titleValidation = (val) => {
-    if( val.trim().length >5 && val.trim().length <51 ) {
-     setTitle({
-         title: val
-     });
-     setData({
-         ...data,
-    titleValid: true,
-    check_Title:true,
-     });
-     }else{
-        setTitle({
-            title: null
-        });
+    if (val.trim().length > 5 && val.trim().length < 51) {
+      setTitle({
+        title: val,
+      });
+      setData({
+        ...data,
+        titleValid: true,
+        check_Title: true,
+      });
+    } else {
+      setTitle({
+        title: null,
+      });
+      setData({
+        ...data,
+        titleValid: false,
+        check_Title: false,
+      });
+    }
+  };
+  const descrValidation = (val) => {
+    if (val.trim().length > 10 && val.trim().length < 251) {
+      setDescr({
+        descr: val,
+      });
+      setData({
+        ...data,
+        descrValid: true,
+        check_Descr: true,
+      });
+    } else {
+      setDescr({
+        descr: null,
+      });
+      setData({
+        ...data,
+        descrValid: false,
+        check_Descr: false,
+      });
+    }
+  };
+
+  const totalOccupantsValidation = (val) => {
+    var rege = /^[0-9]+$/;
+
+    if (rege.test(val)) {
+      if (val.trim().length !== 0) {
+        setTotalOccupants({ totalOccupants: val });
         setData({
-            ...data,
-       titleValid: false,
-       check_Title:false,
+          ...data,
+          totalOccupantsValid: true,
+          check_TotalOccupants: true,
         });
-     }
-
- }
- const descrValidation = (val) => {
-    if( val.trim().length >10 && val.trim().length <251 ) {
-     setDescr({
-         descr: val
-     });
-     setData({
-         ...data,
-    descrValid: true,
-    check_Descr:true,
-     });
-     }else{
-        setDescr({
-            descr: null
-        });
+      } else {
+        setTotalOccupants({ totalOccupants: val });
         setData({
-            ...data,
-       descrValid: false,
-       check_Descr:false,
+          ...data,
+          totalOccupantsValid: false,
+          check_TotalOccupants: false,
         });
-     }
+      }
+    } else {
+      setTotalOccupants({ totalOccupants: val });
+      setData({
+        ...data,
+        totalOccupantsValid: false,
+        check_TotalOccupants: false,
+      });
+    }
+  };
 
- }
-
-  
- 
   const callbackGuestsOften = useCallback((val) => {
     setGuestsOften(val);
   }, []);
-
-
-
- 
 
   const Submission = () => {
     handleSubmit(onSubmit);
@@ -269,9 +290,8 @@ export default function Questionnaire({ route, navigation }) {
     console.log("squareF:" + squareFootage);
     console.log("rent:" + rent);
     //console.log("cleanliness:" + cleanliness);
- 
+
     navigation.navigate("ListingsPicsScreen");
-   
 
     //console.log("test");
     //console.log(errors);
@@ -279,8 +299,6 @@ export default function Questionnaire({ route, navigation }) {
 
     //route.params.setIsLoggedIn(true);
   };
-
-
 
   const {
     control,
@@ -292,464 +310,529 @@ export default function Questionnaire({ route, navigation }) {
   console.log(errors);
 
   return (
-     <View style={styles.outsideContainer}>
-                   <View style={{ marginLeft: 10, marginTop: 10,    flexDirection: "row",
-    alignItems: "center",}}>
-          <View style={styles.headerBtn}>
-            <Icon
-              style={{ marginLeft: 5 }}
-              name="arrow-back-ios"
-              size={20}
-              onPress={navigation.goBack}
-            />
-           
-          </View>
-        
-        </View> 
-    <View style={styles.container}>
-  
-      <View style={[styles.form, { width: window.width - 20 }]}>
-        <Text style={styles.header}>Question {questionNumber}/6</Text>
-    
-        <Question
-          question="What is the square footage of the entire property?"
-          display={questionNumber == 1}
-          control={control}
-          rules={{ required: true, min: 5 }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <View style={{ flexDirection: "column" }}>
-              <View style={{ flexDirection: "row" }}>
-                <TextInput
-                  style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
-                  onChange={onChange}
-                  onChangeText={(val) =>  squarefootageValidation(val)}
-                  onBlur={onBlur}
-                  value={value}
-                  keyboardType="number-pad"
-                  placeholder="Enter Square Footage"
-                />
-
-                <View style={{ marginLeft: "auto" }}>
-                  {data.check_Squarefootage ? (
-                    <Animatable.View animation="bounceIn">
-                      <Feather name="check-circle" color="green" size={25} /> 
-                    </Animatable.View>
-                  ) : null}
-                  {data.squarefootageValid ? null : (
-                    <Animatable.View animation="fadeInLeft" duration={500}>
-                      <Text style={styles.errorMsg}>
-                        {" "}
-                        <FontAwesome
-                          name="exclamation-circle"
-                          color="red"
-                          size={25}
-                        />{" "}
-                      </Text>
-                    </Animatable.View>
-                  )}
-                </View>
-              </View>
-              <View>
-                {data.squarefootageValid ? null : (
-                  <Animatable.View animation="fadeInLeft" duration={500}>
-                    <Text
-                      style={{
-                        flexDirection: "column",
-                        marginBottom: "auto",
-                        color: "#ae0700",
-                      }}
-                    >
-                      {" "}
-                      Square Footage is invalid, please try again.
-                    </Text>
-                  </Animatable.View>
-                )}
-              </View>
-            </View>
-          )}
-          name="Square Footage"
-          defaultValue=""
-        />
-
-        <Question
-          question="How much is it to rent?"
-          display={questionNumber == 2}
-          control={control}
-          rules={{ required: true, min: 5 }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <View style={{ flexDirection: "column" }}>
-              <View style={{ flexDirection: "row" }}>
-                <TextInput
-                  style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
-                  onChange={onChange}
-                  onChangeText={(val) => rentValidation(val)}
-                  onBlur={onBlur}
-                  value={value}
-                  keyboardType="number-pad"
-                  placeholder="Price range in $"
-                />
-
-                <View style={{ marginLeft: "auto" }}>
-                  {data.check_Rent ? (
-                    <Animatable.View animation="bounceIn">
-                      <Feather name="check-circle" color="green" size={25} />
-                    </Animatable.View>
-                  ) : null}
-                  {data.rentValid ? null : (
-                    <Animatable.View animation="fadeInLeft" duration={500}>
-                      <Text style={styles.errorMsg}>
-                        {" "}
-                        <FontAwesome
-                          name="exclamation-circle"
-                          color="red"
-                          size={25}
-                        />{" "}
-                      </Text>
-                    </Animatable.View>
-                  )}
-                </View>
-              </View>
-              <View>
-                {data.rentValid ? null : (
-                  <Animatable.View animation="fadeInLeft" duration={500}>
-                    <Text
-                      style={{
-                        flexDirection: "column",
-                        marginBottom: "auto",
-                        color: "#ae0700",
-                      }}
-                    >
-                      {" "}
-                      Rent amount is invalid, please try again.
-                    </Text>
-                  </Animatable.View>
-                )}
-              </View>
-            </View>
-          )}
-          name="Rent"
-          defaultValue=""
-        />
-
-    <Question
-          question="How many bedrooms are on the property?"
-          display={questionNumber == 3}
-          control={control}
-          rules={{ required: true, min: 5 }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <View style={{ flexDirection: "column" }}>
-              <View style={{ flexDirection: "row" }}>
-                <TextInput
-                  style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
-                  onChange={onChange}
-                  onChangeText={(val) => bedroomsValidation(val)}
-                  onBlur={onBlur}
-                  value={value}
-                  keyboardType="number-pad"
-                  placeholder="Number of bedrooms"
-                />
-
-                <View style={{ marginLeft: "auto" }}>
-                  {data.check_Bedrooms ? (
-                    <Animatable.View animation="bounceIn">
-                      <Feather name="check-circle" color="green" size={25} />
-                    </Animatable.View>
-                  ) : null}
-                  {data.bedroomsValid ? null : (
-                    <Animatable.View animation="fadeInLeft" duration={500}>
-                      <Text style={styles.errorMsg}>
-                        {" "}
-                        <FontAwesome
-                          name="exclamation-circle"
-                          color="red"
-                          size={25}
-                        />{" "}
-                      </Text>
-                    </Animatable.View>
-                  )}
-                </View>
-              </View>
-              <View>
-                {data.bedroomsValid ? null : (
-                  <Animatable.View animation="fadeInLeft" duration={500}>
-                    <Text
-                      style={{
-                        flexDirection: "column",
-                        marginBottom: "auto",
-                        color: "#ae0700",
-                      }}
-                    >
-                      {" "}
-                      Number of Bedrooms is invalid, please try again.
-                    </Text>
-                  </Animatable.View>
-                )}
-              </View>
-            </View>
-          )}
-          name="Bedrooms"
-          defaultValue=""
-        />
-        <Question
-          question="How many bathrooms are on the property?"
-          display={questionNumber == 4}
-          control={control}
-          rules={{ required: true, min: 5 }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <View style={{ flexDirection: "column" }}>
-              <View style={{ flexDirection: "row" }}>
-                <TextInput
-                  style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
-                  onChange={onChange}
-                  onChangeText={(val) => bathroomsValidation(val)}
-                  onBlur={onBlur}
-                  value={value}
-                  keyboardType="number-pad"
-                  placeholder="Number of bathrooms"
-                />
-
-                <View style={{ marginLeft: "auto" }}>
-                  {data.check_Bathrooms ? (
-                    <Animatable.View animation="bounceIn">
-                      <Feather name="check-circle" color="green" size={25} />
-                    </Animatable.View>
-                  ) : null}
-                  {data.bathroomsValid ? null : (
-                    <Animatable.View animation="fadeInLeft" duration={500}>
-                      <Text style={styles.errorMsg}>
-                        {" "}
-                        <FontAwesome
-                          name="exclamation-circle"
-                          color="red"
-                          size={25}
-                        />{" "}
-                      </Text>
-                    </Animatable.View>
-                  )}
-                </View>
-              </View>
-              <View>
-                {data.bathroomsValid ? null : (
-                  <Animatable.View animation="fadeInLeft" duration={500}>
-                    <Text
-                      style={{
-                        flexDirection: "column",
-                        marginBottom: "auto",
-                        color: "#ae0700",
-                      }}
-                    >
-                      {" "}
-                      Number of Bathrooms is invalid, please try again.
-                    </Text>
-                  </Animatable.View>
-                )}
-              </View>
-            </View>
-          )}
-          name="Bathrooms"
-          defaultValue=""
-        />
-
-    <Question
-          question="Please Create a Title for Your Listing."
-          display={questionNumber == 5}
-          control={control}
-          rules={{ required: true, min: 5 }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <View style={{ flexDirection: "column" }}>
-              <View style={{ flexDirection: "row" }}>
-                <TextInput
-                  style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
-                  onChange={onChange}
-                  onChangeText={(val) => titleValidation(val)}
-                  onBlur={onBlur}
-                  value={value}
-                  placeholder="Title potential roomates will see"
-                />
-
-                <View style={{ marginLeft: "auto" }}>
-                  {data.check_Title ? (
-                    <Animatable.View animation="bounceIn">
-                      <Feather name="check-circle" color="green" size={25} />
-                    </Animatable.View>
-                  ) : null}
-                  {data.titleValid ? null : (
-                    <Animatable.View animation="fadeInLeft" duration={500}>
-                      <Text style={styles.errorMsg}>
-                        {" "}
-                        <FontAwesome
-                          name="exclamation-circle"
-                          color="red"
-                          size={25}
-                        />{" "}
-                      </Text>
-                    </Animatable.View>
-                  )}
-                </View>
-              </View>
-              <View>
-                {data.titleValid ? null : (
-                  <Animatable.View animation="fadeInLeft" duration={500}>
-                    <Text
-                      style={{
-                        flexDirection: "column",
-                        marginBottom: "auto",
-                        color: "#ae0700",
-                      }}
-                    >
-                      {" "}
-                      Title is invalid, please try again.
-                    </Text>
-                  </Animatable.View>
-                )}
-              </View>
-            </View>
-          )}
-          name="Title"
-          defaultValue=""
-        />
-        <Question
-          question="Please Create a Description for Your Listing."
-          display={questionNumber == 6}
-          control={control}
-          rules={{ required: true, min: 5 }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <View style={{ flexDirection: "column" }}>
-              <View style={{ flexDirection: "row" }}>
-                <TextInput
-                  style={{ width: 250, height:250, marginLeft: 5, marginRight: "auto" }}
-                  onChange={onChange}
-                  onChangeText={(val) => descrValidation(val)}
-                  onBlur={onBlur}
-                  value={value}
-                  multiline={true}
-                  numberOfLines={5}          
-                  placeholder="Description potential roomates will see"
-                />
-
-                <View style={{ marginLeft: "auto" }}>
-                  {data.check_Descr? (
-                    <Animatable.View animation="bounceIn">
-                      <Feather name="check-circle" color="green" size={25} />
-                    </Animatable.View>
-                  ) : null}
-                  {data.descrValid ? null : (
-                    <Animatable.View animation="fadeInLeft" duration={500}>
-                      <Text style={styles.errorMsg}>
-                        {" "}
-                        <FontAwesome
-                          name="exclamation-circle"
-                          color="red"
-                          size={25}
-                        />{" "}
-                      </Text>
-                    </Animatable.View>
-                  )}
-                </View>
-              </View>
-              <View>
-                {data.descrValid ? null : (
-                  <Animatable.View animation="fadeInLeft" duration={500}>
-                    <Text
-                      style={{
-                        flexDirection: "column",
-                        marginBottom: "auto",
-                        color: "#ae0700",
-                      }}
-                    >
-                      {" "}
-                      Description is invalid, please try again.
-                    </Text>
-                  </Animatable.View>
-                )}
-              </View>
-            </View>
-          )}
-          name="Description"
-          defaultValue=""
-        />
-
-       
-        
-
-       
-
-        <View style={styles.formNavigation}>
-        {questionNumber > 1 ? (
-          <Button
-            title="Back"
-            disabled={questionNumber == 1}
-            onPress={prevQuestion}
-            style={styles.buttonLeft}
+    <View style={styles.outsideContainer}>
+      <View
+        style={{
+          marginLeft: 10,
+          marginTop: 10,
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
+        <View style={styles.headerBtn}>
+          <Icon
+            style={{ marginLeft: 5 }}
+            name="arrow-back-ios"
+            size={20}
+            onPress={navigation.goBack}
           />
-          ) : null}
-
-          
-
-
-          {questionNumber < 6 && (
-            <View>
-               
-              {data.squarefootageValid &&
-              data.check_Squarefootage &&
-              questionNumber == 1 ? (
-                <Button
-                  title="Next"
-                  onPress={nextQuestion}
-                  style={styles.buttonRight}
-                />
-              ) : null}
-              {data.rentValid && data.check_Rent && questionNumber == 2 ? (
-                <Button
-                  title="Next"
-                  onPress={nextQuestion}
-                  style={styles.buttonRight}
-                />
-              ) : null}
-                {data.bedroomsValid &&
-              data.check_Bedrooms &&
-              questionNumber == 3 ? (
-                <Button
-                  title="Next"
-                  onPress={nextQuestion}
-                  style={styles.buttonRight}
-                />
-              ) : null}
-               {data.bathroomsValid &&
-              data.check_Bathrooms &&
-              questionNumber == 4 ? (
-                <Button
-                  title="Next"
-                  onPress={nextQuestion}
-                  style={styles.buttonRight}
-                />
-              ) : null}
-             {data.titleValid &&
-              data.check_Title &&
-              questionNumber == 5 ? (
-                <Button
-                  title="Next"
-                  onPress={nextQuestion}
-                  style={styles.buttonRight}
-                />
-              ) : null}
-          
-          </View>
-          )} 
-           {data.descrValid &&
-              data.check_Descr &&
-              questionNumber == 6  ? (
-                <Button
-                title="Submit"
-                onPress={() => {
-                  Submission();}}
-                  style={styles.buttonRight}
-                />
-              ) : null}
-         
         </View>
       </View>
-    </View>
+      <View style={styles.container}>
+        <View style={[styles.form, { width: window.width - 20 }]}>
+          <Text style={styles.header}>Question {questionNumber}/7</Text>
+
+          <Question
+            question="What is the square footage of the entire property?"
+            display={questionNumber == 1}
+            control={control}
+            rules={{ required: true, min: 5 }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View style={{ flexDirection: "column" }}>
+                <View style={{ flexDirection: "row" }}>
+                  <TextInput
+                    style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
+                    onChange={onChange}
+                    onChangeText={(val) => squarefootageValidation(val)}
+                    onBlur={onBlur}
+                    value={value}
+                    keyboardType="number-pad"
+                    placeholder="Enter Square Footage"
+                  />
+
+                  <View style={{ marginLeft: "auto" }}>
+                    {data.check_Squarefootage ? (
+                      <Animatable.View animation="bounceIn">
+                        <Feather name="check-circle" color="green" size={25} />
+                      </Animatable.View>
+                    ) : null}
+                    {data.squarefootageValid ? null : (
+                      <Animatable.View animation="fadeInLeft" duration={500}>
+                        <Text style={styles.errorMsg}>
+                          {" "}
+                          <FontAwesome
+                            name="exclamation-circle"
+                            color="red"
+                            size={25}
+                          />{" "}
+                        </Text>
+                      </Animatable.View>
+                    )}
+                  </View>
+                </View>
+                <View>
+                  {data.squarefootageValid ? null : (
+                    <Animatable.View animation="fadeInLeft" duration={500}>
+                      <Text
+                        style={{
+                          flexDirection: "column",
+                          marginBottom: "auto",
+                          color: "#ae0700",
+                        }}
+                      >
+                        {" "}
+                        Square Footage is invalid, please try again.
+                      </Text>
+                    </Animatable.View>
+                  )}
+                </View>
+              </View>
+            )}
+            name="Square Footage"
+            defaultValue=""
+          />
+
+          <Question
+            question="How much is it to rent?"
+            display={questionNumber == 2}
+            control={control}
+            rules={{ required: true, min: 5 }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View style={{ flexDirection: "column" }}>
+                <View style={{ flexDirection: "row" }}>
+                  <TextInput
+                    style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
+                    onChange={onChange}
+                    onChangeText={(val) => rentValidation(val)}
+                    onBlur={onBlur}
+                    value={value}
+                    keyboardType="number-pad"
+                    placeholder="Price range in $"
+                  />
+
+                  <View style={{ marginLeft: "auto" }}>
+                    {data.check_Rent ? (
+                      <Animatable.View animation="bounceIn">
+                        <Feather name="check-circle" color="green" size={25} />
+                      </Animatable.View>
+                    ) : null}
+                    {data.rentValid ? null : (
+                      <Animatable.View animation="fadeInLeft" duration={500}>
+                        <Text style={styles.errorMsg}>
+                          {" "}
+                          <FontAwesome
+                            name="exclamation-circle"
+                            color="red"
+                            size={25}
+                          />{" "}
+                        </Text>
+                      </Animatable.View>
+                    )}
+                  </View>
+                </View>
+                <View>
+                  {data.rentValid ? null : (
+                    <Animatable.View animation="fadeInLeft" duration={500}>
+                      <Text
+                        style={{
+                          flexDirection: "column",
+                          marginBottom: "auto",
+                          color: "#ae0700",
+                        }}
+                      >
+                        {" "}
+                        Rent amount is invalid, please try again.
+                      </Text>
+                    </Animatable.View>
+                  )}
+                </View>
+              </View>
+            )}
+            name="Rent"
+            defaultValue=""
+          />
+
+          <Question
+            question="How many bedrooms are on the property?"
+            display={questionNumber == 3}
+            control={control}
+            rules={{ required: true, min: 5 }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View style={{ flexDirection: "column" }}>
+                <View style={{ flexDirection: "row" }}>
+                  <TextInput
+                    style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
+                    onChange={onChange}
+                    onChangeText={(val) => bedroomsValidation(val)}
+                    onBlur={onBlur}
+                    value={value}
+                    keyboardType="number-pad"
+                    placeholder="Number of bedrooms"
+                  />
+
+                  <View style={{ marginLeft: "auto" }}>
+                    {data.check_Bedrooms ? (
+                      <Animatable.View animation="bounceIn">
+                        <Feather name="check-circle" color="green" size={25} />
+                      </Animatable.View>
+                    ) : null}
+                    {data.bedroomsValid ? null : (
+                      <Animatable.View animation="fadeInLeft" duration={500}>
+                        <Text style={styles.errorMsg}>
+                          {" "}
+                          <FontAwesome
+                            name="exclamation-circle"
+                            color="red"
+                            size={25}
+                          />{" "}
+                        </Text>
+                      </Animatable.View>
+                    )}
+                  </View>
+                </View>
+                <View>
+                  {data.bedroomsValid ? null : (
+                    <Animatable.View animation="fadeInLeft" duration={500}>
+                      <Text
+                        style={{
+                          flexDirection: "column",
+                          marginBottom: "auto",
+                          color: "#ae0700",
+                        }}
+                      >
+                        {" "}
+                        Number of Bedrooms is invalid, please try again.
+                      </Text>
+                    </Animatable.View>
+                  )}
+                </View>
+              </View>
+            )}
+            name="Bedrooms"
+            defaultValue=""
+          />
+          <Question
+            question="How many bathrooms are on the property?"
+            display={questionNumber == 4}
+            control={control}
+            rules={{ required: true, min: 5 }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View style={{ flexDirection: "column" }}>
+                <View style={{ flexDirection: "row" }}>
+                  <TextInput
+                    style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
+                    onChange={onChange}
+                    onChangeText={(val) => bathroomsValidation(val)}
+                    onBlur={onBlur}
+                    value={value}
+                    keyboardType="number-pad"
+                    placeholder="Number of bathrooms"
+                  />
+
+                  <View style={{ marginLeft: "auto" }}>
+                    {data.check_Bathrooms ? (
+                      <Animatable.View animation="bounceIn">
+                        <Feather name="check-circle" color="green" size={25} />
+                      </Animatable.View>
+                    ) : null}
+                    {data.bathroomsValid ? null : (
+                      <Animatable.View animation="fadeInLeft" duration={500}>
+                        <Text style={styles.errorMsg}>
+                          {" "}
+                          <FontAwesome
+                            name="exclamation-circle"
+                            color="red"
+                            size={25}
+                          />{" "}
+                        </Text>
+                      </Animatable.View>
+                    )}
+                  </View>
+                </View>
+                <View>
+                  {data.bathroomsValid ? null : (
+                    <Animatable.View animation="fadeInLeft" duration={500}>
+                      <Text
+                        style={{
+                          flexDirection: "column",
+                          marginBottom: "auto",
+                          color: "#ae0700",
+                        }}
+                      >
+                        {" "}
+                        Number of Bathrooms is invalid, please try again.
+                      </Text>
+                    </Animatable.View>
+                  )}
+                </View>
+              </View>
+            )}
+            name="Bathrooms"
+            defaultValue=""
+          />
+
+          <Question
+            question="Please Create a Title for Your Listing."
+            display={questionNumber == 5}
+            control={control}
+            rules={{ required: true, min: 5 }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View style={{ flexDirection: "column" }}>
+                <View style={{ flexDirection: "row" }}>
+                  <TextInput
+                    style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
+                    onChange={onChange}
+                    onChangeText={(val) => titleValidation(val)}
+                    onBlur={onBlur}
+                    value={value}
+                    placeholder="Title potential roomates will see"
+                  />
+
+                  <View style={{ marginLeft: "auto" }}>
+                    {data.check_Title ? (
+                      <Animatable.View animation="bounceIn">
+                        <Feather name="check-circle" color="green" size={25} />
+                      </Animatable.View>
+                    ) : null}
+                    {data.titleValid ? null : (
+                      <Animatable.View animation="fadeInLeft" duration={500}>
+                        <Text style={styles.errorMsg}>
+                          {" "}
+                          <FontAwesome
+                            name="exclamation-circle"
+                            color="red"
+                            size={25}
+                          />{" "}
+                        </Text>
+                      </Animatable.View>
+                    )}
+                  </View>
+                </View>
+                <View>
+                  {data.titleValid ? null : (
+                    <Animatable.View animation="fadeInLeft" duration={500}>
+                      <Text
+                        style={{
+                          flexDirection: "column",
+                          marginBottom: "auto",
+                          color: "#ae0700",
+                        }}
+                      >
+                        {" "}
+                        Title is invalid, please try again.
+                      </Text>
+                    </Animatable.View>
+                  )}
+                </View>
+              </View>
+            )}
+            name="Title"
+            defaultValue=""
+          />
+
+          <Question
+            question="How many total occupants?"
+            display={questionNumber == 6}
+            control={control}
+            rules={{ required: true, min: 5 }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View style={{ flexDirection: "column" }}>
+                <View style={{ flexDirection: "row" }}>
+                  <TextInput
+                    style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
+                    onChange={onChange}
+                    onChangeText={(val) => totalOccupantsValidation(val)}
+                    onBlur={onBlur}
+                    value={value}
+                    keyboardType="number-pad"
+                    placeholder="Total occupants"
+                  />
+
+                  <View style={{ marginLeft: "auto" }}>
+                    {data.check_TotalOccupants ? (
+                      <Animatable.View animation="bounceIn">
+                        <Feather name="check-circle" color="green" size={25} />
+                      </Animatable.View>
+                    ) : null}
+                    {data.totalOccupantsValid ? null : (
+                      <Animatable.View animation="fadeInLeft" duration={500}>
+                        <Text style={styles.errorMsg}>
+                          {" "}
+                          <FontAwesome
+                            name="exclamation-circle"
+                            color="red"
+                            size={25}
+                          />{" "}
+                        </Text>
+                      </Animatable.View>
+                    )}
+                  </View>
+                </View>
+                <View>
+                  {data.totalOccupantsValid ? null : (
+                    <Animatable.View animation="fadeInLeft" duration={500}>
+                      <Text
+                        style={{
+                          flexDirection: "column",
+                          marginBottom: "auto",
+                          color: "#ae0700",
+                        }}
+                      >
+                        {" "}
+                        Total occupants is invalid, please try again.
+                      </Text>
+                    </Animatable.View>
+                  )}
+                </View>
+              </View>
+            )}
+            name="TotalOccupants"
+            defaultValue=""
+          />
+
+          <Question
+            question="Please Create a Description for Your Listing."
+            display={questionNumber == 7}
+            control={control}
+            rules={{ required: true, min: 5 }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View style={{ flexDirection: "column" }}>
+                <View style={{ flexDirection: "row" }}>
+                  <TextInput
+                    style={{
+                      width: 250,
+                      height: 250,
+                      marginLeft: 5,
+                      marginRight: "auto",
+                    }}
+                    onChange={onChange}
+                    onChangeText={(val) => descrValidation(val)}
+                    onBlur={onBlur}
+                    value={value}
+                    multiline={true}
+                    numberOfLines={5}
+                    placeholder="Description potential roomates will see"
+                  />
+
+                  <View style={{ marginLeft: "auto" }}>
+                    {data.check_Descr ? (
+                      <Animatable.View animation="bounceIn">
+                        <Feather name="check-circle" color="green" size={25} />
+                      </Animatable.View>
+                    ) : null}
+                    {data.descrValid ? null : (
+                      <Animatable.View animation="fadeInLeft" duration={500}>
+                        <Text style={styles.errorMsg}>
+                          {" "}
+                          <FontAwesome
+                            name="exclamation-circle"
+                            color="red"
+                            size={25}
+                          />{" "}
+                        </Text>
+                      </Animatable.View>
+                    )}
+                  </View>
+                </View>
+                <View>
+                  {data.descrValid ? null : (
+                    <Animatable.View animation="fadeInLeft" duration={500}>
+                      <Text
+                        style={{
+                          flexDirection: "column",
+                          marginBottom: "auto",
+                          color: "#ae0700",
+                        }}
+                      >
+                        {" "}
+                        Description is invalid, please try again.
+                      </Text>
+                    </Animatable.View>
+                  )}
+                </View>
+              </View>
+            )}
+            name="Description"
+            defaultValue=""
+          />
+
+          <View style={styles.formNavigation}>
+            {questionNumber > 1 ? (
+              <Button
+                title="Back"
+                disabled={questionNumber == 1}
+                onPress={prevQuestion}
+                style={styles.buttonLeft}
+              />
+            ) : null}
+
+            {questionNumber < 7 && (
+              <View>
+                {data.squarefootageValid &&
+                data.check_Squarefootage &&
+                questionNumber == 1 ? (
+                  <Button
+                    title="Next"
+                    onPress={nextQuestion}
+                    style={styles.buttonRight}
+                  />
+                ) : null}
+                {data.rentValid && data.check_Rent && questionNumber == 2 ? (
+                  <Button
+                    title="Next"
+                    onPress={nextQuestion}
+                    style={styles.buttonRight}
+                  />
+                ) : null}
+                {data.bedroomsValid &&
+                data.check_Bedrooms &&
+                questionNumber == 3 ? (
+                  <Button
+                    title="Next"
+                    onPress={nextQuestion}
+                    style={styles.buttonRight}
+                  />
+                ) : null}
+                {data.bathroomsValid &&
+                data.check_Bathrooms &&
+                questionNumber == 4 ? (
+                  <Button
+                    title="Next"
+                    onPress={nextQuestion}
+                    style={styles.buttonRight}
+                  />
+                ) : null}
+                {data.titleValid && data.check_Title && questionNumber == 5 ? (
+                  <Button
+                    title="Next"
+                    onPress={nextQuestion}
+                    style={styles.buttonRight}
+                  />
+                ) : null}
+
+                {data.totalOccupantsValid &&
+                data.check_TotalOccupants &&
+                questionNumber == 6 ? (
+                  <Button
+                    title="Next"
+                    onPress={nextQuestion}
+                    style={styles.buttonRight}
+                  />
+                ) : null}
+              </View>
+            )}
+            {data.descrValid && data.check_Descr && questionNumber == 7 ? (
+              <Button
+                title="Submit"
+                onPress={() => {
+                  Submission();
+                }}
+                style={styles.buttonRight}
+              />
+            ) : null}
+          </View>
+        </View>
+      </View>
     </View>
   );
 }
@@ -769,7 +852,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  outsideContainer:{
+  outsideContainer: {
     backgroundColor: "#009387",
     height: "100%",
     width: "100%",
@@ -810,8 +893,8 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   buttonLeft: {
-   // marginLeft: "auto",
-   marginLeft:65,
+    // marginLeft: "auto",
+    marginLeft: 65,
     marginRight: 5,
     justifyContent: "center",
   },

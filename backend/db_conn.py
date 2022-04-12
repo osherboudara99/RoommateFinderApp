@@ -99,7 +99,8 @@ def connect():
     `bedrooms` int(3) NOT NULL, \
     `bathrooms` int(3) NOT NULL, \
     `total_occupants` int(4) NOT NULL, \
-    `description` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL, \
+    `description` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL, \
+    `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL, \
     `date_created` DATE NOT NULL,\
     PRIMARY KEY (`listingid`), \
     UNIQUE KEY `user_UNIQUE` (`userid`), \

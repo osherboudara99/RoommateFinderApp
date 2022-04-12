@@ -71,7 +71,8 @@ export default function ListingsPicScreen({ route, navigation }) {
           route.params.setIsLoggedIn(true);
           //navigation.navigate("Questionnaire");
         } else if (data === "not executed") {
-          navigation.navigate("SignUpError");
+          //navigation.navigate("SignUpError");
+          console.log("Not executed, no picture was able to be inserted into db")
         }
       })
       .catch((error) => console.log(error));
@@ -109,7 +110,7 @@ export default function ListingsPicScreen({ route, navigation }) {
           )}
         </View>
 
-        <Button title="Change profile picture" onPress={pickImage} />
+        <Button title="Change listings picture" onPress={pickImage} />
       </View>
       {profile_pic != null && (
         <View

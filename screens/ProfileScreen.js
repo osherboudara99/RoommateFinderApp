@@ -55,6 +55,7 @@ const ProfileScreen = ({ route, navigation }) => {
           data[i] = data[i].replace(",", "");
           data[i] = data[i].replace(/[']/g, "");
         }
+        console.log("fulldata" + data);
         console.log("profileArticle: ", article);
         //console.log(data);
         setFirstName(data[2]);
@@ -76,45 +77,67 @@ const ProfileScreen = ({ route, navigation }) => {
           setWorkingProfessional(data[7]);
         }
 
+        console.log("data8: " + data[8]);
         setJobTitle(data[8]);
+        console.log("jobTitle: " + jobTitle);
 
-        if (data[9] == 1) {
-          data[9] = "Yes";
-          setGuestsOften(data[9]);
-        } else {
-          data[9] = "No";
-          setGuestsOften(data[9]);
+        var runLoop = true;
+        var k = 9;
+        var jobTitleTemp = data[8];
+        while (runLoop) {
+          if (data[k] != 0 && data[k] != 1) {
+            //setJobTitle(jobTitle + " " + data[k]);
+            //setJobTitle(jobTitle + " " + data[k]);
+            jobTitleTemp = jobTitleTemp + " " + data[k];
+            
+            
+            k++;
+          } else {
+            runLoop = false;
+          }
         }
-        if (data[10] == 1) {
-          data[10] = "Seeking roommates for a place";
-          setRoommate_yes_no(data[10]);
+        setJobTitle(jobTitleTemp);
+        console.log("new jobtitle" + jobTitle);
+
+        var i = k;
+
+        if (data[i] == 1) {
+          data[i] = "Yes";
+          setGuestsOften(data[i]);
         } else {
-          data[10] = "Joining a place with roommates";
-          setRoommate_yes_no(data[10]);
+          data[i] = "No";
+          setGuestsOften(data[i]);
         }
-        if (data[11] == 1) {
-          data[11] = "Smoker";
-          setSmoker(data[11]);
+        if (data[i + 1] == 1) {
+          data[i + 1] = "Seeking roommates for a place";
+          setRoommate_yes_no(data[i + 1]);
         } else {
-          data[11] = "Non-Smoker";
-          setSmoker(data[11]);
+          data[i + 1] = "Joining a place with roommates";
+          setRoommate_yes_no(data[i + 1]);
         }
-        if (data[12] == 1) {
-          data[12] = "Pet-Friendly";
-          setPets(data[12]);
+        if (data[i + 2] == 1) {
+          data[i + 2] = "Smoker";
+          setSmoker(data[i + 2]);
         } else {
-          data[12] = "Not Pet-Friendly";
-          setPets(data[12]);
+          data[i + 2] = "Non-Smoker";
+          setSmoker(data[i + 2]);
         }
-        setCleanliness(data[13]);
-        data[14] = data[14].replace(")", "");
-        data[14] = data[14].replace("]", "");
-        if (data[14] == 1) {
-          data[14] = "Zoom-Friendly";
-          setZoom_friendly(data[14]);
+        if (data[i + 3] == 1) {
+          data[i + 3] = "Pet-Friendly";
+          setPets(data[i + 3]);
         } else {
-          data[14] = "Not Zoom-Friendly";
-          setZoom_friendly(data[14]);
+          data[i + 3] = "Not Pet-Friendly";
+          setPets(data[i + 3]);
+        }
+        setCleanliness(data[i + 4]);
+        data[i + 5] = data[i + 5].replace(")", "");
+        data[i + 5] = data[i + 5].replace("]", "");
+        if (data[i + 5] == 1) {
+          data[i + 5] = "Zoom-Friendly";
+          setZoom_friendly(data[i + 5]);
+        } else {
+          data[i + 5] = "Not Zoom-Friendly";
+          setZoom_friendly(data[i + 5]);
         }
       });
   };
