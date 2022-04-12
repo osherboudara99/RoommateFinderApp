@@ -270,7 +270,7 @@ export default function Questionnaire({ route, navigation }) {
     console.log("rent:" + rent);
     //console.log("cleanliness:" + cleanliness);
  
-   
+    navigation.navigate("ListingsPicsScreen");
    
 
     //console.log("test");

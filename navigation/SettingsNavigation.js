@@ -5,7 +5,7 @@ import SettingsScreen from "../screens/SettingsScreen";
 import CreateListingsScreen from "../screens/CreateListingsScreen";
 import ViewListingsScreen from "../screens/ViewListingsScreen";
 import DetailsViewListingScreen from "../screens/DetailsViewListingScreen";
-
+import ListingsPicsScreen from "../screens/ListingsPicsScreen";
 const SettingsStack = createNativeStackNavigator();
 
 const SettingsNavigation = ({ navigation, route }) => {
@@ -31,6 +31,11 @@ const SettingsNavigation = ({ navigation, route }) => {
         name="DetailsViewListingScreen"
         component={DetailsViewListingScreen}
         options={{ title: "DetailsViewListingScreen", headerShown: false }}
+      />
+         <SettingsStack.Screen
+        name="ListingsPicsScreen"
+        component={ListingsPicsScreen}
+        options={{ title: "ListingsPicsScreen", headerShown: false }}
       />
       <SettingsStack.Screen
         name="LoginScreen"

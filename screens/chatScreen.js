@@ -10,7 +10,7 @@ import { Avatar } from "react-native-elements";
 import { GiftedChat } from "react-native-gifted-chat";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
- 
+
 const Chat = ({ navigation }) => {
   const [messages, setMessages] = useState([]);
   const signOut = () => {
@@ -21,6 +21,11 @@ const Chat = ({ navigation }) => {
     // An error happened.
     //  });
   };
+  const randomStart = ()=>{
+    setRecieved[0]="Hello, would you like to talk?";
+    setRecieved[1]="I think we could be great roommates. How do you feel about parties?";
+    const [recievedMessages, setRecieved]=useState([10]);
+  }
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
