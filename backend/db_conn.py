@@ -11,6 +11,13 @@ from profile_pic_insertion import profile_pic_blueprint
 from profile_pic_select import profile_pic_select_blueprint
 from personality_test_select import personality_test_select_blueprint
 from profile_pic_update import profile_pic_update_blueprint
+from listings_select import listings_select_blueprint
+from listings_insertion import listings_insertion_blueprint
+from listings_deletion import listing_deletion_blueprint
+from listings_detailed_select import listings_detailed_select_blueprint
+from gallery_insertion import gallery_insertion_blueprint
+from gallery_deletion import gallery_deletion_blueprint
+from own_listings_select import own_listings_select_blueprint
 from flask_cors import CORS, cross_origin
 
 
@@ -145,6 +152,20 @@ app.register_blueprint(profile_pic_select_blueprint)
 app.register_blueprint(personality_test_select_blueprint)
 
 app.register_blueprint(profile_pic_update_blueprint)
+
+app.register_blueprint(listings_select_blueprint)
+
+app.register_blueprint(listings_insertion_blueprint)
+
+app.register_blueprint(listings_detailed_select_blueprint)
+
+app.register_blueprint(listing_deletion_blueprint)
+
+app.register_blueprint(own_listings_select_blueprint)
+
+app.register_blueprint(gallery_insertion_blueprint)
+
+app.register_blueprint(gallery_deletion_blueprint)
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', 

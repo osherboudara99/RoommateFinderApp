@@ -6,10 +6,10 @@ import signup_backend
 import login_backend
 import logged_or_signed
 
-gallery_deletion_blueprint = Blueprint('gallery_deletion', __name__)
+listing_deletion_blueprint = Blueprint('listing_deletion', __name__)
 
-@gallery_deletion_blueprint.route('/gallery_deletion', methods=['GET', 'POST'])
-def gallery_deletion():
+@listing_deletion_blueprint.route('/listing_deletion', methods=['GET', 'POST'])
+def listing_deletion():
     ##cnx = mysql.connector.connect(user='seniorproject', password='', host='38.34.124.120') 
     cnx = mysql.connector.connect(user='root', password='',
                               host='127.0.0.1')
@@ -22,15 +22,19 @@ def gallery_deletion():
         email = login_backend.email
         password = login_backend.password
 
-    gallery_id = request.json['gallery_id']
+    listing_id = request.json['listing_id']
         
-    gallery_pic_deletion = ("DELETE g FROM SeniorProject.gallery AS g INNER JOIN SeniorProject.Users AS u ON u.userid = g.userid WHERE (email = %s) AND (password = %s) AND (gallery_id = %s)")
-    gallery_pic_info = (email, password, gallery_id)
+    listing_deletion = ("DELETE l FROM SeniorProject.listings As l INNER JOIN SeniorProject.Users AS u ON u.userid = l.userid WHERE (email = %s) AND (password = %s) AND (listingid = %s)")
+    listing_info = (email, password, listing_id)
+
+    gallery_deletion = ("DELETE FROM SeniorProject.gallery WHERE listingid = %s")
+    gallery_info = (listing_id)
     cursor = cnx.cursor()
     
 
     try:
-        cursor.execute(gallery_pic_deletion, gallery_pic_info)
+        cursor.execute(listing_deletion, listing_info)
+        cursor.execute(gallery_deletion, gallery_info)
         cnx.commit()
         cursor.close()
         cnx.close()

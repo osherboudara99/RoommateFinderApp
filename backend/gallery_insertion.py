@@ -5,6 +5,7 @@ from mysql.connector import errorcode
 import signup_backend
 import login_backend
 import logged_or_signed
+import listings_insertion
 
 gallery_insertion_blueprint = Blueprint('gallery_insertion', __name__)
 
@@ -24,13 +25,13 @@ def gallery_insertion():
 
     gallery_pic = request.json['gallery_pic']
         
-    gallery_pic_insertion = ("INSERT INTO SeniorProject.gallery VALUES (NULL, (SELECT userid FROM SeniorProject.Users WHERE (email = %s) AND (password = %s)), %s)")
-    gallery_pic_info = (email, password, gallery_pic)
+    gallery_insertion = ("INSERT INTO SeniorProject.gallery VALUES (NULL, (SELECT userid FROM SeniorProject.Users WHERE (email = %s) AND (password = %s)), (SELECT listingid FROM SeniorProject.listings as L INNER JOIN SeniorProject.Users as U ON L.userid = U.userid WHERE (email = %s) AND (password = %s) AND (title = %s)), %s)")
+    gallery_info = (email,password, email, password, listings_insertion.title, gallery_pic)
     cursor = cnx.cursor()
     
 
     try:
-        cursor.execute(gallery_pic_insertion, gallery_pic_info)
+        cursor.execute(gallery_insertion, gallery_info)
         cnx.commit()
         cursor.close()
         cnx.close()

@@ -35,6 +35,8 @@ def listings_insertion():
     listing_insertion = (
         "INSERT INTO SeniorProject.listings VALUES ((SELECT userid FROM SeniorProject.Users WHERE (email = %s) AND (password = %s)), NULL,  %s, %s, %s, %s, %s, %s, %s, NOW())")
     listing_answers = (email, password, total_rent, square_footaqe, bedrooms, bathrooms, total_occupants, description, title)
+
+
     cursor = cnx.cursor()
 
     try:

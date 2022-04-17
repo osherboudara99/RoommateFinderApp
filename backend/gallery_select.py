@@ -22,7 +22,7 @@ def gallery_select():
         email = login_backend.email
         password = login_backend.password
         
-    gallery_select = ("SELECT gallery_pic, gallery_id FROM SeniorProject.gallery AS g INNER JOIN SeniorProject.Users AS u ON u.userid = g.userid WHERE (email = %s) AND (password = %s)")
+    gallery_select = ("SELECT gallery_pic, gallery_id FROM SeniorProject.gallery AS g INNER JOIN SeniorProject.listings ON g.listingid = l.listingid WHERE (email = %s) AND (password = %s)")
     gallery_info = (email, password)
     cursor = cnx.cursor()
 

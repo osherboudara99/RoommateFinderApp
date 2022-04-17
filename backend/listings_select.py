@@ -3,13 +3,13 @@ import os
 import mysql.connector
 from mysql.connector import errorcode
 import signup_backend
-import login_backend
 import logged_or_signed
+import login_backend
 
-gallery_deletion_blueprint = Blueprint('gallery_deletion', __name__)
+listings_select_blueprint = Blueprint('listings_select', __name__)
 
-@gallery_deletion_blueprint.route('/gallery_deletion', methods=['GET', 'POST'])
-def gallery_deletion():
+@listings_select_blueprint.route('/listings_select', methods=['GET', 'POST'])
+def listings_select():
     ##cnx = mysql.connector.connect(user='seniorproject', password='', host='38.34.124.120') 
     cnx = mysql.connector.connect(user='root', password='',
                               host='127.0.0.1')
@@ -21,20 +21,16 @@ def gallery_deletion():
     elif(logged_or_signed.didUserLogin):
         email = login_backend.email
         password = login_backend.password
-
-    gallery_id = request.json['gallery_id']
         
-    gallery_pic_deletion = ("DELETE g FROM SeniorProject.gallery AS g INNER JOIN SeniorProject.Users AS u ON u.userid = g.userid WHERE (email = %s) AND (password = %s) AND (gallery_id = %s)")
-    gallery_pic_info = (email, password, gallery_id)
-    cursor = cnx.cursor()
-    
+    listing_select = ("SELECT total_rent, square_footage, bedrooms, bathrooms, total_occupants, description, title, date_created, gallery_pic, firstName, lastName, email, phone, L.userid, L.listingid FROM listings as L INNER JOIN gallery as G ON L.listingid = G.listingid INNER JOIN Users as U on L.userid = U.userid WHERE (email != %s) and (password != %s) ORDER BY date_created DESC")
+    cursor = cnx.cursor(buffered=True)
 
     try:
-        cursor.execute(gallery_pic_deletion, gallery_pic_info)
+        cursor.execute(listing_select)
         cnx.commit()
-        cursor.close()
+        values = cursor.fetchall()
         cnx.close()
-        return "executed"
+        return str(values)
     except mysql.connector.IntegrityError as err:
         cursor.close()
         cnx.close()
