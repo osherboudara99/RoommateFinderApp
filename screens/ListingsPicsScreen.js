@@ -4,17 +4,20 @@ import * as ImagePicker from "expo-image-picker";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import {
-    ImageBackground,
-    SafeAreaView,
-    Text,
-    FlatList,
-    Dimensions,
-    Pressable,
-    ScrollView,
-  } from "react-native";
+  ImageBackground,
+  SafeAreaView,
+  Text,
+  FlatList,
+  Dimensions,
+  Pressable,
+  ScrollView,
+} from "react-native";
 export default function ListingsPicScreen({ route, navigation }) {
-  const [profile_pic, setImage] = useState(null);
-  const [gallery_pic, setImages] = useState([]);
+  const [galleryMainPic, setImage] = useState(null);
+  const [gallery_image1, setGalleryImage1] = useState(null);
+  const [gallery_image2, setGalleryImage2] = useState(null);
+  const [gallery_image3, setGalleryImage3] = useState(null);
+
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -22,121 +25,190 @@ export default function ListingsPicScreen({ route, navigation }) {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
-     
     });
-
-    //console.log(result);
-
     if (!result.cancelled) {
       setImage(result.uri);
     }
-
-    //console.log("look: "+ result.uri);
-
   };
-  const pickImages = async () => {
+
+  const pickGalleryImage = async (imageNumber) => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
-     
     });
-
-    //console.log(result);
-
     if (!result.cancelled) {
-     gallery_pic[0]=(result.uri);
+      if (imageNumber == 1) setGalleryImage1(result.uri);
+      if (imageNumber == 2) setGalleryImage2(result.uri);
+      if (imageNumber == 3) setGalleryImage3(result.uri);
     }
-
-    //console.log("look: "+ result.uri);
-
   };
 
-  const insertPictureData = () => {
-    fetch("http://127.0.0.1:5000/profile_pic", {
+  const insertPictureData = (image) => {
+    fetch("http://127.0.0.1:5000/gallery_insertion", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ profile_pic: profile_pic }),
+      body: JSON.stringify({ galleryMainPic: image }),
     })
       .then((resp) => resp.text())
       .then((data) => {
         console.log(data);
         if (data === "executed") {
-          console.log("data: " + profile_pic);
+          console.log("data: " + image);
           console.log(route.params);
           route.params.setIsLoggedIn(true);
           //navigation.navigate("Questionnaire");
         } else if (data === "not executed") {
           //navigation.navigate("SignUpError");
-          console.log("Not executed, no picture was able to be inserted into db")
+          console.log(
+            "Not executed, no picture was able to be inserted into db"
+          );
         }
       })
       .catch((error) => console.log(error));
   };
 
+  const submitAllImages = () => {
+    insertPictureData(galleryMainPic);
+    if (gallery_image1 != null) insertPictureData(gallery_image1);
+    if (gallery_image2 != null) insertPictureData(gallery_image2);
+    if (gallery_image3 != null) insertPictureData(gallery_image3);
+  };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: "#009387",
-      }}
-    >
-      <View
-        style={{
-          alignItems: "center",
-        }}
-      >
-        
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#009387" }}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View
-          style={[styles.profileImage, { marginTop: 75, marginBottom: 15 }]}
+          style={{
+            flex: 1,
+            backgroundColor: "#009387",
+          }}
         >
-          {!profile_pic && (
-            <Image
-              source={require("../src/assets/profile-pic.jpg")}
-              style={styles.image}
-              resizeMode="center"
-            ></Image>
-          )}
-          {profile_pic && (
-            <Image
-              source={{ uri: profile_pic }}
-              style={{ width: 200, height: 200 }}
-            />
+          <View
+            style={{
+              alignItems: "center",
+            }}
+          >
+            <View
+              style={[styles.profileImage, { marginTop: 75, marginBottom: 15 }]}
+            >
+              {!galleryMainPic && (
+                <Image
+                  source={require("../src/assets/genericHouse.jpg")}
+                  style={styles.image}
+                  resizeMode="center"
+                ></Image>
+              )}
+              {galleryMainPic && (
+                <Image
+                  source={{ uri: galleryMainPic }}
+                  style={{ width: 200, height: 200 }}
+                />
+              )}
+            </View>
+
+            <Button title="Change listings picture" onPress={pickImage} />
+          </View>
+
+          <View
+            style={{
+              alignItems: "center",
+            }}
+          >
+            <View style={{ marginTop: 25 }}>
+              <View>
+                <View style={[styles.galleryImage]}>
+                  {!gallery_image1 && (
+                    <Image
+                      source={require("../src/assets/genericHouse.jpg")}
+                      style={{ width: 100, height: 100 }}
+                      resizeMode="center"
+                    ></Image>
+                  )}
+                  {gallery_image1 && (
+                    <Image
+                      source={{ uri: gallery_image1 }}
+                      style={{ width: 100, height: 100 }}
+                    />
+                  )}
+                </View>
+
+                <Button
+                  title="Add 1st listing picture"
+                  onPress={() => pickGalleryImage(1)}
+                />
+              </View>
+              <View>
+                <View style={[styles.galleryImage]}>
+                  {!gallery_image2 && (
+                    <Image
+                      source={require("../src/assets/genericHouse.jpg")}
+                      style={{ width: 100, height: 100 }}
+                      resizeMode="center"
+                    ></Image>
+                  )}
+                  {gallery_image2 && (
+                    <Image
+                      source={{ uri: gallery_image2 }}
+                      style={{ width: 100, height: 100 }}
+                    />
+                  )}
+                </View>
+
+                <Button
+                  title="Add 2nd listing picture"
+                  onPress={() => pickGalleryImage(2)}
+                />
+              </View>
+              <View>
+                <View style={[styles.galleryImage]}>
+                  {!gallery_image3 && (
+                    <Image
+                      source={require("../src/assets/genericHouse.jpg")}
+                      style={{ width: 100, height: 100 }}
+                      resizeMode="center"
+                    ></Image>
+                  )}
+                  {gallery_image3 && (
+                    <Image
+                      source={{ uri: gallery_image3 }}
+                      style={{ width: 100, height: 100 }}
+                    />
+                  )}
+                </View>
+
+                <Button
+                  title="Add 3rd listing picture"
+                  onPress={() => pickGalleryImage(3)}
+                />
+              </View>
+            </View>
+          </View>
+          {galleryMainPic != null && (
+            <View
+              style={{
+                alignSelf: "flex-end",
+                marginRight: 10,
+              }}
+            >
+              <TouchableOpacity onPress={submitAllImages}>
+                <FontAwesome5
+                  name="arrow-circle-right"
+                  size={50}
+                  color="white"
+                />
+              </TouchableOpacity>
+            </View>
           )}
         </View>
 
-        <Button title="Change listings picture" onPress={pickImage} />
-      </View>
-      {profile_pic != null && (
-        <View
-          style={{
-            alignSelf: "flex-end",
-            marginRight: 10,
-            marginTop: 200,
-          }}
-        >
-          
-          <TouchableOpacity onPress={insertPictureData}>
-            <FontAwesome5 name="arrow-circle-right" size={50} color="white" />
-          </TouchableOpacity>
-        </View>
-      )}
-        <View>
-            <FlatList
-            contentContainerStyle={{ marginTop: 20 }}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={(_, key) => key.toString()}
-            data={gallery_pic}
-            renderItem={({ item }) => <InteriorCard interior={item} />}
-          />
-                </View>
-    </View>
+        <View style={{ marginTop: 100 }}></View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -150,6 +222,14 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     borderRadius: 100,
+    overflow: "hidden",
+  },
+  galleryImage: {
+    marginLeft: 45,
+    marginTop: 5,
+    width: 100,
+    height: 100,
+    borderRadius: 5,
     overflow: "hidden",
   },
 });

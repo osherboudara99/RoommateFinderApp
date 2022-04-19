@@ -23,7 +23,7 @@ def gallery_insertion():
         email = login_backend.email
         password = login_backend.password
 
-    gallery_pic = request.json['gallery_pic']
+    gallery_pic = request.json['galleryMainPic']
         
     gallery_insertion = ("INSERT INTO SeniorProject.gallery VALUES (NULL, (SELECT userid FROM SeniorProject.Users WHERE (email = %s) AND (password = %s)), (SELECT listingid FROM SeniorProject.listings as L INNER JOIN SeniorProject.Users as U ON L.userid = U.userid WHERE (email = %s) AND (password = %s) AND (title = %s)), %s)")
     gallery_info = (email,password, email, password, listings_insertion.title, gallery_pic)

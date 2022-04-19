@@ -23,12 +23,12 @@ def listings_insertion():
         password = login_backend.password
     
 
-    total_rent = request.json['total_rent']
-    square_footaqe = request.json['square_footage']
+    total_rent = request.json['rent']
+    square_footaqe = request.json['squareFootage']
     bedrooms = request.json['bedrooms']
     bathrooms = request.json['bathrooms']
-    total_occupants = request.json['total_occupants']
-    description = request.json['description']
+    total_occupants = request.json['totalOccupants']
+    description = request.json['descr']
     title = request.json['title']
 
 

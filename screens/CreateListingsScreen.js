@@ -68,7 +68,7 @@ export default function Questionnaire({ route, navigation }) {
   const [descr, setDescr] = React.useState("");
 
   const insert_Listing_Data = () => {
-    fetch("http://127.0.0.1:5000/questionnaire", {
+    fetch("http://127.0.0.1:5000/listings_insertion", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -80,6 +80,7 @@ export default function Questionnaire({ route, navigation }) {
         bathrooms: bathrooms.bathrooms,
         title: title.title,
         descr: descr.descr,
+        totalOccupants: totalOccupants.totalOccupants,
       }),
     })
       .then((resp) => resp.text())
@@ -87,7 +88,7 @@ export default function Questionnaire({ route, navigation }) {
         console.log(data);
         if (data === "executed") {
           console.log(route.params);
-          navigation.navigate("SignUpProfilePic");
+          navigation.navigate("ListingsPicsScreen");
           //route.params.setIsLoggedIn(true);
         }
       })
@@ -99,7 +100,7 @@ export default function Questionnaire({ route, navigation }) {
 
     if (rege.test(val)) {
       if (val.trim().length !== 0) {
-        setRent({ rent: null });
+        setRent({ rent: val });
         setData({
           ...data,
           rentValid: true,
@@ -114,7 +115,7 @@ export default function Questionnaire({ route, navigation }) {
         });
       }
     } else {
-      setRent({ rent: null });
+      setRent({ rent: val });
       setData({
         ...data,
         rentValid: false,
@@ -135,7 +136,7 @@ export default function Questionnaire({ route, navigation }) {
           check_Bedrooms: true,
         });
       } else {
-        setBedrooms({ bedrooms: null });
+        setBedrooms({ bedrooms: val });
         setData({
           ...data,
           bedroomsValid: false,
@@ -143,7 +144,7 @@ export default function Questionnaire({ route, navigation }) {
         });
       }
     } else {
-      setBedrooms({ bedrooms: null });
+      setBedrooms({ bedrooms: val });
       setData({
         ...data,
         bedroomsValid: false,
@@ -164,7 +165,7 @@ export default function Questionnaire({ route, navigation }) {
           check_Bathrooms: true,
         });
       } else {
-        setBathrooms({ bathrooms: null });
+        setBathrooms({ bathrooms: val });
         setData({
           ...data,
           bathroomsValid: false,
@@ -172,7 +173,7 @@ export default function Questionnaire({ route, navigation }) {
         });
       }
     } else {
-      setBathrooms({ bathrooms: null });
+      setBathrooms({ bathrooms: val });
       setData({
         ...data,
         bathroomsValid: false,
@@ -192,7 +193,7 @@ export default function Questionnaire({ route, navigation }) {
           check_Squarefootage: true,
         });
       } else {
-        setSquarefootage({ squareFootage: null });
+        setSquarefootage({ squareFootage: val });
         setData({
           ...data,
           squarefootageValid: false,
@@ -200,7 +201,7 @@ export default function Questionnaire({ route, navigation }) {
         });
       }
     } else {
-      setSquarefootage({ squareFootage: null });
+      setSquarefootage({ squareFootage: val });
       setData({
         ...data,
         squarefootageValid: false,
@@ -220,7 +221,7 @@ export default function Questionnaire({ route, navigation }) {
       });
     } else {
       setTitle({
-        title: null,
+        title: val,
       });
       setData({
         ...data,
@@ -241,7 +242,7 @@ export default function Questionnaire({ route, navigation }) {
       });
     } else {
       setDescr({
-        descr: null,
+        descr: val,
       });
       setData({
         ...data,
@@ -285,13 +286,14 @@ export default function Questionnaire({ route, navigation }) {
   }, []);
 
   const Submission = () => {
-    handleSubmit(onSubmit);
-
+    //handleSubmit(onSubmit);
     console.log("squareF:" + squareFootage);
     console.log("rent:" + rent);
+    console.log(rent);
+    console.log(rent.rent);
     //console.log("cleanliness:" + cleanliness);
 
-    navigation.navigate("ListingsPicsScreen");
+    insert_Listing_Data();
 
     //console.log("test");
     //console.log(errors);
