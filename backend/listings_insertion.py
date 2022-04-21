@@ -29,6 +29,7 @@ def listings_insertion():
     bathrooms = request.json['bathrooms']
     total_occupants = request.json['totalOccupants']
     description = request.json['descr']
+    global title
     title = request.json['title']
 
 
