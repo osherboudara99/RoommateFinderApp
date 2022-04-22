@@ -50,7 +50,6 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   //const [listings, setListings] = React.useState([]);
-
   const fetchListings = () => {
     fetch("http://127.0.0.1:5000/listings_select", {
       method: "GET",
