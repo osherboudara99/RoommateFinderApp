@@ -60,7 +60,7 @@ export default function ListingsPicScreen({ route, navigation }) {
         if (data === "executed") {
           console.log("data: " + image);
           console.log(route.params);
-          route.params.setIsLoggedIn(true);
+          //route.params.setIsLoggedIn(true);
           //navigation.navigate("Questionnaire");
         } else if (data === "not executed") {
           //navigation.navigate("SignUpError");
@@ -77,6 +77,7 @@ export default function ListingsPicScreen({ route, navigation }) {
     if (gallery_image1 != null) insertPictureData(gallery_image1);
     if (gallery_image2 != null) insertPictureData(gallery_image2);
     if (gallery_image3 != null) insertPictureData(gallery_image3);
+    navigation.navigate("HomeScreen");
   };
 
   return (

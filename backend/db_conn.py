@@ -108,7 +108,7 @@ def connect():
     `total_occupants` int(4) NOT NULL, \
     `description` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL, \
     `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL, \
-    `date_created` DATE NOT NULL,\
+    `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,\
     PRIMARY KEY (`listingid`), \
     CONSTRAINT `user_id_5` FOREIGN KEY (`userid`) REFERENCES `Users` (`userid`) \
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci")

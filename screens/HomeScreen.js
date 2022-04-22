@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   SafeAreaView,
   View,
@@ -21,6 +21,7 @@ import listings from "../src/consts/listings";
 import roommates from "../src/consts/roommates";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { CompareSharp } from "@material-ui/icons";
 
 const HomeScreen = ({ navigation }) => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
@@ -35,6 +36,68 @@ const HomeScreen = ({ navigation }) => {
     },
   ];
   const categoryList = ["Roommates ", "Listings"];
+
+  const [isMounted, setMounted] = React.useState(true);
+  useEffect(() => {
+    if (isMounted) {
+      fetchListings();
+    }
+    return () => {
+      setMounted(false);
+    };
+  }, []);
+
+  //const [listings, setListings] = React.useState([]);
+
+  const fetchListings = () => {
+    fetch("http://127.0.0.1:5000/listings_select", {
+      method: "GET",
+    })
+      .then((resp) => resp.text())
+      .then((article) => {
+        console.log(article);
+        console.log(article[1]);
+        //const jsonValue = {}
+
+        var object = JSON.parse(article);
+        var array = [];
+        for (var i in object) {
+          array.push(object[i]);
+        }
+        
+        console.log(object);
+
+        var str = JSON.stringify(object[0]);
+        var testStr = str.replace(/([a-zA-Z0-9_]+)/g, '"$1"')
+        console.log(testStr)
+        console.log()
+        
+        //console.log(object[0].bedrooms)
+        // console.log(array[1].bedrooms);
+        // console.log(array[1]["bedrooms"]);
+
+        // console.log(array[1]);
+
+        // var strArray = JSON.stringify(array[1]);
+        // strArray.replace("'", '");
+
+        // const objTest = JSON.parse(strArray);
+
+        // console.log(objTest);
+        // //console.log(JSON.parse(objTest));
+
+        // console.log(object);
+        // console.log(object[0]);
+        // var testObj = object[0];
+        // console.log(testObj["bedrooms"]);
+
+        // console.log("testStr");
+        // var testStr = JSON.stringify(object[0]);
+        // var newStr = testStr.replace("'total_rent'", "total_rent");
+        // console.log(newStr);
+        // console.log(testStr[13]);
+      });
+  };
 
   const ListCategories = () => {
     return (
@@ -109,7 +172,7 @@ const HomeScreen = ({ navigation }) => {
           {/* House image */}
           <Image source={house.image} style={style.cardImage} />
           <View style={{ marginTop: 10 }}>
-            {/* Title and price container */}
+            {/* Title and total_rent container */}
             <View
               style={{
                 flexDirection: "row",
@@ -127,7 +190,7 @@ const HomeScreen = ({ navigation }) => {
                   fontSize: 16,
                 }}
               >
-                {house.price}
+                {house.total_rent}
               </Text>
             </View>
 
@@ -149,7 +212,7 @@ const HomeScreen = ({ navigation }) => {
               </View>
               <View style={style.facility}>
                 <Icon name="aspect-ratio" size={18} />
-                <Text style={style.facilityText}>{house.size}</Text>
+                <Text style={style.facilityText}>{house.square_footage}</Text>
               </View>
             </View>
           </View>
@@ -169,7 +232,7 @@ const HomeScreen = ({ navigation }) => {
           {/* House image */}
           <Image source={roommate.image} style={style.cardImage} />
           <View style={{ marginTop: 10 }}>
-            {/* Title and price container */}
+            {/* Title and total_rent container */}
             <View
               style={{
                 flexDirection: "row",
