@@ -60,16 +60,17 @@ const HomeScreen = ({ navigation }) => {
         //const jsonValue = {}
 
         var object = JSON.parse(article);
-        var array = [];
-        for (var i in object) {
-          array.push(object[i]);
-        }
+        // var array = [];
+        // for (var i in object) {
+        //   array.push(object[i]);
+        // }
         
         console.log(object);
 
         var str = JSON.stringify(object[0]);
-        var testStr = str.replace(/([a-zA-Z0-9_]+)/g, '"$1"')
-        console.log(testStr)
+        //var testStr = str.replace(/([a-zA-Z0-9_]+)/g, '"$1"')
+        //var testStr = str.replace("'", '"')
+        console.log(str)
         console.log()
         
         //console.log(object[0].bedrooms)

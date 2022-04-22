@@ -42,8 +42,8 @@ def listings_select():
         for result in values:
             # print(result)
             testStr = str(result)
-            newTestStr = testStr.replace("'", "")
-            json_data.append(newTestStr)
+            #newTestStr = testStr.replace("'", "") #to replace single quote ' with nothing
+            json_data.append(testStr)
 
         cnx.close()
         # return values
