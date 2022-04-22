@@ -77,7 +77,7 @@ export default function ListingsPicScreen({ route, navigation }) {
     if (gallery_image1 != null) insertPictureData(gallery_image1);
     if (gallery_image2 != null) insertPictureData(gallery_image2);
     if (gallery_image3 != null) insertPictureData(gallery_image3);
-    navigation.navigate("HomeScreen");
+    navigation.navigate("SettingsScreen");
   };
 
   return (
@@ -189,22 +189,25 @@ export default function ListingsPicScreen({ route, navigation }) {
               </View>
             </View>
           </View>
-          {galleryMainPic != null && (
-            <View
-              style={{
-                alignSelf: "flex-end",
-                marginRight: 10,
-              }}
-            >
-              <TouchableOpacity onPress={submitAllImages}>
-                <FontAwesome5
-                  name="arrow-circle-right"
-                  size={50}
-                  color="white"
-                />
-              </TouchableOpacity>
-            </View>
-          )}
+          {galleryMainPic != null &&
+            gallery_image1 != null &&
+            gallery_image2 != null &&
+            gallery_image3 != null && (
+              <View
+                style={{
+                  alignSelf: "flex-end",
+                  marginRight: 10,
+                }}
+              >
+                <TouchableOpacity onPress={submitAllImages}>
+                  <FontAwesome5
+                    name="arrow-circle-right"
+                    size={50}
+                    color="white"
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
         </View>
 
         <View style={{ marginTop: 100 }}></View>
