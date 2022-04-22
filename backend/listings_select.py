@@ -34,7 +34,7 @@ def listings_select():
         #row_headers = [x[0] for x in cursor.description]
 
         for x in cursor.description:
-            stringHeader = x[0].replace("'", '"')
+            stringHeader = x[0].replace('"', "'")
             row_headers = []
             row_headers = row_headers.append(stringHeader)
 
@@ -47,7 +47,7 @@ def listings_select():
 
         cnx.close()
         # return values
-        return jsonify(json_data)
+        return json.dumps(json_data)
 
     except mysql.connector.IntegrityError as err:
         cursor.close()

@@ -55,7 +55,7 @@ const HomeScreen = ({ navigation }) => {
     })
       .then((resp) => resp.text())
       .then((article) => {
-        console.log(article);
+        console.log("article:", article);
         console.log(article[1]);
         //const jsonValue = {}
 
@@ -65,12 +65,14 @@ const HomeScreen = ({ navigation }) => {
         //   array.push(object[i]);
         // }
         
-        console.log(object);
+        console.log("object:", object);
+
+        console.log("object at 0:", object.total_rent);
 
         var str = JSON.stringify(object[0]);
         //var testStr = str.replace(/([a-zA-Z0-9_]+)/g, '"$1"')
         //var testStr = str.replace("'", '"')
-        console.log(str)
+        console.log("string: ", str);
         console.log()
         
         //console.log(object[0].bedrooms)
