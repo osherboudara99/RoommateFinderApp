@@ -22,11 +22,12 @@ def own_listings_select():
         email = login_backend.email
         password = login_backend.password
         
-    own_listing_select = ("SELECT total_rent, square_footage, bedrooms, bathrooms, total_occupants, description, title, date_created, gallery_pic, firstName, lastName, email, phone, L.userid, L.listingid FROM listings as L INNER JOIN gallery as G ON L.listingid = G.listingid INNER JOIN Users as U on L.userid = U.userid WHERE (email = %s) and (password = %s) ORDER BY date_created DESC")
+    own_listing_select = ("SELECT total_rent, square_footage, bedrooms, bathrooms, total_occupants, description, title, gallery_pic, firstName, lastName, email, phone, L.userid, L.listingid, G.gallery_id FROM SeniorProject.listings as L INNER JOIN SeniorProject.gallery as G ON L.listingid = G.listingid INNER JOIN SeniorProject.Users as U on L.userid = U.userid WHERE email = %s and password = %s ORDER BY date_created desc")
+    listing_info = (email, password)
     cursor = cnx.cursor(buffered=True)
 
     try:
-        cursor.execute(own_listing_select)
+        cursor.execute(own_listing_select, listing_info)
         cnx.commit()
         values = cursor.fetchall()
         cnx.close()

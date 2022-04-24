@@ -28,7 +28,7 @@ def listing_deletion():
     listing_info = (email, password, listing_id)
 
     gallery_deletion = ("DELETE FROM SeniorProject.gallery WHERE listingid = %s")
-    gallery_info = (listing_id)
+    gallery_info = (listing_id, )
     cursor = cnx.cursor()
     
 

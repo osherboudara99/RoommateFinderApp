@@ -29,7 +29,7 @@ def roommates_select():
         "SELECT firstName, lastName, phone, email, zipcode_location, budget, student, working_professional, job_title, guests_often, cleanliness, cleanliness, smoker, pets, zoom_friendly, profile_pic, personality_type FROM SeniorProject.Users AS u INNER JOIN SeniorProject.questionnaire as q ON u.userid = q.userid INNER JOIN SeniorProject.profile_picture as pp ON u.userid = pp.userid LEFT JOIN SeniorProject.profile as p ON u.userid = p.userid WHERE roommates_yes_no = false \
             UNION \
 SELECT firstName, lastName, phone, email, zipcode_location, budget, student, working_professional, job_title, guests_often, cleanliness, cleanliness, smoker, pets, zoom_friendly, profile_pic, personality_type FROM SeniorProject.Users AS u INNER JOIN SeniorProject.questionnaire as q ON u.userid = q.userid INNER JOIN SeniorProject.profile_picture as pp ON u.userid = pp.userid RIGHT JOIN SeniorProject.profile as p ON u.userid = p.userid WHERE roommates_yes_no = false and email != %s")
-    roommate_info = (email)
+    roommate_info = (email,)
     cursor = cnx.cursor(buffered=True)
 
     try:
