@@ -26,17 +26,32 @@ def roommates_select():
     #password = "1234"
 
     roommates_select = (
-        "SELECT * FROM (SELECT personality_type, description, email, password FROM SeniorProject.profile AS p INNER JOIN SeniorProject.Users AS u ON u.userid = p.userid) as a WHERE (email = %s) AND (password = %s)")
-    profile_info = (email, password)
+        "SELECT firstName, lastName, phone, email, zipcode_location, budget, student, working_professional, job_title, guests_often, cleanliness, cleanliness, smoker, pets, zoom_friendly, profile_pic, personality_type FROM SeniorProject.Users AS u INNER JOIN SeniorProject.questionnaire as q ON u.userid = q.userid INNER JOIN SeniorProject.profile_picture as pp ON u.userid = pp.userid LEFT JOIN SeniorProject.profile as p ON u.userid = p.userid WHERE roommates_yes_no = false \
+            UNION \
+SELECT firstName, lastName, phone, email, zipcode_location, budget, student, working_professional, job_title, guests_often, cleanliness, cleanliness, smoker, pets, zoom_friendly, profile_pic, personality_type FROM SeniorProject.Users AS u INNER JOIN SeniorProject.questionnaire as q ON u.userid = q.userid INNER JOIN SeniorProject.profile_picture as pp ON u.userid = pp.userid RIGHT JOIN SeniorProject.profile as p ON u.userid = p.userid WHERE roommates_yes_no = false and email != %s")
+    roommate_info = (email)
     cursor = cnx.cursor(buffered=True)
 
     try:
-        cursor.execute(profile_screen_select, profile_info)
+        cursor.execute(roommates_select, roommate_info)
         cnx.commit()
         values = cursor.fetchall()
-        cursor.close()
+        
+        for x in cursor.description:
+            stringHeader = x[0].replace('"', "'")
+            row_headers = []
+            row_headers = row_headers.append(stringHeader)
+
+        json_data = []
+        for result in values:
+            # print(result)
+            testStr = str(result)
+            #newTestStr = testStr.replace("'", "") #to replace single quote ' with nothing
+            json_data.append(testStr)
+
         cnx.close()
-        return str(values)
+        # return values
+        return json.dumps(json_data)
     except mysql.connector.IntegrityError as err:
         cursor.close()
         cnx.close()

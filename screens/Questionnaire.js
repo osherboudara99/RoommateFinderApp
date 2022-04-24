@@ -498,7 +498,7 @@ export default function Questionnaire({ route, navigation }) {
         />
 
         <Question
-          question="Are you seeking roommates for a place or do you need to join a place with roommates?"
+          question="Are you seeking roommates for a place you already have or do you need to join a place with roommates? (Choose joining if you are just looking for roommates)"
           display={questionNumber == 6}
           control={control}
           rules={{ required: true }}

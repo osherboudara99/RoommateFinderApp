@@ -18,6 +18,7 @@ from listings_detailed_select import listings_detailed_select_blueprint
 from gallery_insertion import gallery_insertion_blueprint
 from gallery_deletion import gallery_deletion_blueprint
 from own_listings_select import own_listings_select_blueprint
+from roommates_select import roommates_select_blueprint
 from flask_cors import CORS, cross_origin
 
 
@@ -165,6 +166,8 @@ app.register_blueprint(own_listings_select_blueprint)
 app.register_blueprint(gallery_insertion_blueprint)
 
 app.register_blueprint(gallery_deletion_blueprint)
+
+app.register_blueprint(roommates_select_blueprint)
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', 
