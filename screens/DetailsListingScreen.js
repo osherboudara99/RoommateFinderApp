@@ -14,6 +14,7 @@ import {
 
 import Icon from "react-native-vector-icons/MaterialIcons";
 import COLORS from "../src/consts/colors";
+import ZIPCODES from "../src/consts/zipcodes";
 const { width } = Dimensions.get("screen");
 const DetailsScreen = ({ navigation, route }) => {
   const house = route.params;
@@ -68,26 +69,35 @@ const DetailsScreen = ({ navigation, route }) => {
 
           {/* Location text */}
           <Text style={{ fontSize: 16, color: COLORS.grey }}>
-            {house.location}
+            {ZIPCODES[house.location]}
           </Text>
 
           {/* Facilities container */}
           <View style={{ flexDirection: "row", marginTop: 20 }}>
             <View style={style.facility}>
               <Icon name="hotel" size={18} />
-              <Text style={style.facilityText}>2</Text>
+              <Text style={style.facilityText}>{house.bedrooms}</Text>
             </View>
             <View style={style.facility}>
               <Icon name="bathtub" size={18} />
-              <Text style={style.facilityText}>2</Text>
+              <Text style={style.facilityText}>{house.bathrooms}</Text>
             </View>
             <View style={style.facility}>
               <Icon name="aspect-ratio" size={18} />
-              <Text style={style.facilityText}>100m area</Text>
+              <Text style={style.facilityText}>{house.square_footage} ft sq</Text>
             </View>
           </View>
           <Text style={{ marginTop: 20, color: COLORS.grey }}>
-            {house.details}
+          Roommate Rep: {house.firstName} {house.lastName}
+          </Text>
+          <Text style={{ marginTop: 20, color: COLORS.grey }}>
+          Email: {house.email} 
+          </Text>
+          <Text style={{ marginTop: 20, color: COLORS.grey }}>
+          Phone Number: {house.phone}
+          </Text>
+          <Text style={{ marginTop: 20, color: COLORS.grey }}>
+            {house.description}
           </Text>
 
           {/* Interior list */}
@@ -106,7 +116,7 @@ const DetailsScreen = ({ navigation, route }) => {
               <Text
                 style={{ color: COLORS.blue, fontWeight: "bold", fontSize: 18 }}
               >
-                {house.price}
+                ${house.total_rent}
               </Text>
               <Text
                 style={{ fontSize: 12, color: COLORS.grey, fontWeight: "bold" }}

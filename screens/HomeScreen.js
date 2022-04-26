@@ -22,6 +22,7 @@ import roommates from "../src/consts/roommates";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { CompareSharp } from "@material-ui/icons";
+import ZIPCODES from "../src/consts/zipcodes";
 
 const HomeScreen = ({ navigation }) => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
@@ -101,14 +102,18 @@ const HomeScreen = ({ navigation }) => {
         for (var i = 0; i < allPerfect.length; i += 4) {
           const singleListing = {
             id: allPerfect[i].listingid,
-            title: allPerfect[i].description,
-            location: "placeholder",
+            title: allPerfect[i].title,
+            location: allPerfect[i].location,
             total_rent: allPerfect[i].total_rent,
             image: { uri: allPerfect[i].gallery_pic },
             bedrooms: allPerfect[i].bedrooms,
             bathrooms: allPerfect[i].bathrooms,
             square_footage: allPerfect[i].square_footage,
             description: allPerfect[i].description,
+            firstName: allPerfect[i].firstName,
+            lastName: allPerfect[i].lastName,
+            phone: allPerfect[i].phone,
+            email: allPerfect[i].email,
             interiors: [
               { uri: allPerfect[i + 1].gallery_pic },
               { uri: allPerfect[i + 2].gallery_pic },
@@ -291,14 +296,14 @@ const HomeScreen = ({ navigation }) => {
                   fontSize: 16,
                 }}
               >
-                {house.total_rent}
+                ${house.total_rent}
               </Text>
             </View>
 
             {/* Location text */}
 
             <Text style={{ color: COLORS.green, fontSize: 14, marginTop: 5 }}>
-              {house.location}
+              {ZIPCODES[house.location]}
             </Text>
 
             {/* Facilities container */}

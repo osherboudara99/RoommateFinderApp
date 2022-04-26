@@ -21,7 +21,7 @@ def listings_select():
         email = login_backend.email
         password = login_backend.password
 
-    listing_select = ("SELECT total_rent, square_footage, bedrooms, bathrooms, total_occupants, description, title, gallery_pic, firstName, lastName, email, phone, L.userid, L.listingid, G.gallery_id FROM SeniorProject.listings as L INNER JOIN SeniorProject.gallery as G ON L.listingid = G.listingid INNER JOIN SeniorProject.Users as U on L.userid = U.userid WHERE email != %s ORDER BY date_created desc")
+    listing_select = ("SELECT total_rent, square_footage, bedrooms, bathrooms, total_occupants, description, title, gallery_pic, firstName, lastName, email, phone, L.zipcode_location as location, L.userid, L.listingid, G.gallery_id FROM SeniorProject.listings as L INNER JOIN SeniorProject.gallery as G ON L.listingid = G.listingid INNER JOIN SeniorProject.Users as U on L.userid = U.userid WHERE email != %s ORDER BY date_created desc")
     listing_info = (email,)
     cursor = cnx.cursor(buffered=True, dictionary=True)
 

@@ -53,6 +53,8 @@ export default function Questionnaire({ route, navigation }) {
     check_Title: false,
     check_Bedrooms: false,
     check_Bathrooms: false,
+    locationValid: true,
+    check_location: false,
     check_Descr: false,
     check_TotalOccupants: false,
   });
@@ -66,6 +68,8 @@ export default function Questionnaire({ route, navigation }) {
 
   const [rent, setRent] = React.useState("");
   const [descr, setDescr] = React.useState("");
+
+  const [location, setLocation] = React.useState("");
 
   const insert_Listing_Data = () => {
     fetch("http://127.0.0.1:5000/listings_insertion", {
@@ -81,6 +85,7 @@ export default function Questionnaire({ route, navigation }) {
         title: title.title,
         descr: descr.descr,
         totalOccupants: totalOccupants.totalOccupants,
+        location: location.location,
       }),
     })
       .then((resp) => resp.text())
@@ -230,6 +235,36 @@ export default function Questionnaire({ route, navigation }) {
       });
     }
   };
+
+  const locationValidation = (val) => {
+    var rege = /^\d{5}$/;
+
+    if (rege.test(val)) {
+      if (val.trim().length == 5) {
+        setLocation({ location: val });
+        setData({
+          ...data,
+          locationValid: true,
+          check_location: true,
+        });
+      } else {
+        setLocation({ location: val });
+        setData({
+          ...data,
+          locationValid: false,
+          check_location: false,
+        });
+      }
+    } else {
+      setLocation({ location: val });
+      setData({
+        ...data,
+        locationValid: false,
+        check_location: false,
+      });
+    }
+  };
+  
   const descrValidation = (val) => {
     if (val.trim().length > 10 && val.trim().length < 251) {
       setDescr({
@@ -332,7 +367,7 @@ export default function Questionnaire({ route, navigation }) {
       </View>
       <View style={styles.container}>
         <View style={[styles.form, { width: window.width - 20 }]}>
-          <Text style={styles.header}>Question {questionNumber}/7</Text>
+          <Text style={styles.header}>Question {questionNumber}/8</Text>
 
           <Question
             question="What is the square footage of the entire property?"
@@ -692,9 +727,69 @@ export default function Questionnaire({ route, navigation }) {
             defaultValue=""
           />
 
+        <Question
+          question="What is the location of this listing?"
+          display={questionNumber == 7}
+          control={control}
+          rules={{ required: true, min: 5 }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <View style={{ flexDirection: "column" }}>
+              <View style={{ flexDirection: "row" }}>
+                <TextInput
+                  style={{ width: 250, marginLeft: 5, marginRight: "auto" }}
+                  onChange={onChange}
+                  onChangeText={(val) => locationValidation(val)}
+                  onBlur={onBlur}
+                  value={value}
+                  keyboardType="number-pad"
+                  placeholder="Enter Zip Code"
+                />
+
+                <View style={{ marginLeft: "auto" }}>
+                  {data.check_location ? (
+                    <Animatable.View animation="bounceIn">
+                      <Feather name="check-circle" color="green" size={25} />
+                    </Animatable.View>
+                  ) : null}
+                  {data.locationValid ? null : (
+                    <Animatable.View animation="fadeInLeft" duration={500}>
+                      <Text style={styles.errorMsg}>
+                        {" "}
+                        <FontAwesome
+                          name="exclamation-circle"
+                          color="red"
+                          size={25}
+                        />{" "}
+                      </Text>
+                    </Animatable.View>
+                  )}
+                </View>
+              </View>
+              <View>
+                {data.locationValid ? null : (
+                  <Animatable.View animation="fadeInLeft" duration={500}>
+                    <Text
+                      style={{
+                        flexDirection: "column",
+                        marginBottom: "auto",
+                        color: "#ae0700",
+                      }}
+                    >
+                      {" "}
+                      Zip code is invalid, please try again.
+                    </Text>
+                  </Animatable.View>
+                )}
+              </View>
+            </View>
+          )}
+          name="Location"
+          defaultValue=""
+        />
+
           <Question
             question="Please Create a Description for Your Listing."
-            display={questionNumber == 7}
+            display={questionNumber == 8}
             control={control}
             rules={{ required: true, min: 5 }}
             render={({ field: { onChange, onBlur, value } }) => (
@@ -768,7 +863,7 @@ export default function Questionnaire({ route, navigation }) {
               />
             ) : null}
 
-            {questionNumber < 7 && (
+            {questionNumber < 8 && (
               <View>
                 {data.squarefootageValid &&
                 data.check_Squarefootage &&
@@ -821,9 +916,19 @@ export default function Questionnaire({ route, navigation }) {
                     style={styles.buttonRight}
                   />
                 ) : null}
+
+                {data.check_location &&
+                data.locationValid &&
+                questionNumber == 7 ? (
+                  <Button
+                    title="Next"
+                    onPress={nextQuestion}
+                    style={styles.buttonRight}
+                  />
+                ) : null}
               </View>
             )}
-            {data.descrValid && data.check_Descr && questionNumber == 7 ? (
+            {data.descrValid && data.check_Descr && questionNumber == 8 ? (
               <Button
                 title="Submit"
                 onPress={() => {

@@ -31,11 +31,12 @@ def listings_insertion():
     description = request.json['descr']
     global title
     title = request.json['title']
+    location = request.json['location']
 
 
     listing_insertion = (
-        "INSERT INTO SeniorProject.listings VALUES ((SELECT userid FROM SeniorProject.Users WHERE (email = %s) ), NULL,  %s, %s, %s, %s, %s, %s, %s, NOW())")
-    listing_answers = (email, total_rent, square_footaqe, bedrooms, bathrooms, total_occupants, description, title)
+        "INSERT INTO SeniorProject.listings VALUES ((SELECT userid FROM SeniorProject.Users WHERE (email = %s) ), NULL,  %s, %s, %s, %s, %s, %s, %s, %s, NOW())")
+    listing_answers = (email, total_rent, square_footaqe, bedrooms, bathrooms, total_occupants, description, title, location)
 
 
     cursor = cnx.cursor()
