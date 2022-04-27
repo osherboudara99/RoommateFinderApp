@@ -10,11 +10,14 @@ import {
   Dimensions,
   Pressable,
   ScrollView,
+  TouchableOpacity
 } from "react-native";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
 import COLORS from "../src/consts/colors";
 import ZIPCODES from "../src/consts/zipcodes";
+import { Avatar, Divider } from "react-native-elements";
 const { width } = Dimensions.get("screen");
 const DetailsScreen = ({ navigation, route }) => {
   const house = route.params;
@@ -39,17 +42,10 @@ const DetailsScreen = ({ navigation, route }) => {
                   onPress={navigation.goBack}
                 />
               </View>
-              <View style={style.headerBtn}>
-                <Icon name="favorite" size={20} color={COLORS.red} />
-              </View>
             </View>
           </ImageBackground>
-
-          {/* Virtual Tag View */}
-          <View style={style.virtualTag}>
-            <Text style={{ color: COLORS.white }}>Virtual tour</Text>
           </View>
-        </View>
+
 
         <View style={style.detailsContainer}>
           {/* Name and rating view container */}
@@ -68,7 +64,7 @@ const DetailsScreen = ({ navigation, route }) => {
           </View>
 
           {/* Location text */}
-          <Text style={{ fontSize: 16, color: COLORS.grey }}>
+          <Text style={{ fontSize: 16, color: COLORS.green }}>
             {ZIPCODES[house.location]}
           </Text>
 
@@ -87,18 +83,47 @@ const DetailsScreen = ({ navigation, route }) => {
               <Text style={style.facilityText}>{house.square_footage} ft sq</Text>
             </View>
           </View>
-          <Text style={{ marginTop: 20, color: COLORS.grey }}>
-          Roommate Rep: {house.firstName} {house.lastName}
-          </Text>
-          <Text style={{ marginTop: 20, color: COLORS.grey }}>
-          Email: {house.email} 
-          </Text>
-          <Text style={{ marginTop: 20, color: COLORS.grey }}>
-          Phone Number: {house.phone}
-          </Text>
-          <Text style={{ marginTop: 20, color: COLORS.grey }}>
+          <Divider
+          orientation="horizontal"
+          style={{ marginTop: 10, marginHorizontal: 25 }}
+          />
+          <Text style={{ marginTop: 20, color: COLORS.dark }}>
             {house.description}
           </Text>
+
+        
+
+          <Divider
+          orientation="horizontal"
+          style={{ marginTop: 10, marginHorizontal: 25 }}
+        />
+        <View style={style.footer2}>
+        <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+              Contact Information
+            </Text>
+          <Text style={{ marginTop: 20, color: COLORS.green }}>
+          {house.firstName} {house.lastName}
+          </Text>
+          <Text style={{ marginTop: 20, color: COLORS.green }}>
+          {house.email} 
+          </Text>
+          <Text style={{ marginTop: 20, color: COLORS.green }}>
+          {house.phone}
+          </Text>
+          <Text style={{ marginTop: 20, color: COLORS.green }}>
+          {house.personality_type}
+          <TouchableOpacity
+                style={{ marginLeft: 5 }}
+                onPress={() => navigation.navigate("PersonalityHelper")}
+              >
+                <Ionicons name="ios-help-circle" size={14} color={COLORS.green} />
+          </TouchableOpacity>
+          </Text>
+          </View>
+          <Divider
+          orientation="horizontal"
+          style={{ marginTop: 10, marginHorizontal: 25, color: COLORS.green }}
+        />
 
           {/* Interior list */}
           <FlatList
@@ -114,12 +139,12 @@ const DetailsScreen = ({ navigation, route }) => {
           <View style={style.footer}>
             <View>
               <Text
-                style={{ color: COLORS.blue, fontWeight: "bold", fontSize: 18 }}
+                style={{ color: COLORS.green, fontWeight: "bold", fontSize: 18 }}
               >
                 ${house.total_rent}
               </Text>
               <Text
-                style={{ fontSize: 12, color: COLORS.grey, fontWeight: "bold" }}
+                style={{ fontSize: 12, color: COLORS.dark, fontWeight: "bold" }}
               >
                 Total Price
               </Text>
@@ -212,7 +237,17 @@ const style = StyleSheet.create({
   },
   detailsContainer: { flex: 1, paddingHorizontal: 20, marginTop: 40 },
   facility: { flexDirection: "row", marginRight: 15 },
-  facilityText: { marginLeft: 5, color: COLORS.grey },
+  facilityText: { marginLeft: 5, color: COLORS.green },
+  footer2: {
+    height: 180,
+    backgroundColor: COLORS.light,
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    marginTop: 5,
+    flexDirection: "column",
+    marginVertical: 10,
+    marginBottom: 5
+  },
 });
 
 export default DetailsScreen;

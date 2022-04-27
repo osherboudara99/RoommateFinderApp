@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import DetailsListingScreen from "../screens/DetailsListingScreen";
 import DetailsRoommateScreen from "../screens/DetailsRoommateScreen";
 import RoommateIconsHelper from "../screens/RoommateIconsHelper";
+import PersonalityHelper from "../screens/PersonalityHelper";
 
 import chatScreen from "../screens/chatScreen";
 
@@ -36,6 +37,11 @@ const HomeNavigation = ({ navigation, route }) => {
         name="RoommateIconsHelper"
         component={RoommateIconsHelper}
         options={{ title: "RoommateIconsHelper", headerShown: false }}
+      />
+      <HomeStack.Screen
+        name="PersonalityHelper"
+        component={PersonalityHelper}
+        options={{ title: "PersonalityHelper", headerShown: false }}
       />
     </HomeStack.Navigator>
   );

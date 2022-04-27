@@ -24,6 +24,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { CompareSharp } from "@material-ui/icons";
 import ZIPCODES from "../src/consts/zipcodes";
 
+
 const HomeScreen = ({ navigation }) => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
   const optionsList = [
@@ -39,6 +40,8 @@ const HomeScreen = ({ navigation }) => {
   const categoryList = ["Roommates ", "Listings"];
 
   const [listings, setListings] = React.useState([]);
+  
+  const [word, setWord] = React.useState(false);
 
   const [isMounted, setMounted] = React.useState(true);
   useEffect(() => {
@@ -64,6 +67,8 @@ const HomeScreen = ({ navigation }) => {
         console.log(article);
         
         if(testStr != "[]"){
+
+
         //const jsonValue = {}
         var object = article.replaceAll('"', "");
         var object = article.replaceAll("'", "");
@@ -81,6 +86,7 @@ const HomeScreen = ({ navigation }) => {
         for (var i = 0; i < object.length; i++) {
           var str = JSON.stringify(object[i]);
           var tok = str.replace("'gallery_pic': b", "'gallery_pic': ");
+          tok = tok.replace("None", "null");
           tok = tok.replaceAll(/[']/g, '"');
           //tok = tok.replaceAll("'gallery_pic': b", "'gallery_pic': ");
           tok = tok.slice(1, -1);
@@ -100,6 +106,12 @@ const HomeScreen = ({ navigation }) => {
         var amountOfListings = allPerfect.length / 4;
         var correctListing = [];
         for (var i = 0; i < allPerfect.length; i += 4) {
+
+          if (allPerfect[i].personality_type === null){
+            allPerfect[i].personality_type = "This user has not taken the personality test.";
+          }
+
+
           const singleListing = {
             id: allPerfect[i].listingid,
             title: allPerfect[i].title,
@@ -114,6 +126,7 @@ const HomeScreen = ({ navigation }) => {
             lastName: allPerfect[i].lastName,
             phone: allPerfect[i].phone,
             email: allPerfect[i].email,
+            personality_type: allPerfect[i].personality_type,
             interiors: [
               { uri: allPerfect[i + 1].gallery_pic },
               { uri: allPerfect[i + 2].gallery_pic },
@@ -269,6 +282,9 @@ const HomeScreen = ({ navigation }) => {
   };
   const Card = ({ house }) => {
     return (
+      <View>
+        
+
       <Pressable
         activeOpacity={0.8}
         style={{ size: 22, color: COLORS.dark }}
@@ -324,6 +340,8 @@ const HomeScreen = ({ navigation }) => {
           </View>
         </View>
       </Pressable>
+      
+      </View>
     );
   };
 
@@ -552,7 +570,7 @@ const HomeScreen = ({ navigation }) => {
 
         {/* Render categories */}
         <ListCategories />
-
+        
         {/* Render Card */}
         {selectedCategoryIndex === 0 ? (
           <FlatList
@@ -564,6 +582,12 @@ const HomeScreen = ({ navigation }) => {
             renderItem={({ item }) => <CardRoommate roommate={item} />}
           />
         ) : (
+          <View>
+          {listings.length === 0 && ( <View> 
+            <Text style={{ color: COLORS.dark, fontSize: 22, fontWeight: "bold"}}>
+                There are no listings.
+              </Text>
+          </View>)}
           <FlatList
             snapToInterval={width - 20}
             showsHorizontalScrollIndicator={false}
@@ -572,6 +596,7 @@ const HomeScreen = ({ navigation }) => {
             data={listings}
             renderItem={({ item }) => <Card house={item} />}
           />
+          </View>
         )}
       </ScrollView>
     </SafeAreaView>
