@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import {
   SafeAreaView,
   View,
@@ -23,8 +23,24 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { CompareSharp } from "@material-ui/icons";
 import ZIPCODES from "../src/consts/zipcodes";
+import ZIPCODESLATLONG from "../src/consts/zipcodes_latlong";
+import { getPreciseDistance, getDistance } from "geolib";
 
 const HomeScreen = ({ navigation }) => {
+  const [isMounted, setIsMounted] = React.useState(true);
+
+  useEffect(() => {
+    if (isMounted) {
+      fetchListings();
+    }
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      setIsMounted(false);
+    };
+  }, []);
+
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
   const optionsList = [
     {
@@ -40,168 +56,185 @@ const HomeScreen = ({ navigation }) => {
 
   const [listings, setListings] = React.useState([]);
 
-  const [isMounted, setMounted] = React.useState(true);
-  useEffect(() => {
-    if (isMounted) {
-      fetchListings();
-    }
-    return () => {
-      setMounted(false);
-    };
-  }, []);
+  const [profileZipcode, setProfileZipcode] = React.useState("");
 
   //const [listings, setListings] = React.useState([]);
-  const fetchListings = () => {
+  const fetchListings = async () => {
     fetch("http://127.0.0.1:5000/listings_select", {
       method: "GET",
     })
       .then((resp) => resp.text())
       .then((article) => {
+        if (isMounted) {
+          console.log(article);
+          var testStr = toString(article);
+          console.log(article);
 
+          if (testStr != "[]") {
+            //const jsonValue = {}
+            var object = article.replaceAll('"', "");
+            var object = article.replaceAll("'", "");
+            var object = article.replace("'gallery_pic': b", "'gallery_pic': ");
+            console.log(object);
+            var object = JSON.parse(article);
+            // var array = [];
+            // for (var i in object) {
+            //   array.push(object[i]);
+            // }
+            // console.log(article);
+            console.log(object);
 
-        console.log(article);
-        var testStr = toString(article);
-        console.log(article);
-        
-        if(testStr != "[]"){
-        //const jsonValue = {}
-        var object = article.replaceAll('"', "");
-        var object = article.replaceAll("'", "");
-        var object = article.replace("'gallery_pic': b", "'gallery_pic': ");
-        console.log(object);
-        var object = JSON.parse(article);
-        // var array = [];
-        // for (var i in object) {
-        //   array.push(object[i]);
-        // }
-        // console.log(article);
-        console.log(object);
+            var allPerfect = [];
+            for (var i = 0; i < object.length; i++) {
+              var str = JSON.stringify(object[i]);
+              var tok = str.replace("'gallery_pic': b", "'gallery_pic': ");
+              tok = tok.replaceAll(/[']/g, '"');
+              //tok = tok.replaceAll("'gallery_pic': b", "'gallery_pic': ");
+              tok = tok.slice(1, -1);
 
-        var allPerfect = [];
-        for (var i = 0; i < object.length; i++) {
-          var str = JSON.stringify(object[i]);
-          var tok = str.replace("'gallery_pic': b", "'gallery_pic': ");
-          tok = tok.replaceAll(/[']/g, '"');
-          //tok = tok.replaceAll("'gallery_pic': b", "'gallery_pic': ");
-          tok = tok.slice(1, -1);
+              var jsonified = JSON.parse(tok);
 
-          var jsonified = JSON.parse(tok);
+              console.log(jsonified);
+              allPerfect.push(jsonified);
+            }
 
-          console.log(jsonified);
-          allPerfect.push(jsonified);
+            console.log(allPerfect);
+            //console.log(allPerfect[0].gallery_pic);
+
+            setListings(allPerfect);
+
+            var count;
+            var amountOfListings = allPerfect.length / 4;
+            var correctListing = [];
+            for (var i = 0; i < allPerfect.length; i += 4) {
+              console.log(allPerfect[i].location);
+              var tempStr = ZIPCODESLATLONG[allPerfect[i].location];
+              var latlongtemp1 = tempStr.toString().split("@");
+              //console.log
+              var latlong1 = {
+                latitude: latlongtemp1[0],
+                longitude: latlongtemp1[1],
+              };
+
+              tempStr = ZIPCODESLATLONG[90401];
+              var latlongtemp2 = tempStr.toString().split("@");
+              var latlong2 = {
+                latitude: latlongtemp2[0],
+                longitude: latlongtemp2[1],
+              };
+              console.log(latlong1);
+              console.log(latlong2);
+              var locationDistance = getDistance(
+                latlong1,
+                latlong2,
+                0.000000000000000000000000001
+              );
+              console.log(locationDistance);
+
+              const singleListing = {
+                id: allPerfect[i].listingid,
+                title: allPerfect[i].title,
+                location: allPerfect[i].location,
+                total_rent: allPerfect[i].total_rent,
+                image: { uri: allPerfect[i].gallery_pic },
+                bedrooms: allPerfect[i].bedrooms,
+                bathrooms: allPerfect[i].bathrooms,
+                square_footage: allPerfect[i].square_footage,
+                description: allPerfect[i].description,
+                firstName: allPerfect[i].firstName,
+                lastName: allPerfect[i].lastName,
+                phone: allPerfect[i].phone,
+                email: allPerfect[i].email,
+                zipcodeDistance: locationDistance,
+                interiors: [
+                  { uri: allPerfect[i + 1].gallery_pic },
+                  { uri: allPerfect[i + 2].gallery_pic },
+                  { uri: allPerfect[i + 3].gallery_pic },
+                ],
+              };
+
+              correctListing.push(singleListing);
+            }
+
+            console.log(correctListing);
+            setListings(correctListing);
+
+            var allListingID = [];
+
+            // for (var i = 0; i < allPerfect.length; i++)
+            // {
+            //   allListingID.push(allPerfect[i].lengthid)
+            // }
+            // var result = correctListing.filter(obj => {
+            //   //for(var i = 0; allListingID.length; i++)
+            //   //{
+            //   return obj.lengthid === 2
+            //   //}
+            // })
+
+            //console.log(result);
+
+            // for (var i = 0; i < allPerfect.length; i++)
+            //  {
+
+            //   for (var k = -1; k < allPerfect.length; k++) {
+            //     if ((k === -1) && correctListing[k].listingid === allPerfect[i].listingid)
+            //      {
+            //        //gallery pic is only difference here
+
+            //     }
+            //     if (correctListing[k].listingid = allPerfect[i].listingid)
+            //      {
+            //        //gallery pic is only difference here
+
+            //     }
+            //     else {
+            //       //need to add a listing
+
+            //       correctListing.push(allPerfect[i]);
+            //     }
+            //   }
+            // }
+
+            // var str = JSON.stringify(object[0]);
+
+            // console.log(str);
+            // var tok = str.replaceAll(/[']/g, '"');
+
+            // tok = tok.slice(1, -1);
+            // console.log(tok);
+
+            // console.log(JSON.parse(tok));
+            // var jsonified = JSON.parse(tok);
+            // console.log(jsonified);
+            // console.log(jsonified.bedrooms);
+
+            //console.log(object[0].bedrooms)
+            // console.log(array[1].bedrooms);
+            // console.log(array[1]["bedrooms"]);
+
+            // console.log(array[1]);
+
+            // var strArray = JSON.stringify(array[1]);
+            // strArray.replace("'", '");
+
+            // const objTest = JSON.parse(strArray);
+
+            // console.log(objTest);
+            // //console.log(JSON.parse(objTest));
+
+            // console.log(object);
+            // console.log(object[0]);
+            // var testObj = object[0];
+            // console.log(testObj["bedrooms"]);
+
+            // console.log("testStr");
+            // var testStr = JSON.stringify(object[0]);
+            // var newStr = testStr.replace("'total_rent'", "total_rent");
+            // console.log(newStr);
+            // console.log(testStr[13]);
+          }
         }
-
-        console.log(allPerfect);
-        //console.log(allPerfect[0].gallery_pic);
-
-        setListings(allPerfect);
-
-        var count;
-        var amountOfListings = allPerfect.length / 4;
-        var correctListing = [];
-        for (var i = 0; i < allPerfect.length; i += 4) {
-          const singleListing = {
-            id: allPerfect[i].listingid,
-            title: allPerfect[i].title,
-            location: allPerfect[i].location,
-            total_rent: allPerfect[i].total_rent,
-            image: { uri: allPerfect[i].gallery_pic },
-            bedrooms: allPerfect[i].bedrooms,
-            bathrooms: allPerfect[i].bathrooms,
-            square_footage: allPerfect[i].square_footage,
-            description: allPerfect[i].description,
-            firstName: allPerfect[i].firstName,
-            lastName: allPerfect[i].lastName,
-            phone: allPerfect[i].phone,
-            email: allPerfect[i].email,
-            interiors: [
-              { uri: allPerfect[i + 1].gallery_pic },
-              { uri: allPerfect[i + 2].gallery_pic },
-              { uri: allPerfect[i + 3].gallery_pic },
-            ],
-          };
-
-          correctListing.push(singleListing);
-        }
-
-        console.log(correctListing);
-        setListings(correctListing);
-
-        var allListingID = [];
-
-        // for (var i = 0; i < allPerfect.length; i++)
-        // {
-        //   allListingID.push(allPerfect[i].lengthid)
-        // }
-        // var result = correctListing.filter(obj => {
-        //   //for(var i = 0; allListingID.length; i++)
-        //   //{
-        //   return obj.lengthid === 2
-        //   //}
-        // })
-
-        //console.log(result);
-
-        // for (var i = 0; i < allPerfect.length; i++)
-        //  {
-
-        //   for (var k = -1; k < allPerfect.length; k++) {
-        //     if ((k === -1) && correctListing[k].listingid === allPerfect[i].listingid)
-        //      {
-        //        //gallery pic is only difference here
-
-        //     }
-        //     if (correctListing[k].listingid = allPerfect[i].listingid)
-        //      {
-        //        //gallery pic is only difference here
-
-        //     }
-        //     else {
-        //       //need to add a listing
-
-        //       correctListing.push(allPerfect[i]);
-        //     }
-        //   }
-        // }
-
-        // var str = JSON.stringify(object[0]);
-
-        // console.log(str);
-        // var tok = str.replaceAll(/[']/g, '"');
-
-        // tok = tok.slice(1, -1);
-        // console.log(tok);
-
-        // console.log(JSON.parse(tok));
-        // var jsonified = JSON.parse(tok);
-        // console.log(jsonified);
-        // console.log(jsonified.bedrooms);
-
-        //console.log(object[0].bedrooms)
-        // console.log(array[1].bedrooms);
-        // console.log(array[1]["bedrooms"]);
-
-        // console.log(array[1]);
-
-        // var strArray = JSON.stringify(array[1]);
-        // strArray.replace("'", '");
-
-        // const objTest = JSON.parse(strArray);
-
-        // console.log(objTest);
-        // //console.log(JSON.parse(objTest));
-
-        // console.log(object);
-        // console.log(object[0]);
-        // var testObj = object[0];
-        // console.log(testObj["bedrooms"]);
-
-        // console.log("testStr");
-        // var testStr = JSON.stringify(object[0]);
-        // var newStr = testStr.replace("'total_rent'", "total_rent");
-        // console.log(newStr);
-        // console.log(testStr[13]);
-      }
       });
   };
 
@@ -319,6 +352,10 @@ const HomeScreen = ({ navigation }) => {
               <View style={style.facility}>
                 <Icon name="aspect-ratio" size={18} />
                 <Text style={style.facilityText}>{house.square_footage}</Text>
+              </View>
+              <View style={style.facility}>
+                <MaterialCommunityIcons name="map-marker-distance" size={18} />
+                <Text style={style.facilityText}>{house.zipcodeDistance}</Text>
               </View>
             </View>
           </View>
