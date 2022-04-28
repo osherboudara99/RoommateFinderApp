@@ -24,7 +24,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { CompareSharp } from "@material-ui/icons";
 import ZIPCODES from "../src/consts/zipcodes";
 
-
 const HomeScreen = ({ navigation }) => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
   const optionsList = [
@@ -40,7 +39,7 @@ const HomeScreen = ({ navigation }) => {
   const categoryList = ["Roommates ", "Listings"];
 
   const [listings, setListings] = React.useState([]);
-  
+
   const [word, setWord] = React.useState(false);
 
   const [isMounted, setMounted] = React.useState(true);
@@ -53,6 +52,38 @@ const HomeScreen = ({ navigation }) => {
     };
   }, []);
 
+  const SortByZipcodeCombined = () => {
+    for (var i = 0; i < listings.length; i++) {
+      SortByZipcode(i, listings[i].location, 90405); //90405 should be replaced by the user profile zipcode
+    }
+  };
+
+  const SortByZipcode = (index, zipcode1, zipcode2) => {
+    //var zipcode1 = 90403 //this should be user profile zipcode
+
+    //var zipcode2 = 90405
+    fetch(
+      "https://www.zipcodeapi.com/rest/DemoOnly00z6QXlSozI1gIUy7UMJXtcQWzZ8CEuPg45TPfsDYdY2rjlLJGWLyjPv/distance.json/" +
+        zipcode1 +
+        "/" +
+        zipcode2 +
+        "/mile",
+      {
+        method: "GET",
+      }
+    )
+      .then((resp) => resp.json())
+      .then((article) => {
+        var tempListings = listings;
+        tempListings[index].locationDistance = article.distance;
+        console.log(article.distance);
+        setListings(() => {
+          return [...tempListings];
+        });
+        console.log(listings);
+      });
+  };
+
   //const [listings, setListings] = React.useState([]);
   const fetchListings = () => {
     fetch("http://127.0.0.1:5000/listings_select", {
@@ -60,161 +91,84 @@ const HomeScreen = ({ navigation }) => {
     })
       .then((resp) => resp.text())
       .then((article) => {
-
-
         console.log(article);
         var testStr = toString(article);
         console.log(article);
-        
-        if(testStr != "[]"){
 
+        if (testStr != "[]") {
+          //const jsonValue = {}
+          var object = article.replaceAll('"', "");
+          var object = article.replaceAll("'", "");
+          var object = article.replace("'gallery_pic': b", "'gallery_pic': ");
+          console.log(object);
+          var object = JSON.parse(article);
+          // var array = [];
+          // for (var i in object) {
+          //   array.push(object[i]);
+          // }
+          // console.log(article);
+          console.log(object);
 
-        //const jsonValue = {}
-        var object = article.replaceAll('"', "");
-        var object = article.replaceAll("'", "");
-        var object = article.replace("'gallery_pic': b", "'gallery_pic': ");
-        console.log(object);
-        var object = JSON.parse(article);
-        // var array = [];
-        // for (var i in object) {
-        //   array.push(object[i]);
-        // }
-        // console.log(article);
-        console.log(object);
+          var allPerfect = [];
+          for (var i = 0; i < object.length; i++) {
+            var str = JSON.stringify(object[i]);
+            var tok = str.replace("'gallery_pic': b", "'gallery_pic': ");
+            tok = tok.replace("None", "null");
+            tok = tok.replaceAll(/[']/g, '"');
+            //tok = tok.replaceAll("'gallery_pic': b", "'gallery_pic': ");
+            tok = tok.slice(1, -1);
 
-        var allPerfect = [];
-        for (var i = 0; i < object.length; i++) {
-          var str = JSON.stringify(object[i]);
-          var tok = str.replace("'gallery_pic': b", "'gallery_pic': ");
-          tok = tok.replace("None", "null");
-          tok = tok.replaceAll(/[']/g, '"');
-          //tok = tok.replaceAll("'gallery_pic': b", "'gallery_pic': ");
-          tok = tok.slice(1, -1);
+            var jsonified = JSON.parse(tok);
 
-          var jsonified = JSON.parse(tok);
-
-          console.log(jsonified);
-          allPerfect.push(jsonified);
-        }
-
-        console.log(allPerfect);
-        //console.log(allPerfect[0].gallery_pic);
-
-        setListings(allPerfect);
-
-        var count;
-        var amountOfListings = allPerfect.length / 4;
-        var correctListing = [];
-        for (var i = 0; i < allPerfect.length; i += 4) {
-
-          if (allPerfect[i].personality_type === null){
-            allPerfect[i].personality_type = "This user has not taken the personality test.";
+            console.log(jsonified);
+            allPerfect.push(jsonified);
           }
 
+          console.log(allPerfect);
+          //console.log(allPerfect[0].gallery_pic);
 
-          const singleListing = {
-            id: allPerfect[i].listingid,
-            title: allPerfect[i].title,
-            location: allPerfect[i].location,
-            total_rent: allPerfect[i].total_rent,
-            image: { uri: allPerfect[i].gallery_pic },
-            bedrooms: allPerfect[i].bedrooms,
-            bathrooms: allPerfect[i].bathrooms,
-            square_footage: allPerfect[i].square_footage,
-            description: allPerfect[i].description,
-            firstName: allPerfect[i].firstName,
-            lastName: allPerfect[i].lastName,
-            phone: allPerfect[i].phone,
-            email: allPerfect[i].email,
-            personality_type: allPerfect[i].personality_type,
-            interiors: [
-              { uri: allPerfect[i + 1].gallery_pic },
-              { uri: allPerfect[i + 2].gallery_pic },
-              { uri: allPerfect[i + 3].gallery_pic },
-            ],
-          };
+          setListings(allPerfect);
 
-          correctListing.push(singleListing);
+          var count;
+          var amountOfListings = allPerfect.length / 4;
+          var correctListing = [];
+          for (var i = 0; i < allPerfect.length; i += 4) {
+            if (allPerfect[i].personality_type === null) {
+              allPerfect[i].personality_type =
+                "This user has not taken the personality test.";
+            }
+
+            const singleListing = {
+              id: allPerfect[i].listingid,
+              title: allPerfect[i].title,
+              location: allPerfect[i].location,
+              total_rent: allPerfect[i].total_rent,
+              image: { uri: allPerfect[i].gallery_pic },
+              bedrooms: allPerfect[i].bedrooms,
+              bathrooms: allPerfect[i].bathrooms,
+              square_footage: allPerfect[i].square_footage,
+              description: allPerfect[i].description,
+              firstName: allPerfect[i].firstName,
+              lastName: allPerfect[i].lastName,
+              phone: allPerfect[i].phone,
+              email: allPerfect[i].email,
+              locationDistance: -1,
+              personality_type: allPerfect[i].personality_type,
+              interiors: [
+                { uri: allPerfect[i + 1].gallery_pic },
+                { uri: allPerfect[i + 2].gallery_pic },
+                { uri: allPerfect[i + 3].gallery_pic },
+              ],
+            };
+
+            correctListing.push(singleListing);
+          }
+
+          console.log(correctListing);
+          setListings(correctListing);
+
+          var allListingID = [];
         }
-
-        console.log(correctListing);
-        setListings(correctListing);
-
-        var allListingID = [];
-
-        // for (var i = 0; i < allPerfect.length; i++)
-        // {
-        //   allListingID.push(allPerfect[i].lengthid)
-        // }
-        // var result = correctListing.filter(obj => {
-        //   //for(var i = 0; allListingID.length; i++)
-        //   //{
-        //   return obj.lengthid === 2
-        //   //}
-        // })
-
-        //console.log(result);
-
-        // for (var i = 0; i < allPerfect.length; i++)
-        //  {
-
-        //   for (var k = -1; k < allPerfect.length; k++) {
-        //     if ((k === -1) && correctListing[k].listingid === allPerfect[i].listingid)
-        //      {
-        //        //gallery pic is only difference here
-
-        //     }
-        //     if (correctListing[k].listingid = allPerfect[i].listingid)
-        //      {
-        //        //gallery pic is only difference here
-
-        //     }
-        //     else {
-        //       //need to add a listing
-
-        //       correctListing.push(allPerfect[i]);
-        //     }
-        //   }
-        // }
-
-        // var str = JSON.stringify(object[0]);
-
-        // console.log(str);
-        // var tok = str.replaceAll(/[']/g, '"');
-
-        // tok = tok.slice(1, -1);
-        // console.log(tok);
-
-        // console.log(JSON.parse(tok));
-        // var jsonified = JSON.parse(tok);
-        // console.log(jsonified);
-        // console.log(jsonified.bedrooms);
-
-        //console.log(object[0].bedrooms)
-        // console.log(array[1].bedrooms);
-        // console.log(array[1]["bedrooms"]);
-
-        // console.log(array[1]);
-
-        // var strArray = JSON.stringify(array[1]);
-        // strArray.replace("'", '");
-
-        // const objTest = JSON.parse(strArray);
-
-        // console.log(objTest);
-        // //console.log(JSON.parse(objTest));
-
-        // console.log(object);
-        // console.log(object[0]);
-        // var testObj = object[0];
-        // console.log(testObj["bedrooms"]);
-
-        // console.log("testStr");
-        // var testStr = JSON.stringify(object[0]);
-        // var newStr = testStr.replace("'total_rent'", "total_rent");
-        // console.log(newStr);
-        // console.log(testStr[13]);
-      }
       });
   };
 
@@ -283,64 +237,73 @@ const HomeScreen = ({ navigation }) => {
   const Card = ({ house }) => {
     return (
       <View>
-        
-
-      <Pressable
-        activeOpacity={0.8}
-        style={{ size: 22, color: COLORS.dark }}
-        onPress={() => navigation.navigate("DetailsListingScreen", house)}
-      >
-        <View style={style.card}>
-          {/* House image */}
-          <Image source={house.image} style={style.cardImage} />
-          <View style={{ marginTop: 10 }}>
-            {/* Title and total_rent container */}
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginTop: 10,
-              }}
-            >
-              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-                {house.title}
-              </Text>
-              <Text
+        <Pressable
+          activeOpacity={0.8}
+          style={{ size: 22, color: COLORS.dark }}
+          onPress={() => navigation.navigate("DetailsListingScreen", house)}
+        >
+          <View style={style.card}>
+            {/* House image */}
+            <Image source={house.image} style={style.cardImage} />
+            <View style={{ marginTop: 10 }}>
+              {/* Title and total_rent container */}
+              <View
                 style={{
-                  fontWeight: "bold",
-                  color: COLORS.green,
-                  fontSize: 16,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginTop: 10,
                 }}
               >
-                ${house.total_rent}
+                <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                  {house.title}
+                </Text>
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    color: COLORS.green,
+                    fontSize: 16,
+                  }}
+                >
+                  ${house.total_rent}
+                </Text>
+              </View>
+
+              {/* Location text */}
+
+              <Text style={{ color: COLORS.green, fontSize: 14, marginTop: 5 }}>
+                {ZIPCODES[house.location]}
               </Text>
-            </View>
 
-            {/* Location text */}
-
-            <Text style={{ color: COLORS.green, fontSize: 14, marginTop: 5 }}>
-              {ZIPCODES[house.location]}
-            </Text>
-
-            {/* Facilities container */}
-            <View style={{ marginTop: 10, flexDirection: "row" }}>
-              <View style={style.facility}>
-                <Icon name="hotel" size={18} />
-                <Text style={style.facilityText}>{house.bedrooms}</Text>
-              </View>
-              <View style={style.facility}>
-                <Icon name="bathtub" size={18} />
-                <Text style={style.facilityText}>{house.bathrooms}</Text>
-              </View>
-              <View style={style.facility}>
-                <Icon name="aspect-ratio" size={18} />
-                <Text style={style.facilityText}>{house.square_footage}</Text>
+              {/* Facilities container */}
+              <View style={{ marginTop: 10, flexDirection: "row" }}>
+                <View style={style.facility}>
+                  <Icon name="hotel" size={18} />
+                  <Text style={style.facilityText}>{house.bedrooms}</Text>
+                </View>
+                <View style={style.facility}>
+                  <Icon name="bathtub" size={18} />
+                  <Text style={style.facilityText}>{house.bathrooms}</Text>
+                </View>
+                <View style={style.facility}>
+                  <Icon name="aspect-ratio" size={18} />
+                  <Text style={style.facilityText}>{house.square_footage}</Text>
+                </View>
+                {house.locationDistance != -1 && (
+                  <View style={style.facility}>
+                    <MaterialCommunityIcons
+                      name="map-marker-distance"
+                      size={24}
+                      color="black"
+                    />
+                    <Text style={style.facilityText}>
+                      {house.locationDistance} mi
+                    </Text>
+                  </View>
+                )}
               </View>
             </View>
           </View>
-        </View>
-      </Pressable>
-      
+        </Pressable>
       </View>
     );
   };
@@ -561,7 +524,9 @@ const HomeScreen = ({ navigation }) => {
           </View>
 
           <View style={style.sortBtn}>
-            <Icon name="tune" color={COLORS.white} size={25} />
+            <TouchableOpacity onPress={SortByZipcodeCombined}>
+              <Icon name="tune" color={COLORS.white} size={25} />
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -570,32 +535,56 @@ const HomeScreen = ({ navigation }) => {
 
         {/* Render categories */}
         <ListCategories />
-        
+
         {/* Render Card */}
         {selectedCategoryIndex === 0 ? (
-          <FlatList
-            snapToInterval={width - 20}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ paddingLeft: 20, paddingVertical: 20 }}
-            vertical
-            data={roommates}
-            renderItem={({ item }) => <CardRoommate roommate={item} />}
-          />
+          <View>
+            {roommates.length === 0 && (
+              <View>
+                <Text
+                  style={{
+                    color: COLORS.dark,
+                    fontSize: 22,
+                    fontWeight: "bold",
+                  }}
+                >
+                  There are no roommates.
+                </Text>
+              </View>
+            )}
+            <FlatList
+              snapToInterval={width - 20}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingLeft: 20, paddingVertical: 20 }}
+              vertical
+              data={roommates}
+              renderItem={({ item }) => <CardRoommate roommate={item} />}
+            />
+          </View>
         ) : (
           <View>
-          {listings.length === 0 && ( <View> 
-            <Text style={{ color: COLORS.dark, fontSize: 22, fontWeight: "bold"}}>
-                There are no listings.
-              </Text>
-          </View>)}
-          <FlatList
-            snapToInterval={width - 20}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ paddingLeft: 20, paddingVertical: 20 }}
-            vertical
-            data={listings}
-            renderItem={({ item }) => <Card house={item} />}
-          />
+            {listings.length === 0 && (
+              <View>
+                <Text
+                  style={{
+                    color: COLORS.dark,
+                    fontSize: 22,
+                    fontWeight: "bold",
+                  }}
+                >
+                  There are no listings.
+                </Text>
+              </View>
+            )}
+            <FlatList
+              snapToInterval={width - 20}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingLeft: 20, paddingVertical: 20 }}
+              vertical
+              data={listings}
+              extraData={listings}
+              renderItem={({ item }) => <Card house={item} />}
+            />
           </View>
         )}
       </ScrollView>
