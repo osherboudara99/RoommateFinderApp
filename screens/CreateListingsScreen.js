@@ -190,7 +190,7 @@ export default function Questionnaire({ route, navigation }) {
     var rege = /^[0-9]+$/;
 
     if (rege.test(val)) {
-      if (val.trim().length > 2) {
+      if (val.trim().length > 2 && val.trim().length < 9) {
         setSquarefootage({ squareFootage: val });
         setData({
           ...data,

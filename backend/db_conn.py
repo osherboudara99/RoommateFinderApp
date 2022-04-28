@@ -103,7 +103,7 @@ def connect():
    `userid` int(10) DEFAULT NULL, \
     `listingid` int(10) unsigned NOT NULL AUTO_INCREMENT, \
     `total_rent` int NOT NULL, \
-    `square_footage` int NOT NULL, \
+    `square_footage` int(8) NOT NULL, \
     `bedrooms` int(3) NOT NULL, \
     `bathrooms` int(3) NOT NULL, \
     `total_occupants` int(4) NOT NULL, \

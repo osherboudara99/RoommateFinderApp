@@ -14,12 +14,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import COLORS from "../src/consts/colors";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import Icon from "react-native-vector-icons/MaterialIcons";
 const { width } = Dimensions.get("screen"); //old code
 //import listings from "../src/consts/listings";
 import roommates from "../src/consts/roommates";
-import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { CompareSharp } from "@material-ui/icons";
 import ZIPCODES from "../src/consts/zipcodes";
@@ -112,6 +111,7 @@ const ViewListingsScreen = ({ navigation }) => {
             id: allPerfect[i].listingid,
             title: allPerfect[i].title,
             location: allPerfect[i].location,
+            total_occupants: allPerfect[i].total_occupants,
             total_rent: allPerfect[i].total_rent,
             image: { uri: allPerfect[i].gallery_pic },
             bedrooms: allPerfect[i].bedrooms,
@@ -327,8 +327,12 @@ const ViewListingsScreen = ({ navigation }) => {
               </View>
               <View style={style.facility}>
                 <Icon name="aspect-ratio" size={18} />
-                <Text style={style.facilityText}>{house.square_footage}</Text>
+                <Text style={style.facilityText}>{house.square_footage} ft sq</Text>
               </View>
+              <View style={style.facility}>
+              <FontAwesome5 name="users" size={18} />
+              <Text style={style.facilityText}>{house.total_occupants}</Text>
+            </View>
             </View>
           </View>
         </View>
@@ -379,8 +383,22 @@ const ViewListingsScreen = ({ navigation }) => {
         {/* Render categories */}
   
 
-        {/* Render Card */}
-      
+        
+        {listings.length === 0 && (
+              <View>
+                <Text
+                  style={{
+                    color: COLORS.dark,
+                    fontSize: 22,
+                    fontWeight: "bold",
+                    alignSelf: "center",
+                  }}
+                >
+                  No listings have been created.
+                </Text>
+              </View>
+            )}
+            {/* Render Card */}
           <FlatList
             snapToInterval={width - 20}
             showsHorizontalScrollIndicator={false}
@@ -389,7 +407,7 @@ const ViewListingsScreen = ({ navigation }) => {
             data={listings}
             renderItem={({ item }) => <Card house={item} />}
           />
-    
+        
       </ScrollView>
     </SafeAreaView>
   );

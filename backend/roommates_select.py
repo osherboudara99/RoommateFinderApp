@@ -26,11 +26,11 @@ def roommates_select():
     #password = "1234"
 
     roommates_select = (
-        "SELECT firstName, lastName, phone, email, zipcode_location, budget, student, working_professional, job_title, guests_often, cleanliness, cleanliness, smoker, pets, zoom_friendly, profile_pic, personality_type FROM SeniorProject.Users AS u INNER JOIN SeniorProject.questionnaire as q ON u.userid = q.userid INNER JOIN SeniorProject.profile_picture as pp ON u.userid = pp.userid LEFT JOIN SeniorProject.profile as p ON u.userid = p.userid WHERE roommates_yes_no = false \
+        "SELECT u.userid as userid, firstName, lastName, phone, email, zipcode_location, budget, student, working_professional, job_title, guests_often, cleanliness, smoker, pets, zoom_friendly, profile_pic, personality_type, roommates_yes_no FROM SeniorProject.Users AS u INNER JOIN SeniorProject.questionnaire as q ON u.userid = q.userid INNER JOIN SeniorProject.profile_picture as pp ON u.userid = pp.userid LEFT JOIN SeniorProject.profile as p ON u.userid = p.userid WHERE email != %s \
             UNION \
-SELECT firstName, lastName, phone, email, zipcode_location, budget, student, working_professional, job_title, guests_often, cleanliness, cleanliness, smoker, pets, zoom_friendly, profile_pic, personality_type FROM SeniorProject.Users AS u INNER JOIN SeniorProject.questionnaire as q ON u.userid = q.userid INNER JOIN SeniorProject.profile_picture as pp ON u.userid = pp.userid RIGHT JOIN SeniorProject.profile as p ON u.userid = p.userid WHERE roommates_yes_no = false and email != %s")
-    roommate_info = (email,)
-    cursor = cnx.cursor(buffered=True)
+SELECT u.userid as userid, firstName, lastName, phone, email, zipcode_location, budget, student, working_professional, job_title, guests_often, cleanliness, smoker, pets, zoom_friendly, profile_pic, personality_type, roommates_yes_no  FROM SeniorProject.Users AS u INNER JOIN SeniorProject.questionnaire as q ON u.userid = q.userid INNER JOIN SeniorProject.profile_picture as pp ON u.userid = pp.userid RIGHT JOIN SeniorProject.profile as p ON u.userid = p.userid WHERE email != %s")
+    roommate_info = (email, email)
+    cursor = cnx.cursor(buffered=True, dictionary=True)
 
     try:
         cursor.execute(roommates_select, roommate_info)

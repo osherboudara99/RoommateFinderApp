@@ -17,7 +17,7 @@ import COLORS from "../src/consts/colors";
 const { width } = Dimensions.get("screen");
 
 import { Divider } from "react-native-elements";
-
+import ZIPCODES from "../src/consts/zipcodes";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -55,7 +55,7 @@ const DetailsScreen = ({ navigation, route }) => {
 
           {/* Virtual Tag View */}
           <View style={style.virtualTag}>
-            <Text style={{ color: COLORS.white }}>Profile</Text>
+            <Text style={{ color: COLORS.white }}> {roommate.title}</Text>
           </View>
         </View>
 
@@ -197,9 +197,6 @@ const DetailsScreen = ({ navigation, route }) => {
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
-            <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-              {roommate.title}
-            </Text>
             {/*<View style={{flexDirection: 'row', alignItems: 'center'}}>
               <View style={style.ratingTag}>
                 <Text style={{color: COLORS.white}}>4.8</Text>
@@ -209,16 +206,28 @@ const DetailsScreen = ({ navigation, route }) => {
           </View>
 
           {/* Location text */}
-          <Text style={{ fontSize: 16, color: COLORS.grey }}>
-            {roommate.location}
+          <Text style={{ fontSize: 16, color: COLORS.green, alignSelf: "center" }}>
+            {ZIPCODES[roommate.location]} {roommate.location}
           </Text>
 
-          {/*About me*/}
-          <Text
-            style={{ alignSelf: "center", marginTop: 20, color: "#708090" }}
-          >
-            {roommate.details}
+
+          <Divider
+          orientation="horizontal"
+          style={{ marginTop: 10, marginHorizontal: 25 }}
+        />
+        <View style={style.footer2}>
+        <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+              Contact Information
+            </Text>
+          <Text style={{ marginTop: 20, color: COLORS.green }}>
+          {roommate.email} 
           </Text>
+          <Text style={{ marginTop: 20, color: COLORS.green }}>
+          {roommate.phone}
+          </Text>
+          </View>
+          
+
 
           <Divider
             orientation="horizontal"
@@ -238,6 +247,8 @@ const DetailsScreen = ({ navigation, route }) => {
           >
             {roommate.personalityTypeName}
           </Text>
+
+          
 
           {roommate.personalityTypeName === "The Architect" && (
             <View>
@@ -369,30 +380,7 @@ const DetailsScreen = ({ navigation, route }) => {
           />
 
           <View style={{ margin: 5 }}>
-            <View style={style.QuestionnaireAnswers}>
-              <FontAwesome5
-                name="location-arrow"
-                size={24}
-                color="#212F24"
-                style={{ marginRight: 10 }}
-              />
-              <Text style={[style.text, style.subText]}>Location: </Text>
-              <Text style={[style.text, style.subTextRight]}>
-                {roommate.location}
-              </Text>
-            </View>
-            <View style={style.QuestionnaireAnswers}>
-              <FontAwesome5
-                name="money-bill"
-                size={24}
-                color="#212F24"
-                style={{ marginRight: 10 }}
-              />
-              <Text style={[style.text, style.subText]}>Budget: </Text>
-              <Text style={[style.text, style.subTextRight]}>
-                ${roommate.budget}
-              </Text>
-            </View>
+            
             <View style={style.QuestionnaireAnswers}>
               <FontAwesome5
                 name="user-graduate"
@@ -402,8 +390,8 @@ const DetailsScreen = ({ navigation, route }) => {
               />
               <Text style={[style.text, style.subText]}>Student? </Text>
               <Text style={[style.text, style.subTextRight]}>
-                {roommate.student === true && "Yes"}
-                {roommate.student === false && "No"}
+                {roommate.student === 1 && "Yes"}
+                {roommate.student === 0 && "No"}
               </Text>
             </View>
             <View style={style.QuestionnaireAnswers}>
@@ -417,11 +405,11 @@ const DetailsScreen = ({ navigation, route }) => {
                 Working Professional?{" "}
               </Text>
               <Text style={[style.text, style.subTextRight]}>
-                {roommate.workingProfessional === true && "Yes"}
-                {roommate.workingProfessional === false && "No"}
+                {roommate.workingProfessional === 1 && "Yes"}
+                {roommate.workingProfessional === 0 && "No"}
               </Text>
             </View>
-            {roommate.workingProfessional != "No" && (
+            {roommate.workingProfessional === 1 && (
               <View style={style.QuestionnaireAnswers}>
                 <FontAwesome5
                   name="address-card"
@@ -444,7 +432,8 @@ const DetailsScreen = ({ navigation, route }) => {
               />
               <Text style={[style.text, style.subText]}>Guests Often? </Text>
               <Text style={[style.text, style.subTextRight]}>
-                {roommate.guestsOften != 0 && roommate.guestsOften}
+                {roommate.guestsOften === 0 && "Not Often"}
+                {roommate.guestsOften === 1 && "Often"}
               </Text>
             </View>
             <View style={style.QuestionnaireAnswers}>
@@ -456,8 +445,8 @@ const DetailsScreen = ({ navigation, route }) => {
               />
               <Text style={[style.text, style.subText]}>Roommate Status: </Text>
               <Text style={[style.text, style.subTextRight]}>
-                {roommate.roommateStatus === true && "Yes"}
-                {roommate.roommateStatus === false && "No"}
+                {roommate.roommateStatus === 1 && "Seeking"}
+                {roommate.roommateStatus === 0 && "Joining"}
               </Text>
             </View>
             <View style={style.QuestionnaireAnswers}>
@@ -469,8 +458,8 @@ const DetailsScreen = ({ navigation, route }) => {
               />
               <Text style={[style.text, style.subText]}>Smoking Status: </Text>
               <Text style={[style.text, style.subTextRight]}>
-                {roommate.smokingFriendly === true && "Yes"}
-                {roommate.smokingFriendly === false && "No"}
+                {roommate.smokingFriendly === 1 && "Yes"}
+                {roommate.smokingFriendly === 0 && "No"}
               </Text>
             </View>
             <View style={style.QuestionnaireAnswers}>
@@ -493,10 +482,10 @@ const DetailsScreen = ({ navigation, route }) => {
                 color="#212F24"
                 style={{ marginRight: 10 }}
               />
-              <Text style={[style.text, style.subText]}>Zoom preference: </Text>
+              <Text style={[style.text, style.subText]}>Zoom Friendly: </Text>
               <Text style={[style.text, style.subTextRight]}>
-                {roommate.zoomFriendly === true && "Yes"}
-                {roommate.zoomFriendly === false && "No"}
+                {roommate.zoomFriendly === 1 && "Yes"}
+                {roommate.zoomFriendly === 0 && "No"}
               </Text>
             </View>
             <View style={style.QuestionnaireAnswers}>
@@ -506,11 +495,11 @@ const DetailsScreen = ({ navigation, route }) => {
                 color="#212F24"
                 style={{ marginRight: 10 }}
               />
-              <Text style={[style.text, style.subText]}>Pet preference:</Text>{" "}
+              <Text style={[style.text, style.subText]}>Pet Friendly:</Text>{" "}
               <Text style={[style.text, style.subTextRight]}>
                 {" "}
-                {roommate.petFriendly === true && "Yes"}
-                {roommate.petFriendly === false && "No"}
+                {roommate.petFriendly === 1 && "Yes"}
+                {roommate.petFriendly === 0 && "No"}
               </Text>
             </View>
           </View>
@@ -534,25 +523,16 @@ const DetailsScreen = ({ navigation, route }) => {
           <View style={style.footer}>
             <View>
               <Text
-                style={{ color: COLORS.blue, fontWeight: "bold", fontSize: 18 }}
+                style={{ color: COLORS.green, fontWeight: "bold", fontSize: 18 }}
               >
-                {roommate.budget}
+                ${roommate.budget}
               </Text>
               <Text
                 style={{ fontSize: 12, color: COLORS.grey, fontWeight: "bold" }}
               >
-                Total Price
+                Total Budget
               </Text>
             </View>
-            <Pressable
-              onPress={() => {
-                navigation.navigate("chatScreen");
-              }}
-            >
-              <View style={style.bookNowBtn}>
-                <Text style={{ color: COLORS.white }}>Contact now</Text>
-              </View>
-            </Pressable>
           </View>
         </View>
       </ScrollView>
@@ -598,11 +578,11 @@ const style = StyleSheet.create({
   },
   virtualTag: {
     top: -20,
-    width: 120,
+    width: 300,
     borderRadius: 10,
     height: 40,
     paddingHorizontal: 20,
-    backgroundColor: COLORS.dark,
+    backgroundColor: COLORS.green,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -663,6 +643,16 @@ const style = StyleSheet.create({
   detailsContainer: { flex: 1, paddingHorizontal: 20, marginTop: 40 },
   facility: { flexDirection: "row", marginRight: 15 },
   facilityText: { marginLeft: 5, color: COLORS.grey },
+  footer2: {
+    height: 100,
+    backgroundColor: COLORS.light,
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    marginTop: 5,
+    flexDirection: "column",
+    marginVertical: 10,
+    marginBottom: 5
+  },
 });
 
 export default DetailsScreen;

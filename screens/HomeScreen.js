@@ -40,12 +40,15 @@ const HomeScreen = ({ navigation }) => {
 
   const [listings, setListings] = React.useState([]);
 
+  const [roommates, setRoomates] = React.useState([]);
+
   const [word, setWord] = React.useState(false);
 
   const [isMounted, setMounted] = React.useState(true);
   useEffect(() => {
     if (isMounted) {
       fetchListings();
+      fetchRoomates();
     }
     return () => {
       setMounted(false);
@@ -127,7 +130,6 @@ const HomeScreen = ({ navigation }) => {
           console.log(allPerfect);
           //console.log(allPerfect[0].gallery_pic);
 
-          setListings(allPerfect);
 
           var count;
           var amountOfListings = allPerfect.length / 4;
@@ -141,6 +143,7 @@ const HomeScreen = ({ navigation }) => {
             const singleListing = {
               id: allPerfect[i].listingid,
               title: allPerfect[i].title,
+              total_occupants: allPerfect[i].total_occupants,
               location: allPerfect[i].location,
               total_rent: allPerfect[i].total_rent,
               image: { uri: allPerfect[i].gallery_pic },
@@ -172,6 +175,97 @@ const HomeScreen = ({ navigation }) => {
       });
   };
 
+
+  const fetchRoomates = () => {
+    fetch("http://127.0.0.1:5000/roommates_select", {
+      method: "GET",
+    })
+      .then((resp) => resp.text())
+      .then((article) => {
+        console.log(article);
+        var testStr = toString(article);
+        console.log(article);
+
+        if (testStr != "[]") {
+          //const jsonValue = {}
+          var object = article.replaceAll('"', "");
+          var object = article.replaceAll("'", "");
+          var object = article.replace("'profile_pic': b", "'profile_pic': ");
+          console.log(object);
+          var object = JSON.parse(article);
+          // var array = [];
+          // for (var i in object) {
+          //   array.push(object[i]);
+          // }
+          // console.log(article);
+          console.log(object);
+
+          var allPerfect = [];
+          for (var i = 0; i < object.length; i++) {
+            var str = JSON.stringify(object[i]);
+            var tok = str.replace("'profile_pic': b", "'profile_pic': ");
+            tok = tok.replaceAll("None", "null");
+            tok = tok.replaceAll(/[']/g, '"');
+            //tok = tok.replaceAll("'gallery_pic': b", "'gallery_pic': ");
+            tok = tok.slice(1, -1);
+
+            var jsonified = JSON.parse(tok);
+
+            console.log(jsonified);
+            allPerfect.push(jsonified);
+          }
+
+          console.log(allPerfect);
+          //console.log(allPerfect[0].gallery_pic);
+
+          var count;
+          var amountOfListings = allPerfect.length / 4;
+          var correctRoommates = [];
+          for (var i = 0; i < allPerfect.length; i++) {
+            if (allPerfect[i].personality_type === null) {
+              allPerfect[i].personality_type =
+                "This user has not taken the personality test.";
+            }
+
+            if (allPerfect[i].profile_pic === null) {
+              allPerfect[i].profile_pic =
+                require("../src/assets/emotion_profile_pic.jpg");
+            }
+
+            const singleListing = {
+              id: allPerfect[i].userid,
+              title: allPerfect[i].firstName + ' ' + allPerfect[i].lastName,
+              location: allPerfect[i].zipcode_location,
+              student: allPerfect[i].student,
+              roommateStatus: allPerfect[i].roommates_yes_no,
+              workingProfessional: allPerfect[i].working_professional,
+              jobTitle: allPerfect[i].job_title,
+              guestsOften: allPerfect[i].guests_often,
+              cleanliness: allPerfect[i].cleanliness,
+              petFriendly: allPerfect[i].pets,
+              smokingFriendly: allPerfect[i].smoker,
+              zoomFriendly: allPerfect[i].zoom_friendly,
+              image: { uri: allPerfect[i].profile_pic },
+              phone: allPerfect[i].phone,
+              email: allPerfect[i].email,
+              budget: allPerfect[i].budget,
+              locationDistance: -1,
+              personalityTypeName: allPerfect[i].personality_type,
+            
+
+  
+            };
+
+            correctRoommates.push(singleListing);
+          }
+
+          console.log(correctRoommates);
+          setRoomates(correctRoommates);
+
+          var allListingID = [];
+        }
+      });
+  };
   const ListCategories = () => {
     return (
       <View style={style.categoryListContainer}>
@@ -288,6 +382,10 @@ const HomeScreen = ({ navigation }) => {
                   <Icon name="aspect-ratio" size={18} />
                   <Text style={style.facilityText}>{house.square_footage}</Text>
                 </View>
+                <View style={style.facility}>
+              <FontAwesome5 name="users" size={18} />
+              <Text style={style.facilityText}>{house.total_occupants}</Text>
+            </View>
                 {house.locationDistance != -1 && (
                   <View style={style.facility}>
                     <MaterialCommunityIcons
@@ -337,14 +435,14 @@ const HomeScreen = ({ navigation }) => {
                   fontSize: 16,
                 }}
               >
-                {roommate.budget}
+                ${roommate.budget}
               </Text>
             </View>
 
             {/* Location text */}
 
             <Text style={{ color: COLORS.green, fontSize: 14, marginTop: 5 }}>
-              {roommate.location}
+              {ZIPCODES[roommate.location]}
             </Text>
 
             {/* Facilities container */}
@@ -352,7 +450,7 @@ const HomeScreen = ({ navigation }) => {
               <View style={style.facility}>
                 <FontAwesome5 name="dog" size={18} color={COLORS.dark} />
                 <Text> </Text>
-                {roommate.petFriendly ? (
+                {roommate.petFriendly === 1 ? (
                   <FontAwesome5 name="check" size={18} color="green" />
                 ) : (
                   <MaterialCommunityIcons
@@ -365,7 +463,7 @@ const HomeScreen = ({ navigation }) => {
               <View style={style.facility}>
                 <FontAwesome5 name="smoking" size={18} color={COLORS.dark} />
                 <Text> </Text>
-                {roommate.smokingFriendly ? (
+                {roommate.smokingFriendly === 1? (
                   <FontAwesome5 name="check" size={18} color="green" />
                 ) : (
                   <MaterialCommunityIcons
@@ -570,6 +668,7 @@ const HomeScreen = ({ navigation }) => {
                     color: COLORS.dark,
                     fontSize: 22,
                     fontWeight: "bold",
+                    alignSelf: "center",
                   }}
                 >
                   There are no listings.

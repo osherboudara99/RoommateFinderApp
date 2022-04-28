@@ -382,9 +382,6 @@ const ProfileScreen = ({ route, navigation }) => {
         <View style={{ margin: 25 }}>
           <View style={[styles.rowLineUp, { marginBottom: 10 }]}>
             <Text style={[styles.text, { fontSize: 25 }]}>About me</Text>
-            <TouchableOpacity onPress={() => console.log("editing about me")}>
-              <FontAwesome5 name="edit" size={22} color="#dae4d6" />
-            </TouchableOpacity>
           </View>
           <View style={{ marginTop: 15 }} />
 
@@ -399,7 +396,7 @@ const ProfileScreen = ({ route, navigation }) => {
             <View>
               {" "}
               <Text style={[styles.text, styles.subText]}>
-                I am a new user wanting to do good in life
+                I am a new user!
               </Text>
             </View>
           )}

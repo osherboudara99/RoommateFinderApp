@@ -12,7 +12,7 @@ import {
   ScrollView,
   TouchableOpacity
 } from "react-native";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
 import COLORS from "../src/consts/colors";
@@ -84,6 +84,10 @@ const DetailsViewListingScreen = ({ navigation, route }) => {
             <View style={style.facility}>
               <Icon name="aspect-ratio" size={18} />
               <Text style={style.facilityText}>{house.square_footage} ft sq</Text>
+            </View>
+            <View style={style.facility}>
+              <FontAwesome5 name="users" size={18} />
+              <Text style={style.facilityText}>{house.total_occupants}</Text>
             </View>
           </View>
           <Divider

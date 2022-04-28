@@ -6,6 +6,7 @@ import CreateListingsScreen from "../screens/CreateListingsScreen";
 import ViewListingsScreen from "../screens/ViewListingsScreen";
 import DetailsViewListingScreen from "../screens/DetailsViewListingScreen";
 import ListingsPicsScreen from "../screens/ListingsPicsScreen";
+import PersonalityHelper from "../screens/PersonalityHelper";
 const SettingsStack = createNativeStackNavigator();
 
 const SettingsNavigation = ({ navigation, route }) => {
@@ -42,6 +43,11 @@ const SettingsNavigation = ({ navigation, route }) => {
         component={LoginScreen}
         options={{ title: "LoginScreen", headerShown: false }}
         initialParams={{ setIsLoggedIn: route.params.setIsLoggedIn }}
+      />
+      <SettingsStack.Screen
+        name="PersonalityHelper"
+        component={PersonalityHelper}
+        options={{ title: "PersonalityHelper", headerShown: false }}
       />
     </SettingsStack.Navigator>
   );
