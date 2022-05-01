@@ -5,6 +5,7 @@ import DetailsListingScreen from "../screens/DetailsListingScreen";
 import DetailsRoommateScreen from "../screens/DetailsRoommateScreen";
 import RoommateIconsHelper from "../screens/RoommateIconsHelper";
 import PersonalityHelper from "../screens/PersonalityHelper";
+import ListingsIconHelper from "../screens/ListingsIconHelper";
 
 import chatScreen from "../screens/chatScreen";
 
@@ -37,6 +38,11 @@ const HomeNavigation = ({ navigation, route }) => {
         name="RoommateIconsHelper"
         component={RoommateIconsHelper}
         options={{ title: "RoommateIconsHelper", headerShown: false }}
+      />
+          <HomeStack.Screen
+        name="ListingsIconHelper"
+        component={ListingsIconHelper}
+        options={{ title: "ListingsIconsHelper", headerShown: false }}
       />
       <HomeStack.Screen
         name="PersonalityHelper"

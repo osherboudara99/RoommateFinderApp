@@ -301,7 +301,23 @@ const HomeScreen = ({ navigation }) => {
                     />
                   </Pressable>
                 ) : (
-                  <View></View>
+                  <Pressable
+                  style={{
+                    marginLeft: 5,
+                    paddingBottom: 5,
+                    marginTop: 0,
+                    fontSize: 18,
+                  }}
+                  onPress={() => {
+                    navigation.navigate("ListingsIconHelper");
+                  }}
+                >
+                  <Ionicons
+                    name="ios-help-circle"
+                    size={22}
+                    color={COLORS.dark}
+                  />
+                </Pressable>
                 )}
               </View>
             </Text>
