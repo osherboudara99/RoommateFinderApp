@@ -21,8 +21,9 @@ const { width } = Dimensions.get("screen"); //old code
 import roommates from "../src/consts/roommates";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { CompareSharp } from "@material-ui/icons";
+import { CenterFocusWeakOutlined, CompareSharp } from "@material-ui/icons";
 import ZIPCODES from "../src/consts/zipcodes";
+import api_key from "../src/consts/api_key";
 
 const HomeScreen = ({ navigation }) => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
@@ -42,35 +43,94 @@ const HomeScreen = ({ navigation }) => {
 
   const [roommates, setRoomates] = React.useState([]);
 
+  const [selfLocation, setSelfLocation] = React.useState(-1);
+
   const [word, setWord] = React.useState(false);
+
+  const [buttonPressedSort, setButtonPressedSort] = React.useState(false);
 
   const [isMounted, setMounted] = React.useState(true);
   useEffect(() => {
     if (isMounted) {
       fetchListings();
       fetchRoomates();
+      fetchProfileScreen();
+      Promise.all([fetchListings,fetchRoomates,fetchProfileScreen]).then(data=>{
+        // DATA IS AN ARRAY AND THEY ARE IN ORDER AS PLACED IN 
+        })
     }
     return () => {
       setMounted(false);
     };
   }, []);
 
+  const insertionSort = (arr) => {
+    //Start from the second element.
+    for(let i = 1; i < arr.length;i++){
+
+        //Go through the elements behind it.
+        for(let j = i - 1; j > -1; j--){
+            
+            //value comparison using ascending order.
+            if(arr[j + 1].locationDistance < arr[j].locationDistance){
+
+                //swap
+                [arr[j+1],arr[j]] = [arr[j],arr[j + 1]];
+
+            }
+        }
+    };
+
+  return arr;
+}
+
   const SortByZipcodeCombined = () => {
+    var locationArray = [];
+    var roommatesArray = [];
     for (var i = 0; i < listings.length; i++) {
-      SortByZipcode(i, listings[i].location, 90405); //90405 should be replaced by the user profile zipcode
+      locationArray.push(listings[i].location)
     }
+
+    var allLocationsStrings = locationArray[0];
+    for (var i = 1; i < locationArray.length; i++) {
+      allLocationsStrings = allLocationsStrings + "%2C" + locationArray[i];
+    }
+    console.log("locations tring:"+ allLocationsStrings);
+    SortByZipcodeListings(selfLocation, allLocationsStrings);
+
+    for (var i = 0; i < roommates.length; i++) {
+      roommatesArray.push(roommates[i].location)
+    }
+    var allRoommatesStrings = roommatesArray[0];
+    for (var i = 1; i < roommatesArray.length; i++) {
+      allRoommatesStrings = allRoommatesStrings + "%2C" + roommatesArray[i];
+
+    } 
+    SortByZipcodeRoommates(selfLocation, allRoommatesStrings);
+    
+    setButtonPressedSort(true);
+    
+    
+ /*    var tempListings = insertionSort(listings);
+    setListings(() => {
+          return [...tempListings];
+        });
+    var tempRoomates = insertionSort(roommates);
+    setRoomates(() => {
+          return [...tempRoomates];
+        }); */
   };
 
-  const SortByZipcode = (index, zipcode1, zipcode2) => {
+  const SortByZipcodeListings = (zipcode1, zipcode2) => {
     //var zipcode1 = 90403 //this should be user profile zipcode
 
     //var zipcode2 = 90405
     fetch(
-      "https://www.zipcodeapi.com/rest/DemoOnly00z6QXlSozI1gIUy7UMJXtcQWzZ8CEuPg45TPfsDYdY2rjlLJGWLyjPv/distance.json/" +
+      "https://app.zipcodebase.com/api/v1/distance?apikey=" + api_key + "&code=" +
         zipcode1 +
-        "/" +
+        "&compare=" +
         zipcode2 +
-        "/mile",
+        "&country=us&unit=miles",
       {
         method: "GET",
       }
@@ -78,12 +138,39 @@ const HomeScreen = ({ navigation }) => {
       .then((resp) => resp.json())
       .then((article) => {
         var tempListings = listings;
-        tempListings[index].locationDistance = article.distance;
-        console.log(article.distance);
+        for(var i = 0; i < listings.length; i++){
+          tempListings[i].locationDistance = article.results[listings[i].location];
+        }
         setListings(() => {
           return [...tempListings];
         });
-        console.log(listings);
+        
+      });
+  };
+
+  const SortByZipcodeRoommates = (zipcode1, zipcode2) => {
+    //var zipcode1 = 90403 //this should be user profile zipcode
+
+    //var zipcode2 = 90405
+    fetch(
+      "https://app.zipcodebase.com/api/v1/distance?apikey=" + api_key + "&code=" +
+        zipcode1 +
+        "&compare=" +
+        zipcode2 +
+        "&country=us&unit=miles",
+      {
+        method: "GET",
+      }
+    )
+      .then((resp) => resp.json())
+      .then((article) => {
+        var tempRoomates = roommates;
+        for(var i = 0; i < roommates.length; i++){
+          tempRoomates[i].locationDistance = article.results[roommates[i].location];
+        }
+        setRoomates(() => {
+          return [...tempRoomates];
+        });
       });
   };
 
@@ -264,6 +351,27 @@ const HomeScreen = ({ navigation }) => {
 
           var allListingID = [];
         }
+      });
+  };
+
+
+  const fetchProfileScreen = () => {
+    fetch("http://127.0.0.1:5000/profile_screen", {
+      method: "GET",
+    })
+      .then((resp) => resp.text())
+      .then((article) => {
+        var data = article.split(" ");
+
+        for (let i = 0; i < data.length; i++) {
+          data[i] = data[i].replace(",", "");
+          data[i] = data[i].replace(/[']/g, "");
+        }
+
+        
+        setSelfLocation(data[4]);
+        
+         
       });
   };
   const ListCategories = () => {
@@ -590,6 +698,17 @@ const HomeScreen = ({ navigation }) => {
                     />
                     <FontAwesome5 name="user-alt" size={12} color="green" />
                   </View>
+                )}{roommate.locationDistance != -1 && (
+                  <View style={[style.facility, { marginLeft: 1 }]}>
+                    <MaterialCommunityIcons
+                      name="map-marker-distance"
+                      size={24}
+                      color="black"
+                    />
+                    <Text style={style.facilityText}>
+                      {roommate.locationDistance} mi
+                    </Text>
+                  </View>
                 )}
               </View>
             </View>
@@ -636,12 +755,13 @@ const HomeScreen = ({ navigation }) => {
             <Icon name="search" color={COLORS.grey} size={25} />
             <TextInput placeholder="Search address, city, location" />
           </View>
-
+          {!buttonPressedSort &&(
           <View style={style.sortBtn}>
             <TouchableOpacity onPress={SortByZipcodeCombined}>
               <Icon name="tune" color={COLORS.white} size={25} />
             </TouchableOpacity>
           </View>
+          )}
         </View>
 
         {/* Render list options 

@@ -59,15 +59,23 @@ const DetailsScreen = ({ navigation, route }) => {
           </View>
         </View>
 
+      
+        
+
         {/* Facilities container */}
         <View
           style={{
             marginTop: 25,
             marginBottom: -25,
             alignSelf: "center",
-            flexDirection: "row",
+            flexDirection: "column",
           }}
         >
+          {/* Location text */}
+          <Text style={{ fontSize: 16, color: COLORS.green, alignSelf: "center" }}>
+                    {ZIPCODES[roommate.location]}
+                  </Text>
+          <View style={{ flexDirection: "row", marginTop: 10 }}>
           <View style={style.facility}>
             <FontAwesome5 name="dog" size={18} color={COLORS.dark} />
             <Text> </Text>
@@ -190,6 +198,7 @@ const DetailsScreen = ({ navigation, route }) => {
             )}
           </View>
         </View>
+        </View>
         {/* end of facilities container */}
 
         <View style={style.detailsContainer}>
@@ -205,10 +214,7 @@ const DetailsScreen = ({ navigation, route }) => {
             </View>*/}
           </View>
 
-          {/* Location text */}
-          <Text style={{ fontSize: 16, color: COLORS.green, alignSelf: "center" }}>
-            {ZIPCODES[roommate.location]} {roommate.location}
-          </Text>
+          
 
 
           <Divider

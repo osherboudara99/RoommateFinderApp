@@ -44,32 +44,30 @@ const DetailsScreen = ({ navigation, route }) => {
               </View>
             </View>
           </ImageBackground>
+          <View style={style.virtualTag}>
+            <Text style={{ color: COLORS.white }}> {house.title}</Text>
           </View>
+        </View>
+      
 
-
-        <View style={style.detailsContainer}>
+        
           {/* Name and rating view container */}
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
-            <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-              {house.title}
-            </Text>
-            {/*<View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <View style={style.ratingTag}>
-                <Text style={{color: COLORS.white}}>4.8</Text>
-              </View>
-              <Text style={{fontSize: 13, marginLeft: 5}}>155 ratings</Text>
-            </View>*/}
-          </View>
 
+          <View
+          style={{
+            marginTop: 25,
+            marginBottom: -25,
+            alignSelf: "center",
+            flexDirection: "column",
+          }}
+        >
           {/* Location text */}
-          <Text style={{ fontSize: 16, color: COLORS.green }}>
+          <Text style={{ fontSize: 16, color: COLORS.dark, marginTop: 10, alignSelf:"center"}}>
             {ZIPCODES[house.location]}
           </Text>
 
           {/* Facilities container */}
-          <View style={{ flexDirection: "row", marginTop: 20 }}>
+          <View style={{ flexDirection: "row", marginTop: 10 }}>
             <View style={style.facility}>
               <Icon name="hotel" size={18} />
               <Text style={style.facilityText}>{house.bedrooms}</Text>
@@ -87,6 +85,8 @@ const DetailsScreen = ({ navigation, route }) => {
               <Text style={style.facilityText}>{house.total_occupants}</Text>
             </View>
           </View>
+          </View>
+          <View style={style.detailsContainer}>
           <Divider
           orientation="horizontal"
           style={{ marginTop: 10, marginHorizontal: 25 }}
@@ -211,7 +211,7 @@ const style = StyleSheet.create({
     borderRadius: 10,
     height: 40,
     paddingHorizontal: 20,
-    backgroundColor: COLORS.dark,
+    backgroundColor: COLORS.green,
     justifyContent: "center",
     alignItems: "center",
   },
