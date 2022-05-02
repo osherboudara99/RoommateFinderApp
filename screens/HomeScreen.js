@@ -733,17 +733,13 @@ const HomeScreen = ({ navigation }) => {
       {/* Header container */}
       <View style={style.header}>
         <View>
-          <Text style={{ color: COLORS.light }}>Location</Text>
-          <Text
-            style={{ color: COLORS.white, fontSize: 20, fontWeight: "bold" }}
-          >
-            USA
-          </Text>
+        <Image
+        source={require('../src/assets/logo_rf.png')}
+        style={style.tinyLogo}
+      />
         </View>
-      </View>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Input and sort button container */}
-        <View
+         {/* Input and sort button container */}
+         <View
           style={{
             marginTop: 10,
             flexDirection: "row",
@@ -751,10 +747,6 @@ const HomeScreen = ({ navigation }) => {
             paddingHorizontal: 20,
           }}
         >
-          <View style={style.searchInputContainer}>
-            <Icon name="search" color={COLORS.grey} size={25} />
-            <TextInput placeholder="Search address, city, location" />
-          </View>
           {!buttonPressedSort &&(
           <View style={style.sortBtn}>
             <TouchableOpacity onPress={SortByZipcodeCombined}>
@@ -763,6 +755,9 @@ const HomeScreen = ({ navigation }) => {
           </View>
           )}
         </View>
+      </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+       
 
         {/* Render list options 
         <ListOptions />*/}
@@ -854,11 +849,12 @@ const style = StyleSheet.create({
   },
   sortBtn: {
     backgroundColor: COLORS.dark,
-    height: 50,
+    height: 40,
     width: 50,
     borderRadius: 12,
     justifyContent: "center",
     alignItems: "center",
+    flexDirection:"row",
     marginLeft: 10,
   },
   optionsCard: {
@@ -916,5 +912,12 @@ const style = StyleSheet.create({
   },
   facility: { flexDirection: "row", marginRight: 15, size: 22 },
   facilityText: { marginLeft: 5, color: COLORS.green },
+  tinyLogo: {
+    width:200,
+    height: 50,
+    alignSelf:"center",
+    justifyContent: "center",
+    flexDirection:"row",
+  },
 });
 export default HomeScreen;

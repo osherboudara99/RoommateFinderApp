@@ -60,7 +60,6 @@ const ViewListingsScreen = ({ navigation }) => {
       .then((resp) => resp.text())
       .then((article) => {
 
-
         console.log(article);
         var testStr = toString(article);
         console.log(article);

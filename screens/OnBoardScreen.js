@@ -34,7 +34,7 @@ const OnBoardScreen = ({navigation, route}) => {
         {/* Text container */}
         <View style={{marginTop: 10}}>
           <Text style={style.textStyle}>
-            Take our questionnaire in just a few clicks!
+            Take our questionnaire and personality test in just a few clicks!
           </Text>
           <Text style={style.textStyle}>Live comfortably with your new friends.</Text>
         </View>

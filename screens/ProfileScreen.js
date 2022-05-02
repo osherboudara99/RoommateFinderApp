@@ -16,11 +16,12 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
 import ZIPCODES from "../src/consts/zipcodes";
+import COLORS from "../src/consts/colors";
+
 
 const ProfileScreen = ({ route, navigation }) => {
   //const [personalityTestTaken, setPersonalityTestTaken] = React.useState(false)
 
-  const personalityTestTaken = route.params;
 
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
@@ -305,11 +306,7 @@ const ProfileScreen = ({ route, navigation }) => {
                 <Ionicons name="ios-help-circle" size={22} color="#dce3da" />
               </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("PersonalityTest")}
-            >
-              <Ionicons name="newspaper-outline" size={22} color="#dae4d6" />
-            </TouchableOpacity>
+            
           </View>
           <View style={{ marginTop: 10 }} />
           {personalityTypeName != "]" ? (
@@ -366,11 +363,17 @@ const ProfileScreen = ({ route, navigation }) => {
             </View>
           ) : (
             <View>
+              
               {" "}
-              <Text style={[styles.text, styles.subText]}>
-                Take the personality test to find out your personality type and
-                match with others!
+              <Text style={[styles.text, styles.subText, styles.disappear]}>
+                Click on the icon to the right to take the personality test and find out your personality type! 
+                <TouchableOpacity
+              onPress={() => navigation.navigate("PersonalityTest")}
+            >
+              <Ionicons name="newspaper-outline" size={22} color="#dae4d6" style={styles.disappear} />
+            </TouchableOpacity>
               </Text>
+              
             </View>
           )}
         </View>
@@ -381,7 +384,7 @@ const ProfileScreen = ({ route, navigation }) => {
         />
         <View style={{ margin: 25 }}>
           <View style={[styles.rowLineUp, { marginBottom: 10 }]}>
-            <Text style={[styles.text, { fontSize: 25 }]}>About me</Text>
+            <Text style={[styles.text, { fontSize: 25 }]}>About Me</Text>
           </View>
           <View style={{ marginTop: 15 }} />
 
@@ -595,7 +598,7 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#398F79",
+    backgroundColor: COLORS.green,
   },
   text: {
     fontFamily: "HelveticaNeue",
@@ -733,4 +736,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
   },
+  disappear: {
+    flexDirection:"row",
+    marginLeft:5
+  }
 });

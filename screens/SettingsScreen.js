@@ -10,6 +10,7 @@ import {
   ScrollView,
   useWindowDimensions,
   TextInput,
+  Image,
   TouchableOpacity,
   Dimensions,
   Platform,
@@ -75,7 +76,20 @@ const SettingsScreen = ({ route, navigation }) => {
       </View>
     </TouchableOpacity>
   </View>
+
+  <Divider
+          orientation="horizontal"
+          style={{ marginTop: 10, marginHorizontal:25}}
+        />
   
+  <View style={style.btn2}>
+        <Text style={[style.text_header2]}>Thank you for using our app! </Text>
+        <Text style={style.message}> Sincerely, The Roommate Finder Team</Text>
+     </View>
+     <Image
+        source={require('../src/assets/logo_rf.png')}
+        style={style.tinyLogo}
+      />
 
   </View>
   </ScrollView>
@@ -93,11 +107,29 @@ const style = StyleSheet.create({
     width: '100%',
     borderBottomLeftRadius: 100,
   },
+  tinyLogo: {
+    width:200,
+    height: 50,
+    alignSelf:"center",
+    justifyContent: "center",
+    flexDirection:"row",
+  },
   text_header: {
     color: COLORS.green,
     fontWeight: "bold",
     fontSize: 20,
      alignItems:'center'
+  },
+  text_header2: {
+    color: COLORS.white,
+    fontWeight: "bold",
+    fontSize: 20,
+     alignItems:'center'
+  },
+  message: {
+    fontSize:15, 
+    alignItems:'center',
+    color:COLORS.white,
   },
   indicatorContainer: {
     height: 20,
@@ -120,6 +152,14 @@ const style = StyleSheet.create({
     marginTop:70,
     marginHorizontal: 20,
     backgroundColor: COLORS.white,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  btn2: {
+    height: 60,
+    marginTop:70,
+    marginHorizontal: 20,
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',

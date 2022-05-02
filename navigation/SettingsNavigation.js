@@ -8,6 +8,7 @@ import DetailsViewListingScreen from "../screens/DetailsViewListingScreen";
 import ListingsPicsScreen from "../screens/ListingsPicsScreen";
 import PersonalityHelper from "../screens/PersonalityHelper";
 import deleteListingMessage from "../screens/deleteListingMessage";
+import HomeScreen from "../screens/HomeScreen";
 const SettingsStack = createNativeStackNavigator();
 
 const SettingsNavigation = ({ navigation, route }) => {
@@ -23,6 +24,12 @@ const SettingsNavigation = ({ navigation, route }) => {
         name="deleteListingMessage"
         component={deleteListingMessage}
         options={{ title: "deleteListingMessage", headerShown: false }}
+      />
+
+      <SettingsStack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ title: "HomeScreen", headerShown: false }}
       />
       <SettingsStack.Screen
         name="CreateListingsScreen"

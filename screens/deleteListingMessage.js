@@ -51,7 +51,7 @@ let deleteListingMessage = ({ route, navigation }) => {
         
        
         // Redirect to Log In/Sign In using the Stack Navigator
-        navigation.replace('ViewListingsScreen');
+        navigation.replace('HomeScreen');
     };
 
 
