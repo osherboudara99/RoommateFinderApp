@@ -167,7 +167,6 @@ app.register_blueprint(own_listings_select_blueprint)
 
 app.register_blueprint(gallery_insertion_blueprint)
 
-app.register_blueprint(gallery_deletion_blueprint)
 
 app.register_blueprint(roommates_select_blueprint)
 
