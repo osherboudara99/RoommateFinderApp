@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Avatar, Icon, Divider } from "react-native-elements";
 import { FontAwesome5 } from "@expo/vector-icons";
 
@@ -46,7 +47,7 @@ const ListingsIconHelper = ({ route, navigation }) => {
             </View>
             <Text style={[styles.text, { fontSize: 18, color: "#eef5eb" }]}>
               {" "}
-              This icon will have a number next to it to show how many bedrooms the property has.
+              This icon will have a number next to it to indicate how many bedrooms the property has.
             </Text>
           </View>
         </View>
@@ -65,7 +66,7 @@ const ListingsIconHelper = ({ route, navigation }) => {
             </View>
             <Text style={[styles.text, { fontSize: 18, color: "#eef5eb" }]}>
               {" "}
-              This icon will have a number next to it to show how many bathrooms are on the property.
+              This icon will have a number next to it to indicate how many bathrooms are on the property.
             </Text>
           </View>
         </View>
@@ -84,7 +85,7 @@ const ListingsIconHelper = ({ route, navigation }) => {
             </View>
             <Text style={[styles.text, { fontSize: 18, color: "#eef5eb" }]}>
               {" "}
-              This icon will have a number beside it based on the square footage of the entire property.
+              This icon will have a number beside it displaying the square footage of the entire property.
             </Text>
           </View>
         </View>
@@ -100,11 +101,35 @@ const ListingsIconHelper = ({ route, navigation }) => {
           </Text>
           <View style={{ flexDirection: "row", marginTop: 10, marginLeft:10, marginRight:10 }}>
             <View style={[styles.personalityImage]}>
-            <FontAwesome5 name="users" size={65} marginRight={10} color={COLORS.dark} />
+            <FontAwesome5 name="house-user" size={65} marginRight={10} color={COLORS.dark} />
             </View>
             <Text style={[styles.text, { fontSize: 18, color: "#eef5eb" }]}>
               {" "}
-              This icon will have a number next to it based on the total occupants they wish they household to have.
+              This icon will have a number next to it indictating the total occupants they wish to have in the listing.
+            </Text>
+          </View>
+        </View>
+
+        <Divider
+          orientation="horizontal"
+          style={{ marginTop: 10, marginHorizontal: 25 }}
+        />
+
+      <View style={[styles.container, { alignSelf: "left" }]}>
+          <Text style={[styles.text, { fontSize: 30, marginLeft: 5 }]}>
+            Distance Icon
+          </Text>
+          <View style={{ flexDirection: "row", marginTop: 10, marginLeft:10, marginRight:10 }}>
+            <View style={[styles.personalityImage]}>
+            <MaterialCommunityIcons
+                      name="map-marker-distance"
+                      size={65}
+                      marginRight={10} color={COLORS.dark}
+                    />
+            </View>
+            <Text style={[styles.text, { fontSize: 18, color: "#eef5eb" }]}>
+              {" "}
+              When toggled, this icon will have a number next to it indictating the distance in miles from you to the listing.
             </Text>
           </View>
         </View>

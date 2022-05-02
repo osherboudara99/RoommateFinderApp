@@ -12,7 +12,7 @@ listing_deletion_blueprint = Blueprint('listing_deletion', __name__)
 def listing_deletion():
     ##cnx = mysql.connector.connect(user='seniorproject', password='', host='38.34.124.120') 
     cnx = mysql.connector.connect(user='root', password='',
-                              host='127.0.0.1')
+                              host='127.0.0.1', database="SeniorProject")
 
 
     if(logged_or_signed.didUserSignup):
@@ -22,7 +22,8 @@ def listing_deletion():
         email = login_backend.email
         password = login_backend.password
 
-    listing_id = request.json['listing_id']
+    listing_id = request.json['listingid']
+    listing_id = str(listing_id)
         
     listing_deletion = ("DELETE l FROM SeniorProject.listings As l INNER JOIN SeniorProject.Users AS u ON u.userid = l.userid WHERE (email = %s) AND (password = %s) AND (listingid = %s)")
     listing_info = (email, password, listing_id)
@@ -33,8 +34,8 @@ def listing_deletion():
     
 
     try:
-        cursor.execute(listing_deletion, listing_info)
         cursor.execute(gallery_deletion, gallery_info)
+        cursor.execute(listing_deletion, listing_info)
         cnx.commit()
         cursor.close()
         cnx.close()

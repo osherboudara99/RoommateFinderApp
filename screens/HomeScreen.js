@@ -98,7 +98,7 @@ const HomeScreen = ({ navigation }) => {
     console.log("locations tring:"+ allLocationsStrings);
     SortByZipcodeListings(selfLocation, allLocationsStrings);
 
-    for (var i = 0; i < roommates.length; i++) {
+    /* for (var i = 0; i < roommates.length; i++) {
       roommatesArray.push(roommates[i].location)
     }
     var allRoommatesStrings = roommatesArray[0];
@@ -106,7 +106,7 @@ const HomeScreen = ({ navigation }) => {
       allRoommatesStrings = allRoommatesStrings + "%2C" + roommatesArray[i];
 
     } 
-    SortByZipcodeRoommates(selfLocation, allRoommatesStrings);
+    SortByZipcodeRoommates(selfLocation, allRoommatesStrings); */
     
     setButtonPressedSort(true);
     
@@ -507,7 +507,7 @@ const HomeScreen = ({ navigation }) => {
                   <Text style={style.facilityText}>{house.square_footage}</Text>
                 </View>
                 <View style={style.facility}>
-              <FontAwesome5 name="users" size={18} />
+              <FontAwesome5 name="house-user" size={18} />
               <Text style={style.facilityText}>{house.total_occupants}</Text>
             </View>
                 {house.locationDistance != -1 && (
@@ -642,7 +642,11 @@ const HomeScreen = ({ navigation }) => {
                 )}
               </View>
               <View style={style.facility}>
-                <FontAwesome5 name="house-user" size={18} color={COLORS.dark} />
+              <FontAwesome5
+              name="users"
+              size={18}
+              color={COLORS.dark}
+            />
                 <Text> </Text>
                 {roommate.guestsOften === 0 && (
                   <MaterialCommunityIcons
@@ -736,10 +740,6 @@ const HomeScreen = ({ navigation }) => {
             USA
           </Text>
         </View>
-        <Image
-          style={style.profileImage}
-          source={require("../src/assets/homescreen/person.jpg")}
-        />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Input and sort button container */}
@@ -777,9 +777,11 @@ const HomeScreen = ({ navigation }) => {
               <View>
                 <Text
                   style={{
-                    color: COLORS.dark,
+                    color: COLORS.green,
                     fontSize: 22,
                     fontWeight: "bold",
+                    alignSelf: "center",
+                    textAlign:"center"
                   }}
                 >
                   There are no roommates.
@@ -801,10 +803,11 @@ const HomeScreen = ({ navigation }) => {
               <View>
                 <Text
                   style={{
-                    color: COLORS.dark,
+                    color: COLORS.green,
                     fontSize: 22,
                     fontWeight: "bold",
                     alignSelf: "center",
+                    textAlign:"center"
                   }}
                 >
                   There are no listings.

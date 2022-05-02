@@ -46,7 +46,7 @@ const PersonalityHelper = ({ route, navigation }) => {
             </View>
             <Text style={[styles.text, { fontSize: 18, color: "#eef5eb" }]}>
               {" "}
-              This icon will have a green check beside it to let you know this person is pet friendly or not pet friendly.
+            This icon will have a green check beside it to let you know this person is pet friendly. A red 'x' symbol will be there if the person is not pet-friendly.
             </Text>
           </View>
         </View>
@@ -65,7 +65,7 @@ const PersonalityHelper = ({ route, navigation }) => {
             </View>
             <Text style={[styles.text, { fontSize: 18, color: "#eef5eb" }]}>
               {" "}
-              This icon will have a green check beside it to let you know this person smokes or does not smoke.
+            This icon will have a green check beside it to let you know this person smokes. A red 'x' symbol will be there if the person is non-smoker.
             </Text>
           </View>
         </View>
@@ -84,8 +84,7 @@ const PersonalityHelper = ({ route, navigation }) => {
             </View>
             <Text style={[styles.text, { fontSize: 18, color: "#eef5eb" }]}>
               {" "}
-              This icon will have a green check beside it to let you know this person is zoom friendly 
-              and uses zoom or does not mind zoom being used around them.
+            This icon will have a green check beside it to let you know this person is zoom friendly and uses zoom or does not mind zoom being used around them.  A red 'x' symbol will be there if the person is not zoom-friendly.
             </Text>
           </View>
         </View>
@@ -105,7 +104,7 @@ const PersonalityHelper = ({ route, navigation }) => {
             </View>
             <Text style={[styles.text, { fontSize: 18, color: "#eef5eb" }]}>
               {" "}
-              This icon will have a green check beside it to let you know this person is a student.
+              This icon will have a green check beside it to let you know this person is a student. A red 'x' symbol will be there if the person is not a student.
             </Text>
           </View>
         </View>
@@ -124,7 +123,7 @@ const PersonalityHelper = ({ route, navigation }) => {
             </View>
             <Text style={[styles.text, { fontSize: 18, color: "#eef5eb" }]}>
               {" "}
-              This icon will have a green check beside it to let you know this person is a working professional.
+              This icon will have a green check beside it to let you know this person is a working professional. A red 'x' symbol will be there if the person is not working.
             </Text>
           </View>
         </View>
@@ -139,11 +138,16 @@ const PersonalityHelper = ({ route, navigation }) => {
           </Text>
           <View style={{ flexDirection: "row", marginTop: 10, marginLeft:10, marginRight:10 }}>
             <View style={[styles.personalityImage]}>
-            <FontAwesome5  name="house-user" size={70} marginRight={10} color={COLORS.dark} />
+            <FontAwesome5
+              name="users"
+              size={70}
+              color={COLORS.dark}
+              style={{ marginRight: 10 }}
+            />
             </View>
             <Text style={[styles.text, { fontSize: 18, color: "#eef5eb" }]}>
               {" "}
-              This icon will have the frequency of guests this person has over.
+              This icon will have the frequency of guests this person has over. It will have a green check for often and a red 'x' symbol for not often.
             </Text>
           </View>
         </View>

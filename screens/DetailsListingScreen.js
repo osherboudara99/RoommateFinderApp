@@ -81,7 +81,7 @@ const DetailsScreen = ({ navigation, route }) => {
               <Text style={style.facilityText}>{house.square_footage} ft sq</Text>
             </View>
             <View style={style.facility}>
-              <FontAwesome5 name="users" size={18} />
+              <FontAwesome5 name="house-user" size={18} />
               <Text style={style.facilityText}>{house.total_occupants}</Text>
             </View>
           </View>

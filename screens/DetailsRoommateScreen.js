@@ -47,9 +47,6 @@ const DetailsScreen = ({ navigation, route }) => {
                   onPress={navigation.goBack}
                 />
               </View>
-              <View style={style.headerBtn}>
-                <Icon name="favorite" size={20} color={COLORS.red} />
-              </View>
             </View>
           </ImageBackground>
 
@@ -143,7 +140,11 @@ const DetailsScreen = ({ navigation, route }) => {
             )}
           </View>
           <View style={style.facility}>
-            <FontAwesome5 name="house-user" size={18} color={COLORS.dark} />
+          <FontAwesome5
+              name="users"
+              size={18}
+              color={COLORS.dark}
+            />
             <Text> </Text>
             {roommate.guestsOften === 0 && (
               <MaterialCommunityIcons
@@ -534,7 +535,7 @@ const DetailsScreen = ({ navigation, route }) => {
                 ${roommate.budget}
               </Text>
               <Text
-                style={{ fontSize: 12, color: COLORS.grey, fontWeight: "bold" }}
+                style={{ fontSize: 12, color: COLORS.dark, fontWeight: "bold" }}
               >
                 Total Budget
               </Text>

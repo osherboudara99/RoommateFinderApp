@@ -7,6 +7,7 @@ import ViewListingsScreen from "../screens/ViewListingsScreen";
 import DetailsViewListingScreen from "../screens/DetailsViewListingScreen";
 import ListingsPicsScreen from "../screens/ListingsPicsScreen";
 import PersonalityHelper from "../screens/PersonalityHelper";
+import deleteListingMessage from "../screens/deleteListingMessage";
 const SettingsStack = createNativeStackNavigator();
 
 const SettingsNavigation = ({ navigation, route }) => {
@@ -17,6 +18,11 @@ const SettingsNavigation = ({ navigation, route }) => {
         component={SettingsScreen}
         options={{ title: "SettingsScreen", headerShown: false }}
         initialParams={{ setIsLoggedIn: route.params.setIsLoggedIn }}
+      />
+      <SettingsStack.Screen
+        name="deleteListingMessage"
+        component={deleteListingMessage}
+        options={{ title: "deleteListingMessage", headerShown: false }}
       />
       <SettingsStack.Screen
         name="CreateListingsScreen"

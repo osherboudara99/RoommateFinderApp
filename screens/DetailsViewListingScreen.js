@@ -26,6 +26,26 @@ const DetailsViewListingScreen = ({ navigation, route }) => {
     return <Image source={interior} style={style.interiorImage} />;
   };
 
+  const fetchListingsDelete = () => {
+    console.log("id:"+ house.id);
+    console.log("id:"+ house.id.toString());
+    var listingid =  house.id;
+    fetch("http://127.0.0.1:5000/listing_deletion", {
+      method:'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({ listingid:house.id}),
+        })
+      .then((resp) => resp.text())
+      .then((data) => {
+        if (data === "executed") {
+          navigation.navigate("deleteListingMessage");
+        }
+      
+    });
+};
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -43,7 +63,10 @@ const DetailsViewListingScreen = ({ navigation, route }) => {
                 />
               </View>
               <View style={style.headerBtn}>
+                <TouchableOpacity style={{ marginLeft: 5 }}
+                onPress={() => fetchListingsDelete()} >
                 <Icon name="delete" size={40} color={COLORS.green} />
+                </TouchableOpacity>
               </View>
             </View>
           </ImageBackground>
@@ -52,6 +75,13 @@ const DetailsViewListingScreen = ({ navigation, route }) => {
           </View>
         </View>
       
+
+        <TouchableOpacity
+                style={{ marginLeft: 5 }}
+                onPress={() => navigation.navigate("PersonalityHelper")}
+              >
+                <Ionicons name="ios-help-circle" size={14} color={COLORS.green} />
+          </TouchableOpacity>
 
         
           {/* Name and rating view container */}
@@ -84,7 +114,7 @@ const DetailsViewListingScreen = ({ navigation, route }) => {
               <Text style={style.facilityText}>{house.square_footage} ft sq</Text>
             </View>
             <View style={style.facility}>
-              <FontAwesome5 name="users" size={18} />
+              <FontAwesome5 name="house-user" size={18} />
               <Text style={style.facilityText}>{house.total_occupants}</Text>
             </View>
           </View>
@@ -95,7 +125,7 @@ const DetailsViewListingScreen = ({ navigation, route }) => {
           style={{ marginTop: 10, marginHorizontal: 25 }}
           />
           <Text style={{ marginTop: 20, color: COLORS.dark }}>
-            {house.description}
+            {house.description} 
           </Text>
 
         

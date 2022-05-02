@@ -11,7 +11,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 let connectToBackend = () =>
     new Promise((resolve) => setTimeout(resolve, 100));
 
-let SignUpError = ({ route, navigation }) => {
+let deleteListingMessage = ({ route, navigation }) => {
     let [bootSplashIsVisible, setBootSplashIsVisible] = useState(true);
     let [bootSplashLogoIsLoaded, setBootSplashLogoIsLoaded] = useState(true);
     let opacity = useRef(new Animated.Value(1));
@@ -51,7 +51,7 @@ let SignUpError = ({ route, navigation }) => {
         
        
         // Redirect to Log In/Sign In using the Stack Navigator
-        navigation.replace('SignUp');
+        navigation.replace('ViewListingsScreen');
     };
 
 
@@ -65,7 +65,7 @@ let SignUpError = ({ route, navigation }) => {
                     name="exclamation-circle"
                     color=""
                     size={40}
-                />  Email or Phone Number Already Exists. Must Be Unique.</Text>
+                />  The listing has been deleted.</Text>
 
             {bootSplashIsVisible && (
                 <Animated.View
@@ -112,4 +112,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default SignUpError;
+export default deleteListingMessage;

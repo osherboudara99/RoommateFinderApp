@@ -50,6 +50,8 @@ const ViewListingsScreen = ({ navigation }) => {
     };
   }, []);
 
+  
+
   //const [listings, setListings] = React.useState([]);
   const fetchListings = () => {
     fetch("http://127.0.0.1:5000/own_listings_select", {
@@ -330,7 +332,7 @@ const ViewListingsScreen = ({ navigation }) => {
                 <Text style={style.facilityText}>{house.square_footage} ft sq</Text>
               </View>
               <View style={style.facility}>
-              <FontAwesome5 name="users" size={18} />
+              <FontAwesome5 name="house-user" size={18} />
               <Text style={style.facilityText}>{house.total_occupants}</Text>
             </View>
             </View>
@@ -388,10 +390,11 @@ const ViewListingsScreen = ({ navigation }) => {
               <View>
                 <Text
                   style={{
-                    color: COLORS.dark,
+                    color: COLORS.green,
                     fontSize: 22,
                     fontWeight: "bold",
                     alignSelf: "center",
+                    textAlign:"center"
                   }}
                 >
                   No listings have been created.
