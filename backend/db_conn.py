@@ -16,7 +16,6 @@ from listings_insertion import listings_insertion_blueprint
 from listings_deletion import listing_deletion_blueprint
 from listings_detailed_select import listings_detailed_select_blueprint
 from gallery_insertion import gallery_insertion_blueprint
-from gallery_deletion import gallery_deletion_blueprint
 from own_listings_select import own_listings_select_blueprint
 from roommates_select import roommates_select_blueprint
 from zipcode_request import zipcode_blueprint
