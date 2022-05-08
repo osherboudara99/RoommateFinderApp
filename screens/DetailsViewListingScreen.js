@@ -71,17 +71,10 @@ const DetailsViewListingScreen = ({ navigation, route }) => {
             </View>
           </ImageBackground>
           <View style={style.virtualTag}>
-            <Text style={{ color: COLORS.white }}> {house.title}</Text>
+            <Text style={{ color: COLORS.white, alignItems: "center", alignSelf: "center", justifyContent: "center"}}> {house.title}</Text>
           </View>
         </View>
       
-
-        <TouchableOpacity
-                style={{ marginLeft: 5 }}
-                onPress={() => navigation.navigate("PersonalityHelper")}
-              >
-                <Ionicons name="ios-help-circle" size={14} color={COLORS.green} />
-          </TouchableOpacity>
 
         
           {/* Name and rating view container */}
@@ -232,7 +225,7 @@ const style = StyleSheet.create({
   },
   virtualTag: {
     top: -20,
-    width: 120,
+    width: 300,
     borderRadius: 10,
     height: 40,
     paddingHorizontal: 20,

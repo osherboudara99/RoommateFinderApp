@@ -198,7 +198,7 @@ const style = StyleSheet.create({
   },
   virtualTag: {
     top: -20,
-    width: 120,
+    width: 300,
     borderRadius: 10,
     height: 40,
     paddingHorizontal: 20,
