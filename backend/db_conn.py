@@ -38,7 +38,6 @@ def connect():
                               host='127.0.0.1')
 
         
-
         cursor = cnx.cursor()
 
         cursor.execute("CREATE DATABASE IF NOT EXISTS SeniorProject")
